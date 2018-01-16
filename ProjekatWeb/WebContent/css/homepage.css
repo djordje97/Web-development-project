@@ -1,0 +1,136 @@
+@charset "UTF-8";
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+	width: 100%;
+	height: 100%;
+}
+body{
+ background-image:url("../photos/pozadina1.jpg");
+ background-repeat: no-repeat;
+ background-size: cover;
+ -webkit-background-size:cover;
+ -moz-background-size:cover;
+ -o-background-size:cover;
+}
+
+nav{
+	width: 100%;
+	height: 10%;
+	position: fixed;
+	background: #000033;
+	opacity: 0.6;
+}
+
+.nav-container{
+	width: 1000px;
+	margin: 0 auto;
+	position: relative;
+	height: 40px;
+}
+
+.nav-container>.logo{
+	width: 400px;
+	height: 40px;
+	float: left;
+	padding-top: 10px;
+}
+.logo>a{
+	font-size: 2em;
+	color: white;
+	text-decoration: none;
+}
+.menu{
+	width: 100%;
+	height: 40px;
+}
+.menu>.menu-content{
+	width: 250px;
+	height: 40px;
+	float: right;
+	font-family: sans-serif ,Arial;
+	font-size: 20px;
+	letter-spacing:3px;
+	position: relative;
+	margin-top: 20px;
+}
+span{
+	color:white;
+}
+.menu>.menu-content>a{
+	color:#fff;
+	text-decoration: none;
+	
+}
+.arrow-up{
+	width: 0;
+	height: 0;
+	position: relative;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid #333;
+	left: 900px;
+	top: 50px;
+	display: none;
+}
+.login-form{
+	width: 300px;
+	height: auto;
+	position: absolute;
+	background: #333;
+	left:770px;
+	top:70px;
+	border-radius: 3px;
+	border-bottom: 5px solid gray;
+	display: none;
+	
+}
+.login-form>form{
+	margin: 1em 2em;
+	width: 250px;
+	font-size: 20px;
+	font-family: sans-serif,Arial;
+	color: gray;
+}
+
+input[type="text"],input[type="password"]{
+	width: 220px;
+	height: 35px;
+	border: 0px;
+	outline: none;
+	box-shadow: inset 0 0 8px #eee;
+	border-radius:5px; 
+	margin-bottom: 10px;
+	margin-top: 5px;
+	font-family: sans-serif,Arial;
+	font-size: 16px;
+}
+input[type="submit"] {
+	width: 95%;
+	height: 35px;
+	background: #0b8256;
+	font-size: 20px;
+	font-weight: bold;
+	font-family: sans-serif,Arial;
+	color:white;
+	border: 0px;
+	border-radius: 3px;
+	outline: none;
+	cursor: pointer;
+}
+input[type="submit"]:hover {
+	background: #0a4b33;
+}
+#createAccountLink{
+	text-decoration: none;
+	position: relative;
+	top: 20px;
+	font-size: 16px;
+	color: gray;
+}
+.fa{
+	color:white;
+}
