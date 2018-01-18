@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS YouTube;
+DROP SCHEMA IF EXISTS WebProject;
 CREATE SCHEMA webshop DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE Youtube;
+USE WebProject;
 
 CREATE TABLE users{
 userName VARCHAR(10) NOT NULL,
@@ -12,4 +12,47 @@ channeDescription VARCHAR(50),
 registrationDate DATE TIME NOT NULL,
 role ENUM ('USER','ADMIN') NOT NULL DEFAULT 'USER',
 blocked BOOLEAN NOT NULL DEFAULT FALSE,
+PRIMARY KEY (userName)
+}
+
+CREATE TABLE video{
+id BIGINT AUTO_INCREMENT,
+videoUrl VARCHAR(50) NOT NULL,
+videosPicture VARCHAR(50) NOT NULL,
+description VARCHAR(50),
+visibility ENUM ('PRIVATE','PUBLIC','UNLISTED') NOT NULL,
+allowComment BOOLEAN NOT NULL,
+likeNumber BIGINT NOT NULL,
+dislikeNumber BIGINT NOT NULL,
+blocked BOOLEAN NOT NULL,
+views BIGINT NOT NULL,
+createdDate DATE,
+ownerUserName VARCHAR(10) NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (ownerUserName) REFERENCES users(userName) ON DELETE RESTRICT,
+
+}
+
+CREATE TABLE comment{
+id BIGINT AUTO_INCREMENT,
+content VARCHAR(100),
+commentDate DATE NOT NULL,
+ownerUserName VARCHAR(10),
+videoId BIGINT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (ownerUserName) REFERENCES users(userName) ON DELETE RESTRICT,
+FOREIGN KEY (videoId) REFERENCES video(id) ON DELETE RESTRICT,
+}
+
+CREATE TABLE likeDislike{
+id BIGINT AUTO_INCREMENT,
+liked BOOLEAN NOT NULL,
+likeDate DATE NOT NULL,
+videoId BIGINT,
+commentId BIGINT,
+PRIMARY KEY (id),
+FOREIGN KEY (videoId) REFERENCES video(id) ON DELETE RESTRICT,
+FOREIGN KEY (commentId) REFERENCES comment (id) ON DELETE RESTRICT,
+
+
 }

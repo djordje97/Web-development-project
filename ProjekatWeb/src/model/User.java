@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
 	public enum Role {USER, ADMIN};
@@ -16,15 +17,17 @@ public class User {
 	private Date registrationDate;
 	private boolean blocked;
 	private ArrayList<User> subscribers;
-	private ArrayList<LikeDislike> likedVideos;
-	private ArrayList<LikeDislike> likedComment;
+	private HashMap<Video, LikeDislike> likedVideos;
+	private HashMap<Comment, LikeDislike> likedComment;
 	
 	
-	public User(String username, String password, String name, String surname, String email, String channeDescription,
+
+
+	public User(String userName, String password, String name, String surname, String email, String channeDescription,
 			Role role, Date registrationDate, boolean blocked, ArrayList<User> subscribers,
-			ArrayList<LikeDislike> likedVideos, ArrayList<LikeDislike> likedComment) {
+			HashMap<Video, LikeDislike> likedVideos, HashMap<Comment, LikeDislike> likedComment) {
 		super();
-		this.userName = username;
+		this.userName = userName;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
@@ -139,22 +142,22 @@ public class User {
 	}
 
 
-	public ArrayList<LikeDislike> getLikedVideos() {
+	public HashMap<Video, LikeDislike> getLikedVideos() {
 		return likedVideos;
 	}
 
 
-	public void setLikedVideos(ArrayList<LikeDislike> likedVideos) {
+	public void setLikedVideos(HashMap<Video, LikeDislike> likedVideos) {
 		this.likedVideos = likedVideos;
 	}
 
 
-	public ArrayList<LikeDislike> getLikedComment() {
+	public HashMap<Comment, LikeDislike> getLikedComment() {
 		return likedComment;
 	}
 
 
-	public void setLikedComment(ArrayList<LikeDislike> likedComment) {
+	public void setLikedComment(HashMap<Comment, LikeDislike> likedComment) {
 		this.likedComment = likedComment;
 	}
 

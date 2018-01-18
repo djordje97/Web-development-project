@@ -1,15 +1,21 @@
 package model;
 
+import java.util.Date;
+
 public class Comment {
 private int id;
 private String content;
+private Date date;
 private User owner;
 private Video video;
 
-public Comment(int id, String content, User owner, Video video) {
+
+
+public Comment(int id, String content, Date date, User owner, Video video) {
 	super();
 	this.id = id;
 	this.content = content;
+	this.date = date;
 	this.owner = owner;
 	this.video = video;
 }
@@ -30,6 +36,16 @@ public void setContent(String content) {
 	this.content = content;
 }
 
+
+
+public Date getDate() {
+	return date;
+}
+
+public void setDate(Date date) {
+	this.date = date;
+}
+
 public User getOwner() {
 	return owner;
 }
@@ -48,8 +64,11 @@ public void setVideo(Video video) {
 
 @Override
 public String toString() {
-	return "Comment [id=" + id + ", content=" + content + ", owner=" + owner + ", video=" + video + "]";
+	return "Comment [id=" + id + ", content=" + content + ", date=" + date + ", owner=" + owner + ", video=" + video
+			+ "]";
 }
+
+
 
 
 

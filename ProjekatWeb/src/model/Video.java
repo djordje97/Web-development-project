@@ -1,12 +1,15 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Video {
+	public enum Visibility {PUBLIC,PRIVATE,UNLISTED}
+	
 	private int id;
 	private String videosUrl;
 	private String videosPicture;
 	private String description;
+	private Visibility visibility;
 	private boolean allowComments;
 	private int numberOfLikes;
 	private int numberOfDislikes;
@@ -14,13 +17,18 @@ public class Video {
 	private int numberOfviews;
 	private Date date;
 	private User owner;
-	public Video(int id, String videosUrl, String videosPicture, String description, boolean allowComments,
-			int numberOfLikes, int numberOfDislikes, boolean blocked, int numberOfviews, Date date, User owner) {
+	
+	
+	
+	public Video(int id, String videosUrl, String videosPicture, String description, Visibility visibility,
+			boolean allowComments, int numberOfLikes, int numberOfDislikes, boolean blocked, int numberOfviews,
+			Date date, User owner) {
 		super();
 		this.id = id;
 		this.videosUrl = videosUrl;
 		this.videosPicture = videosPicture;
 		this.description = description;
+		this.visibility = visibility;
 		this.allowComments = allowComments;
 		this.numberOfLikes = numberOfLikes;
 		this.numberOfDislikes = numberOfDislikes;
@@ -52,6 +60,13 @@ public class Video {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Visibility getVisibility() {
+		return visibility;
+	}
+	public void setVisibility(Visibility visibility) {
+		this.visibility = visibility;
 	}
 	public boolean isAllowComments() {
 		return allowComments;
@@ -98,10 +113,12 @@ public class Video {
 	@Override
 	public String toString() {
 		return "Video [id=" + id + ", videosUrl=" + videosUrl + ", videosPicture=" + videosPicture + ", description="
-				+ description + ", allowComments=" + allowComments + ", numberOfLikes=" + numberOfLikes
-				+ ", numberOfDislikes=" + numberOfDislikes + ", blocked=" + blocked + ", numberOfviews=" + numberOfviews
-				+ ", date=" + date + ", owner=" + owner + "]";
+				+ description + ", visibility=" + visibility + ", allowComments=" + allowComments + ", numberOfLikes="
+				+ numberOfLikes + ", numberOfDislikes=" + numberOfDislikes + ", blocked=" + blocked + ", numberOfviews="
+				+ numberOfviews + ", date=" + date + ", owner=" + owner + "]";
 	}
+	
+	
 	
 	
 }

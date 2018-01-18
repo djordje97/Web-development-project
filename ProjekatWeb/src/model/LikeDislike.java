@@ -1,14 +1,14 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class LikeDislike {
 	private int id;
 	private boolean liked;
 	private Date likeDate;
 	private Video likedVideo;
-	
 	private Comment likedComment;
+	
 	public LikeDislike(int id, boolean liked, Date likeDate, Video likedVideo, Comment likedComment) {
 		super();
 		this.id = id;
