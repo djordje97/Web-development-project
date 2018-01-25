@@ -1,8 +1,8 @@
 package model;
 
-import java.sql.Date;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 
 public class User {
 	public enum Role {USER, ADMIN};
@@ -17,15 +17,18 @@ public class User {
 	private Date registrationDate;
 	private boolean blocked;
 	private ArrayList<User> subscribers;
-	private HashMap<Video, LikeDislike> likedVideos;
-	private HashMap<Comment, LikeDislike> likedComment;
+	private ArrayList<LikeDislike> likedVideos;
+	private ArrayList<LikeDislike> likedComments;
+	public ArrayList<String> subscribersUserName=new ArrayList<String>();
 	
-	
+
+
+
 
 
 	public User(String userName, String password, String name, String surname, String email, String channeDescription,
 			Role role, Date registrationDate, boolean blocked, ArrayList<User> subscribers,
-			HashMap<Video, LikeDislike> likedVideos, HashMap<Comment, LikeDislike> likedComment) {
+			ArrayList<LikeDislike> likedVideos, ArrayList<LikeDislike> likedComments) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -38,18 +41,9 @@ public class User {
 		this.blocked = blocked;
 		this.subscribers = subscribers;
 		this.likedVideos = likedVideos;
-		this.likedComment = likedComment;
+		this.likedComments = likedComments;
 	}
 
-
-	public String getUsername() {
-		return userName;
-	}
-
-
-	public void setUsername(String username) {
-		this.userName = username;
-	}
 
 
 	public String getPassword() {
@@ -142,34 +136,47 @@ public class User {
 	}
 
 
-	public HashMap<Video, LikeDislike> getLikedVideos() {
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	public ArrayList<LikeDislike> getLikedVideos() {
 		return likedVideos;
 	}
 
 
-	public void setLikedVideos(HashMap<Video, LikeDislike> likedVideos) {
+	public void setLikedVideos(ArrayList<LikeDislike> likedVideos) {
 		this.likedVideos = likedVideos;
 	}
 
 
-	public HashMap<Comment, LikeDislike> getLikedComment() {
-		return likedComment;
+	public ArrayList<LikeDislike> getLikedComments() {
+		return likedComments;
 	}
 
 
-	public void setLikedComment(HashMap<Comment, LikeDislike> likedComment) {
-		this.likedComment = likedComment;
+	public void setLikedComments(ArrayList<LikeDislike> likedComments) {
+		this.likedComments = likedComments;
 	}
+
 
 
 	@Override
 	public String toString() {
-		return "User [username=" + userName + ", password=" + password + ", name=" + name + ", surname=" + surname
+		return "User [userName=" + userName + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", email=" + email + ", channeDescription=" + channeDescription + ", role=" + role
 				+ ", registrationDate=" + registrationDate + ", blocked=" + blocked + ", subscribers=" + subscribers
-				+ ", likedVideos=" + likedVideos + ", likedComment=" + likedComment + "]";
+				+ ", likedVideos=" + likedVideos + ", likedComments=" + likedComments + "]";
 	}
 
+
+	
 
 
 }

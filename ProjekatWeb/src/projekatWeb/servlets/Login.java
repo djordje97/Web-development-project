@@ -12,6 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.User;
+import projekatWeb.dao.UserDAO;
+
 
 /**
  * Servlet implementation class Login
@@ -19,28 +22,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		doPost(request, response);
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 
+		
 		String status = "success";
-		if(userName.toUpperCase().equals("BB") && password.toUpperCase().equals("BB"))
-			status="success";
-		else {
-			status="faliuer";
+		try {
+			User user = UserDAO.get(userName);
+			if (user == null) throw new Exception("Neispravno korisnicko ime i/ili lozinka!");
+			if (!user.getPassword().equals(password)) throw new Exception("Neispravno korisnicko ime i/ili lozinka!");
+
+			HttpSession session = request.getSession();
+			session.setAttribute("loggedInUser", user);
+		} catch (Exception ex) {
+			status = "failure";
 		}
+		
 		Map<String, Object> data = new HashMap<>();
 		data.put("status", status);
 
@@ -50,14 +57,6 @@ public class Login extends HttpServlet {
 
 		response.setContentType("application/json");
 		response.getWriter().write(jsonData);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

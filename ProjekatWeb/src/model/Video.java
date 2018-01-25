@@ -17,12 +17,12 @@ public class Video {
 	private int numberOfviews;
 	private Date date;
 	private User owner;
-	
+	private boolean deleted;
 	
 	
 	public Video(int id, String videosUrl, String videosPicture, String description, Visibility visibility,
 			boolean allowComments, int numberOfLikes, int numberOfDislikes, boolean blocked, int numberOfviews,
-			Date date, User owner) {
+			Date date, User owner, boolean deleted) {
 		super();
 		this.id = id;
 		this.videosUrl = videosUrl;
@@ -36,7 +36,9 @@ public class Video {
 		this.numberOfviews = numberOfviews;
 		this.date = date;
 		this.owner = owner;
+		this.deleted = deleted;
 	}
+	
 	public int getId() {
 		return id;
 	}
@@ -110,13 +112,23 @@ public class Video {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "Video [id=" + id + ", videosUrl=" + videosUrl + ", videosPicture=" + videosPicture + ", description="
 				+ description + ", visibility=" + visibility + ", allowComments=" + allowComments + ", numberOfLikes="
 				+ numberOfLikes + ", numberOfDislikes=" + numberOfDislikes + ", blocked=" + blocked + ", numberOfviews="
-				+ numberOfviews + ", date=" + date + ", owner=" + owner + "]";
+				+ numberOfviews + ", date=" + date + ", owner=" + owner + ", deleted=" + deleted + "]";
 	}
+
 	
 	
 	

@@ -8,14 +8,17 @@ public class LikeDislike {
 	private Date likeDate;
 	private Video likedVideo;
 	private Comment likedComment;
+	private User owner;
 	
-	public LikeDislike(int id, boolean liked, Date likeDate, Video likedVideo, Comment likedComment) {
+	
+	public LikeDislike(int id, boolean liked, Date likeDate, Video likedVideo, Comment likedComment, User owner) {
 		super();
 		this.id = id;
 		this.liked = liked;
 		this.likeDate = likeDate;
 		this.likedVideo = likedVideo;
 		this.likedComment = likedComment;
+		this.owner = owner;
 	}
 	public int getId() {
 		return id;
@@ -48,11 +51,20 @@ public class LikeDislike {
 		this.likedComment = likedComment;
 	}
 	
+	
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 	@Override
 	public String toString() {
 		return "LikeDislike [id=" + id + ", liked=" + liked + ", likeDate=" + likeDate + ", likedVideo=" + likedVideo
-				+ ", likedComment=" + likedComment + "]";
+				+ ", likedComment=" + likedComment + ", owner=" + owner + "]";
 	}
+	
+	
 	
 	
 	
