@@ -3,24 +3,10 @@
  */
 
 $(document).ready(function() {
-	var arrow=$('.arrow-up');
-	var form=$('.login-form');
-	var status=false;
-	$('#login').click(function(event) {
-		if(status==false){
-			arrow.fadeIn();
-			form.fadeIn();
-			status=true;
-		}else{
-			arrow.fadeOut();
-			form.fadeOut();
-			status=false;
-		}
-	});
-	var userNameInput = $('#userNameInput');
-	var passwordInput = $('#passwordInput');
+	var userNameInput = $("input[name='userName']");
+	var passwordInput = $("input[name='password']");
 	var messageParagraph = $('#message');
-	$('#logInSubmit').on('click', function(event) { // izvršava se na klik na dugme
+	$('#signIn').on('click', function(event) { 
 		var userName = userNameInput.val();
 		var password = passwordInput.val();
 		if(userName=="" || password =="")
@@ -38,9 +24,8 @@ $(document).ready(function() {
 		console.log('userName: ' + userName);
 		console.log('password: ' + password);
 
-		// kontrola toka se račva na 2 grane
-		$.post('Login', {'userName': userName, 'password': password}, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
-			// tek kada stigne odgovor izvršiće se ova anonimna funkcija
+		
+		$.post('Login', {'userName': userName, 'password': password}, function(data) { 
 			console.log('stigao odgovor');
 			console.log(data);
 
@@ -48,11 +33,20 @@ $(document).ready(function() {
 				window.location.replace('User.html');
 			}
 		});
-		// program se odmah nastavlja dalje, pre nego što stigne odgovor
+		
 		console.log('poslat zahtev');
 
-		// zabraniti da browser obavi podrazumevanu akciju pri događaju
 		event.preventDefault();
 		return false;
 	});
 });
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.margiLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.body.style.backgroundColor = "white";
+}

@@ -15,100 +15,101 @@ body{
  -webkit-background-size:cover;
  -moz-background-size:cover;
  -o-background-size:cover;
+ transition: background-color .5s;
 }
-
-nav{
-	width: 100%;
-	height: 10%;
-	position: fixed;
-	background: #000033;
+.topnav {
+    background: #000033;
 	opacity: 0.6;
+    overflow: hidden;
+    height: 10%;
 }
-
-.nav-container{
-	width: 1000px;
-	margin: 0 auto;
-	position: relative;
-	height: 100%;
+.topnav a {
+	float:left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 18px 16px;
+    text-decoration: none;
+    font-size: 24px;
 }
-
-.nav-container>.logo{
-	width: 400px;
-	height: 100%;
-	float: left;
-	padding-top: 10px;
-}
-.logo>a{
-	font-size: 2em;
-	color: white;
-	text-decoration: none;
-}
-.menu{
-	width: 100%;
-	height: 100%;
-}
-.menu>.menu-content{
-	width: 250px;
-	height: 73%;
+.topnav a:not(:first-child){
 	float: right;
-	font-family: sans-serif ,Arial;
-	font-size: 20px;
-	letter-spacing:3px;
-	position: relative;
-	margin-top: 20px;
 }
-span{
-	color:white;
+ .active {
+    background-color: #4CAF50;
+    color: white;
 }
-.menu>.menu-content>a{
-	color:#fff;
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.topnav .icon {
+    display: none;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+.sidenav a{
 	text-decoration: none;
-	
-}
-.arrow-up{
-	width: 0;
-	height: 0;
-	position: relative;
-	border-left: 20px solid transparent;
-	border-right: 20px solid transparent;
-	border-bottom: 20px solid #333;
-	left: 900px;
-	top: 50px;
-	display: none;
-}
-.login-form{
-	width: 300px;
-	height: auto;
-	position: absolute;
-	background: black;
-	left:770px;
-	top:70px;
-	border-radius: 3px;
-	border-bottom: 5px solid gray;
-	display: none;
-	
-}
-.login-form>form{
-	margin: 1em 2em;
-	width: 250px;
-	font-size: 20px;
-	font-family: sans-serif,Arial;
 	color: gray;
+	cursor: pointer;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+.sidenav p{
+	color: red;
+	font-weight: bold;
 }
 
-input[type="text"],input[type="password"]{
-	width: 220px;
-	height: 35px;
-	border: 0px;
-	outline: none;
-	box-shadow: inset 0 0 8px #eee;
-	border-radius:5px; 
-	margin-bottom: 10px;
-	margin-top: 5px;
-	font-family: sans-serif,Arial;
-	font-size: 16px;
+button:hover {
+    opacity:1;
 }
-input[type="submit"] {
+label{
+	color: white;
+	font-family: Arial;
+	font-size: 18px;
+}
+input[name=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+input[type=submit] {
 	width: 95%;
 	height: 35px;
 	background: #0b8256;
@@ -124,13 +125,7 @@ input[type="submit"] {
 input[type="submit"]:hover {
 	background: #0a4b33;
 }
-#createAccountLink{
-	text-decoration: none;
-	position: relative;
-	top: 20px;
-	font-size: 16px;
-	color: gray;
-}
+
 .fa{
 	color:white;
 }
@@ -149,10 +144,17 @@ display: grid;
   cursor: pointer;
 }
 #search{
-	margin-top: 6%;
+	margin-top: 2%;
 	display: inline-block;
 	width: 40%;
 	margin-left: 15%;
+	height: 40px;
+	border: 0px;
+	outline: none;
+	box-shadow: inset 0 0 8px #eee;
+	border-radius:5px; 
+	font-family: sans-serif,Arial;
+	font-size: 14px;
 }
 input[name="search-button"] {
 	width: 10%;
@@ -220,39 +222,26 @@ padding: 2%;
 color: blue;
 cursor: pointer;	
 }
-#message{
-	color: red;
-	font-weight: bold;
-	font-size: 16px;
-	margin: 0;
+
+@media screen and (max-width:600px) {
+
+.topnav>a{
+	font-size: 20px;
+	padding-top: 10px;
+	padding-left: 5px;
 }
-
-
-@media screen and (max-width:700px) {
-.logo{display: none;}
-.menu>.menu-content{float: left;}
 #search{
-	margin-top: 20%;
+	margin-top: 2%;
 	width: 55%;
 	margin-left: 3%;
 }
 input[name="search-button"] {width: 30%;}
-	.arrow-up{left:150px;}
-.login-form{left:70px;width: 200px; opacity: 1;background: black;}
-
-input[type="text"], input[type="password"]{
-	width: 100px;
+	
 }
-input[type="submit"]{
+input[name="search"]{
 	width: 40%;
 }
-.login-form>form{
-	margin:1em 2em;
-	width: 150px;
-}
-#createAccountLink{
-	top:15px;
-}
+
 .grid-container{grid-column-gap:5px;grid-row-gap:15px;
 padding: 0;
 height: 50%;
@@ -268,12 +257,4 @@ img{
 .footer-container{grid-template-columns:auto ;margin-top: -6%;}
 .logo-rights{display: none;}
 .social-links{grid-column:1;}
-}
-
-
-@media screen and (max-height:400px) {
-	.menu>.menu-content{
-	margin-top:0%;}
-	.arrow-up{left:150px; top:30px;}
-.login-form{left:60px;top:50px;}
 }

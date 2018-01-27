@@ -10,39 +10,24 @@
 <title>Copyright murder</title>
 </head>
 <body>
-	<nav>
-		<section class="nav-container">
-			<aside class="logo"><a href="index.html">Copyright murder</a></aside>
-			<aside class="menu">
-			<div class="menu-content">
-			<a href="index.html"><i class="fa fa-home"></i> Home</a> <span>|</span> <a href="#" id="login"><i class="fa fa-unlock-alt"></i>  Login</a>
-			</div>
-			<div class="arrow-up"></div>
-			</aside>
-			<div class="login-form">
-				<form action="">
-				<label>Username:</label>
-				<div>
-					<input type="text" id="userNameInput" placeholder="Username" required="required">
-				</div>
-				<label>Password:</label>
-				<div>
-					<input type="password" id="passwordInput" placeholder="Password" required="required">
-				</div>
-				<div>
-					<input type="submit" id="logInSubmit" value="Login"> 
-				</div>
-				<p id="message"></p>
-				<div>
-					<a id="createAccountLink" href="#">Don't have account? Register now</a>
-				</div>
-				</form>
-			</div>
-		</section>
-	</nav>
+<div class="topnav" id="myTopnav">
+  <a href="index.html">Copyright murder</a>
+  <a href="#contact" onclick="openNav()">Sign in</a>
+  <a href="index.html" class="active">Home</a>
+</div> 
+<div id="mySidenav" class="sidenav">
+ <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="userName"  required>
+ <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
+    <a href="Register.html">Don't have account? Click here to sign up</a>
+    <p id="message"></p>
+     <button type="submit" class="signIn" id="signIn">Sign in</button>
+</div>
 	<input type="text" name="search" id ="search" placeholder="Search videos...">
 	<input type="submit" name="search-button" value="Search">
-	<div class="grid-container">
+	<div class="grid-container" id="main">
 		<div class="grid-item"><img alt="" src="photos/slika.jpg"></div>
 		<div class="grid-item"><img alt="" src="photos/slika.jpg"></div>
 		<div class="grid-item"><img alt="" src="photos/slika.jpg"></div>
