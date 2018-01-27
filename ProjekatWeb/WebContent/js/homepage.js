@@ -10,13 +10,13 @@ $(document).ready(function() {
 		var userName = userNameInput.val();
 		var password = passwordInput.val();
 		if(userName=="" || password =="")
-			messageParagraph.text("You must enter your username and password");
-		userNameInput.on('focus',function(){
+			messageParagraph.text("You must enter your username and password fields");
+			userNameInput.on('focus',function(event){
 			messageParagraph.text("");
 			event.preventDefault();
 			return false;
 		});
-		passwordInput.on('focus',function(){
+		passwordInput.on('focus',function(event){
 			messageParagraph.text("");
 			event.preventDefault();
 			return false;
@@ -42,11 +42,7 @@ $(document).ready(function() {
 });
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.margiLeft = "250px";
-    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
-    document.body.style.backgroundColor = "white";
 }

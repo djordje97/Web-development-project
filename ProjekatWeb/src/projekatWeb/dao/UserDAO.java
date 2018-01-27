@@ -1,13 +1,12 @@
 package projekatWeb.dao;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-
 
 import model.User;
 import model.User.Role;
@@ -74,6 +73,40 @@ public class UserDAO {
 			}
 		}
 		return null;
+	}
+
+	public static boolean addUser(User user) {
+		Connection conn = ConnectionMenager.getConnection();
+
+		PreparedStatement pstmt = null;
+		try {
+			String query = "INSERT INTO users (userName, userPassword, nameu, surname, email, channelDescription, role, registrationDate, blocked) VALUES (?, ?, ?, ? ,? ,? , ?, ?, ?)";
+
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, user.getUserName());
+			pstmt.setString(index++, user.getPassword());
+			pstmt.setString(index++, user.getName());
+			pstmt.setString(index++, user.getSurname());
+			pstmt.setString(index++, user.getEmail());
+			pstmt.setString(index++, user.getChanneDescription());
+			pstmt.setString(index++, user.getRole().toString());
+			Timestamp date = new Timestamp(new Date().getTime());
+			pstmt.setTimestamp(index++,date);
+			pstmt.setBoolean(index++, user.isBlocked());
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+
+		return false;
 	}
 
 	public static ArrayList<User> findSubscribers(ArrayList<String> subscribersUserName) {

@@ -1,6 +1,8 @@
 package projekatWeb.servlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,44 +15,47 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.User;
+import model.User.Role;
 import projekatWeb.dao.UserDAO;
 
-
 /**
- * Servlet implementation class Login
+ * Servlet implementation class RegisterServlet
  */
-public class Login extends HttpServlet {
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
+
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
-
+		String name = request.getParameter("name");
+		String surname = request.getParameter("surname");
+		String email = request.getParameter("email");
 		
 		String status = "success";
+		String message ="You sign up successfully";
 		try {
 			User user = UserDAO.get(userName);
-			if (user == null) throw new Exception("Neispravno korisnicko ime i/ili lozinka!");
-			if (!user.getPassword().equals(password)) throw new Exception("Neispravno korisnicko ime i/ili lozinka!");
-
-			HttpSession session = request.getSession();
-			session.setAttribute("loggedInUser", user);
+			if (user != null) throw new Exception("Error");
+			Date d=new Date();
+			d.getTime();
+			User newUser=new User(userName, password, name, surname, email, "", Role.USER, d, false, null, null, null);
+			UserDAO.addUser(newUser);
+			
 		} catch (Exception ex) {
 			status = "failure";
+			message="User already exists";
 		}
 		
 		Map<String, Object> data = new HashMap<>();
 		data.put("status", status);
-
+		data.put("message", message);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
 		System.out.println(jsonData);
@@ -58,5 +63,6 @@ public class Login extends HttpServlet {
 		response.setContentType("application/json");
 		response.getWriter().write(jsonData);
 	}
+	
 
 }
