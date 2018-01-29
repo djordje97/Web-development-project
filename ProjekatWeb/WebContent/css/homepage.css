@@ -45,7 +45,7 @@ body{
 .topnav .icon {
     display: none;
 }
-.sidenav {
+.sidelogin {
     height: 100%;
     width: 0;
     position: fixed;
@@ -58,14 +58,14 @@ body{
     padding-top: 60px;
 }
 input[type=text], input[type=password] {
-    width: 100%;
+    width: 90%;
     padding: 15px;
-    margin: 5px 0 22px 0;
+    margin: 5px 0 22px 10px;
     display: inline-block;
     border: none;
     background: #f1f1f1;
 }
-.sidenav a{
+.sidelogin a{
 	text-decoration: none;
 	color: gray;
 	cursor: pointer;
@@ -74,20 +74,20 @@ button {
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
-    margin: 8px 0;
+    margin: 8px 15px;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 90%;
     opacity: 0.9;
 }
-.sidenav .closebtn {
+.sidelogin .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
 }
-.sidenav p{
+.sidelogin p{
 	color: red;
 	font-weight: bold;
 }
@@ -138,7 +138,7 @@ input[type="submit"]:hover {
     padding: 6px 4px;
 }
 .container{
-	padding: 2em 3em;
+	padding: 3em 3em;
 	background-image:url("../photos/pozadina1.jpg");
 	background-repeat: no-repeat;
  	background-size: cover;
@@ -150,9 +150,34 @@ input[type="submit"]:hover {
 	-ms-user-select: none;
 }
 
-.column img{
+
+.content img{
 	width: 60%;
 	border-radius:5%; 
+}
+
+h4{
+	text-align: center;
+	overflow: hidden;
+}
+.user-link{
+	text-align: left;
+	font-size: 18px;
+	margin-left: 15%;
+}
+.user-link>a{
+	color: gray;
+}
+.date-rating{
+	text-align: left;
+	font-size: 18px;
+	margin-left: 20%;
+	color: gray;
+}
+column {
+    float: left;
+    width: 33.33%;
+    display: block;
 }
 #search{
 	margin-top: 2%;
@@ -212,7 +237,6 @@ width: 350px;
 .footer-logo{
 	color: white;
 	font-size: 24px;
-	margin-left: 22%;
 	margin-top: 10%;
 	}
 .social-links{
@@ -233,6 +257,20 @@ padding: 2%;
 .social-links>i:hover{
 color: blue;
 cursor: pointer;	
+}
+.content .avatar{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	vertical-align: middle;
+}
+.videoName{
+	margin-left:100px;
+	text-align: center;
+}
+a{
+	text-decoration: none;
+	color: black;
 }
 
 @media screen and (max-width:600px) {
@@ -271,4 +309,9 @@ input[name="search-button"] {width: 30%;}
         flex: 100%;
         max-width: 100%;
     }
+    .social-links > p{
+    margin-left: 0;
+    text-align: left;
+    }
+    .content .avatar{width: 20px;height: 20px;}
 }

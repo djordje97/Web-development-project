@@ -27,7 +27,6 @@ $(document).ready(function() {
 			console.log(data);
 			
 			if (data.status == 'success') {
-				messageParagraph.text(data.message);
 				window.location.replace('index.html');
 			}
 			if(data.status=='failure'){
