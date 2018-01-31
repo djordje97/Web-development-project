@@ -133,7 +133,8 @@ button {
 }
 #menu{ margin: 10px 50px 0 0; float: right;}
 
-#description{display: block; overflow: auto; margin-top: 20px;}
+#description{display: block; overflow: auto; margin-top: 20px; word-wrap: break-word;
+word-break: break-all; border-top: 3px solid gray; }
 #date{
 	display:block;
 	margin-top:10px;
@@ -141,22 +142,24 @@ button {
 }
 .comment{
 	width: 80%;
-	height: 80px;
+	height: auto;
 	background: white;
 	border-left: none;
 	border-right: none;
 	border-bottom: 1px  solid gray;
 	border-top: 1px  solid gray;
 	overflow: auto;
+	word-wrap: break-word;
+	word-break: break-all;
 }
 .user-menu{
 	background: gray;
-	height: 50%;
+	height: 30%;
     width: 0;
     position: fixed;
     z-index: 1;
-    top: 0;
-    right: 0;
+    top: 20%;
+    right: 1%;
     background-color: #333;
     overflow-x: hidden;
     transition: 0.5s;
@@ -175,6 +178,8 @@ button {
 	display: block;
 	padding: 10px;
 	text-align: center;
+	opacity: 0.6;
+	font-size: 22px;
 }
 .user-menu>a:first-child{
 	padding: 0;
@@ -182,8 +187,8 @@ button {
 	text-decoration: none;
 }
 .user-menu>a:hover:not(:first-child) {
-	background: white;
-	color: black;
+	color: white;
+	opacity: 1;
 }
 .menu-button{
 	grid-column:2;

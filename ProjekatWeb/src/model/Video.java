@@ -16,7 +16,7 @@ public class Video {
 	private int numberOfLikes;
 	private int numberOfDislikes;
 	private boolean blocked;
-	private boolean allowViews;
+	private boolean allowRating;
 	private int numberOfviews;
 	private String date;
 	private User owner;
@@ -24,7 +24,7 @@ public class Video {
 
 	public Video(int id, String videosUrl, String videoPicture, String videoName, String description,
 			Visibility visibility, boolean allowComments, int numberOfLikes, int numberOfDislikes, boolean blocked,
-			boolean allowViews, int numberOfviews, String date, User owner, boolean deleted) {
+			boolean allowRating, int numberOfviews, String date, User owner, boolean deleted) {
 		super();
 		this.id = id;
 		this.videosUrl = videosUrl;
@@ -36,7 +36,7 @@ public class Video {
 		this.numberOfLikes = numberOfLikes;
 		this.numberOfDislikes = numberOfDislikes;
 		this.blocked = blocked;
-		this.allowViews = allowViews;
+		this.allowRating = allowRating;
 		this.numberOfviews = numberOfviews;
 		this.date = date;
 		this.owner = owner;
@@ -123,12 +123,12 @@ public class Video {
 		this.blocked = blocked;
 	}
 
-	public boolean isAllowViews() {
-		return allowViews;
+	public boolean isAllowRating() {
+		return allowRating;
 	}
 
-	public void setAllowViews(boolean allowViews) {
-		this.allowViews = allowViews;
+	public void setAllowRating(boolean allowRating) {
+		this.allowRating = allowRating;
 	}
 
 	public int getNumberOfviews() {
@@ -168,7 +168,7 @@ public class Video {
 		return "Video [id=" + id + ", videosUrl=" + videosUrl + ", videosPicture=" + videoPicture + ", videoName="
 				+ videoName + ", description=" + description + ", visibility=" + visibility + ", allowComments="
 				+ allowComments + ", numberOfLikes=" + numberOfLikes + ", numberOfDislikes=" + numberOfDislikes
-				+ ", blocked=" + blocked + ", allowViews=" + allowViews + ", numberOfviews=" + numberOfviews + ", date="
+				+ ", blocked=" + blocked + ", allowViews=" + allowRating + ", numberOfviews=" + numberOfviews + ", date="
 				+ date + ", owner=" + owner + ", deleted=" + deleted + "]";
 	}
 

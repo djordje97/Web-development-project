@@ -38,7 +38,7 @@ allowComment BOOLEAN NOT NULL DEFAULT TRUE,
 likeNumber BIGINT NOT NULL ,
 dislikeNumber BIGINT NOT NULL,
 blocked BOOLEAN NOT NULL DEFAULT FALSE,
-allowViews BOOLEAN DEFAULT TRUE,
+allowRating BOOLEAN DEFAULT TRUE,
 views BIGINT NOT NULL,
 createdDate  VARCHAR(15),
 deleted BOOLEAN NOT NULL DEFAULT FALSE,
@@ -48,7 +48,7 @@ FOREIGN KEY (ownerUserName) REFERENCES users(userName) ON DELETE RESTRICT
 );
 
 INSERT INTO video(videoUrl,videosPicture,videoName,description,visibility,allowComment,likeNumber,dislikeNumber
-,blocked,allowViews,views,createdDate,deleted,ownerUserName) VALUES('https://www.youtube.com/watch?v=TYRy5bCsWF8','photos/slika.jpg','Star Warse',
+,blocked,allowRating,views,createdDate,deleted,ownerUserName) VALUES('https://www.youtube.com/embed/Q0CbN8sfihY','photos/slika.jpg','Star Warse',
 '','PUBLIC',true,0,0,false,true,0,'24.01.2018',false,'marko');
 
 CREATE TABLE comment(

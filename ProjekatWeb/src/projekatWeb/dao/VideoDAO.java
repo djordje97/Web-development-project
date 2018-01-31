@@ -170,6 +170,36 @@ public class VideoDAO {
 		return null;
 	}
 
+	public static boolean updateVideo(Video video) {
+		Connection conn = ConnectionMenager.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			String query = "UPDATE video SET description = ?, visibility = ?, allowComment = ?, allowRating = ?, blocked = ?, deleted = ?,views = ?  WHERE id = ?";
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, video.getDescription());
+			pstmt.setString(index++, video.getVisibility().toString());
+			pstmt.setBoolean(index++, video.isAllowComments());
+			pstmt.setBoolean(index++, video.isAllowRating());
+			pstmt.setBoolean(index++, video.isBlocked());
+			pstmt.setBoolean(index++, video.isDeleted());
+			pstmt.setInt(index++, video.getNumberOfviews());
+			pstmt.setInt(index++, video.getId());
+
+			return pstmt.executeUpdate() == 1;
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 	public static String dateToString(Date date) {
 		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
 		String datum;

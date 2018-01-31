@@ -1,7 +1,6 @@
 package projekatWeb.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Video;
 import projekatWeb.dao.VideoDAO;
 
-/**
- * Servlet implementation class VideoServlet
- */
+
 public class VideoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,6 +24,8 @@ public class VideoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id=Integer.parseInt(request.getParameter("id"));
 		Video video =VideoDAO.getVideo(id);
+		video.setNumberOfviews(video.getNumberOfviews()+1);
+		VideoDAO.updateVideo(video);
 		Map<String, Object> data = new HashMap<>();
 		data.put("video", video);
 		data.put("status", "success");
