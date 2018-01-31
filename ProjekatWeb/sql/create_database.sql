@@ -1,43 +1,60 @@
 DROP SCHEMA IF EXISTS WebProject;
-CREATE SCHEMA webshop DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE SCHEMA WebProject DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE WebProject;
 
 CREATE TABLE users(
 userName VARCHAR(10) NOT NULL,
-password VARCHAR(15) NOT NULL,
-name VARCHAR(10),
+userPassword VARCHAR(15) NOT NULL,
+nameu VARCHAR(10),
 surname VARCHAR(15),
-email VARCHAR(15) NOT NULL,
-channeDescription VARCHAR(50),
+email VARCHAR(30) NOT NULL,
+channelDescription VARCHAR(50),
 role ENUM ('USER','ADMIN') NOT NULL DEFAULT 'USER',
-registrationDate DATE TIME NOT NULL,
+registrationDate VARCHAR (15) NOT NULL,
 blocked BOOLEAN NOT NULL DEFAULT FALSE,
 PRIMARY KEY (userName)
 );
+ INSERT INTO users(userName,userPassword,nameU,surname,email,role,registrationDate) VALUES('marko','123','Marko','Markovic','marko@gmail.com','USER','1.1.2018');
+INSERT INTO users(userName,userPassword,nameU,surname,email,role,registrationDate) VALUES('darko','123','Marko','Markovic','darko@gmail.com','USER','1.1.2018');
+INSERT INTO users(userName,userPassword,nameU,surname,email,role,registrationDate) VALUES('stanko','123','Marko','Markovic','marko@gmail.com','USER','1.1.2018');
 
+CREATE TABLE subscribe(
+masterUser VARCHAR(10),
+subscriber VARCHAR(10),
+FOREIGN KEY (masterUser) REFERENCES users(userName) ON DELETE RESTRICT,
+FOREIGN KEY (subscriber) REFERENCES users(userName) ON DELETE RESTRICT
+);
+INSERT INTO subscribe(masterUser,subscriber)VALUES('marko','darko');
+INSERT INTO subscribe(masterUser,subscriber)VALUES('darko','stanko');
 
 CREATE TABLE video(
 id BIGINT AUTO_INCREMENT,
-videoUrl VARCHAR(50) NOT NULL,
-videosPicture VARCHAR(50) NOT NULL,
+videoUrl VARCHAR(100) NOT NULL,
+videosPicture VARCHAR(100) NOT NULL,
+videoName VARCHAR(50) NOT NULL,
 description VARCHAR(50),
 visibility ENUM ('PRIVATE','PUBLIC','UNLISTED') NOT NULL,
-allowComment BOOLEAN NOT NULL,
-likeNumber BIGINT NOT NULL,
+allowComment BOOLEAN NOT NULL DEFAULT TRUE,
+likeNumber BIGINT NOT NULL ,
 dislikeNumber BIGINT NOT NULL,
-blocked BOOLEAN NOT NULL,
+blocked BOOLEAN NOT NULL DEFAULT FALSE,
+allowViews BOOLEAN DEFAULT TRUE,
 views BIGINT NOT NULL,
-createdDate DATE,
-ownerUserName VARCHAR(10) NOT NULL,
+createdDate  VARCHAR(15),
 deleted BOOLEAN NOT NULL DEFAULT FALSE,
+ownerUserName VARCHAR(10) NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (ownerUserName) REFERENCES users(userName) ON DELETE RESTRICT
 );
 
+INSERT INTO video(videoUrl,videosPicture,videoName,description,visibility,allowComment,likeNumber,dislikeNumber
+,blocked,allowViews,views,createdDate,deleted,ownerUserName) VALUES('https://www.youtube.com/watch?v=TYRy5bCsWF8','photos/slika.jpg','Star Warse',
+'','PUBLIC',true,0,0,false,true,0,'24.01.2018',false,'marko');
+
 CREATE TABLE comment(
 id BIGINT AUTO_INCREMENT,
 content VARCHAR(100),
-commentDate DATE NOT NULL,
+commentDate VARCHAR(15) NOT NULL,
 ownerUserName VARCHAR(10),
 videoId BIGINT NOT NULL,
 deleted BOOLEAN NOT NULL DEFAULT FALSE,
@@ -49,7 +66,7 @@ FOREIGN KEY (videoId) REFERENCES video(id) ON DELETE RESTRICT
 CREATE TABLE likeDislike(
 id BIGINT AUTO_INCREMENT,
 liked BOOLEAN NOT NULL,
-likeDate DATE NOT NULL,
+likeDate VARCHAR(15) NOT NULL,
 videoId BIGINT,
 commentId BIGINT,
 ownerUserName VARCHAR(10),

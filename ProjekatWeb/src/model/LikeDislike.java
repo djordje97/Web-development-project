@@ -1,17 +1,16 @@
 package model;
 
-import java.util.Date;
 
 public class LikeDislike {
 	private int id;
 	private boolean liked;
-	private Date likeDate;
+	private String likeDate;
 	private Video likedVideo;
 	private Comment likedComment;
 	private User owner;
 	
 	
-	public LikeDislike(int id, boolean liked, Date likeDate, Video likedVideo, Comment likedComment, User owner) {
+	public LikeDislike(int id, boolean liked, String likeDate, Video likedVideo, Comment likedComment, User owner) {
 		super();
 		this.id = id;
 		this.liked = liked;
@@ -32,10 +31,10 @@ public class LikeDislike {
 	public void setLiked(boolean liked) {
 		this.liked = liked;
 	}
-	public Date getLikeDate() {
+	public String getLikeDate() {
 		return likeDate;
 	}
-	public void setLikeDate(Date likeDate) {
+	public void setLikeDate(String likeDate) {
 		this.likeDate = likeDate;
 	}
 	public Video getLikedVideo() {

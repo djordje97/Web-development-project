@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/video.css">
+<script type="text/javascript" src="jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/video.js"></script>
+<title>Video</title>
+</head>
+<body>
+	<nav class="topnav" id="myTopnav">
+		<a href="index.html">Copyright <span style="color: darkturquoise;">murder</span></a>
+		<a href="index.html">Home</a>
+	</nav>
+	<div class="container">
+		<div class="video-container">
+			<iframe width="360" height="180"
+				src="https://www.youtube.com/watch?v=TYRy5bCsWF8" gesture="media"
+				allow="encrypted-media" allowfullscreen id="video"></iframe>
+			<div class="video-info">
+				<h2 id="videoName"></h2>
+				<p id="videoViews"></p>
+				<div class="like-dislike">
+					<i class="fa fa-thumbs-o-up" id="like"></i>
+					<p id="like-number"></p>
+					<i class="fa fa-thumbs-o-down" id="dislike"></i>
+					<p id="dislike-number"></p>
+				</div>
+			</div>
+			<div class="owner-info">
+				<p class="user-link">
+					<img src="photos/slika.jpg" class="avatar"><a href="#" id="userName"></a>
+				</p>
+				<p id="date"></p>
+				<button id="subscribe">Subscribe</button>
+			<p id="description"></p>
+			</div>
+			<div class="comment">
+				<p>this is some comment</p>
+			</div>
+			<div class="comment">
+				<p>this is some comment</p>
+			</div>
+		</div>
+		<div class="menu-button">
+		<i class="fa fa-th" style="font-size: 36px" id="menu" onclick="openNav()"></i>
+			<div class="user-menu" id="user-menu">
+			 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+				<a href="#">Edit</a>
+				<a href="#">Block</a>
+			</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,7 +1,6 @@
 package projekatWeb.servlets;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,17 +9,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.User;
 import model.User.Role;
 import projekatWeb.dao.UserDAO;
+import projekatWeb.dao.VideoDAO;
 
-/**
- * Servlet implementation class RegisterServlet
- */
+
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,8 +41,8 @@ public class RegisterServlet extends HttpServlet {
 			User user = UserDAO.get(userName);
 			if (user != null) throw new Exception("Error");
 			Date d=new Date();
-			d.getTime();
-			User newUser=new User(userName, password, name, surname, email, "", Role.USER, d, false, null, null, null);
+			String date=VideoDAO.dateToString(d);
+			User newUser=new User(userName, password, name, surname, email, "", Role.USER, date, false, null, null, null);
 			UserDAO.addUser(newUser);
 			
 		} catch (Exception ex) {

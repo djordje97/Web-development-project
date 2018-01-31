@@ -15,7 +15,7 @@ $(document).ready(function() {
 					'<div class="column">'+
 					'<div class="content">'+
 			     	'<p><img src="' +data.videos[it].videoPicture+ '" alt="Video Picture"></p>'+
-			      	'<h4><a href="#">'+data.videos[it].videoName+'</a></h4>'+
+			      	'<h4><a href="Video.html?id='+data.videos[it].id+'">'+data.videos[it].videoName+'</a></h4>'+
 			      	'<p class="user-link"><img src="photos/slika.jpg" class="avatar">'+
 					'<a href="#">'+data.videos[it].owner.userName+'</a></p>'+
 			      	'<p class="date-rating">Date:'+data.videos[it].date+'</p>'+
@@ -62,6 +62,7 @@ $(document).ready(function() {
 		return false;
 	});
 });
+
 function openNav() {
     document.getElementById("mySidelogin").style.width = "280px";
 }

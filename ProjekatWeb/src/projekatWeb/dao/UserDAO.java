@@ -4,9 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 import model.User;
 import model.User.Role;
@@ -33,7 +32,7 @@ public class UserDAO {
 				String email = rset.getString(index++);
 				String channelDescription = rset.getString(index++);
 				Role role = Role.valueOf(rset.getString(index++));
-				Date registrationDate = rset.getDate(index++);
+				String registrationDate = rset.getString(index++);
 				boolean blocked = rset.getBoolean(index++);
 
 				User u = new User(userName, password, name, surname, email, channelDescription, role, registrationDate,
@@ -91,8 +90,7 @@ public class UserDAO {
 			pstmt.setString(index++, user.getEmail());
 			pstmt.setString(index++, user.getChanneDescription());
 			pstmt.setString(index++, user.getRole().toString());
-			Timestamp date = new Timestamp(new Date().getTime());
-			pstmt.setTimestamp(index++,date);
+			pstmt.setString(index++, user.getRegistrationDate());
 			pstmt.setBoolean(index++, user.isBlocked());
 			return pstmt.executeUpdate() == 1;
 		} catch (SQLException ex) {

@@ -2,7 +2,6 @@ package model;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class User {
 	public enum Role {USER, ADMIN};
@@ -14,7 +13,7 @@ public class User {
 	private String email;
 	private String channeDescription;
 	private Role role;
-	private Date registrationDate;
+	private String registrationDate;
 	private boolean blocked;
 	private ArrayList<User> subscribers;
 	private ArrayList<LikeDislike> likedVideos;
@@ -27,7 +26,7 @@ public class User {
 
 
 	public User(String userName, String password, String name, String surname, String email, String channeDescription,
-			Role role, Date registrationDate, boolean blocked, ArrayList<User> subscribers,
+			Role role, String registrationDate, boolean blocked, ArrayList<User> subscribers,
 			ArrayList<LikeDislike> likedVideos, ArrayList<LikeDislike> likedComments) {
 		super();
 		this.userName = userName;
@@ -106,12 +105,12 @@ public class User {
 	}
 
 
-	public Date getRegistrationDate() {
+	public String getRegistrationDate() {
 		return registrationDate;
 	}
 
 
-	public void setRegistrationDate(Date registrationDate) {
+	public void setRegistrationDate(String registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 
