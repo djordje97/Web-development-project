@@ -174,11 +174,7 @@ h4{
 	margin-left: 20%;
 	color: gray;
 }
-column {
-    float: left;
-    width: 33.33%;
-    display: block;
-}
+
 #search{
 	margin-top: 2%;
 	display: inline-block;

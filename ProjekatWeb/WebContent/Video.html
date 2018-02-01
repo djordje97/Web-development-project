@@ -32,13 +32,30 @@
 			</div>
 			<div class="owner-info">
 				<p class="user-link">
-					<img src="photos/slika.jpg" class="avatar"><a href="#" id="userName"></a>
+					<img src="photos/slika.jpg" class="avatar"><a href="#"
+						id="userName"></a>
 				</p>
 				<button id="subscribe">Subscribe</button>
 				<p id="date"></p>
-			<p id="description"></p>
+				<p id="description"></p>
+			</div>
+			
+			<div class="add-comment">
+			<textarea name="Text1" placeholder="Add your comment" maxlength="80"></textarea>
+			<input type="submit" value="Comment" id="submit-comment">
 			</div>
 			<div class="comment">
+				<p class="user-link">
+					<img src="photos/slika.jpg" class="avatar"><a href="#"
+						id="userName">Vlasnika komentara</a>
+				</p>
+					<div class="like-dislike">
+					<i class="fa fa-thumbs-o-up" id="like"></i>
+					<p id="like-number">4</p>
+					<i class="fa fa-thumbs-o-down" id="dislike"></i>
+					<p id="dislike-number">2</p>
+				</div>
+				<p id="date">12.5.2018</p>
 				<p>this is some comment</p>
 			</div>
 			<div class="comment">
@@ -46,13 +63,13 @@
 			</div>
 		</div>
 		<div class="menu-button">
-		<i class="fa fa-th" style="font-size: 36px" id="menu" onclick="openNav()"></i>
+			<i class="fa fa-th" style="font-size: 36px" id="menu"
+				onclick="openNav()"></i>
 			<div class="user-menu" id="user-menu">
-			 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-				<a href="#">Edit</a>
-				<a href="#">Block</a>
+				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+				<a href="#">Edit</a> <a href="#">Block</a>
 			</div>
+		</div>
 	</div>
-</div>
 </body>
 </html>

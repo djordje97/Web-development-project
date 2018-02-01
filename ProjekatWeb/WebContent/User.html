@@ -2,9 +2,133 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/user.css">
+<script type="text/javascript" src="jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/user.js"></script>
+<title>User</title>
 </head>
 <body>
-	<p>Hello user</p>
+	<nav class="topnav" id="myTopnav">
+		<a href="index.html">Copyright <span style="color: darkturquoise;">murder</span></a>
+		<a href="#contact" onclick="openNav()">Sign out</a> <a
+			href="index.html" class="active">Home</a>
+	</nav>
+	<div class="container">
+		<div class="user-info">
+			<div class="card">
+				<img src="photos/slika.jpg" alt="User">
+				<div class="container-info">
+					<h2>User Name</h2>
+					<p>Subscribers</p>
+					<p>Date</p>
+					<p>Blocked</p>
+					<p>Role</p>
+					<p>Some text that describes me lorem ipsum ipsum lorem.</p>
+					<p id="sub">
+						<button id="subscribe">Subscribe</button>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="video-subs">
+			<div class="videos">
+				<div class="row">
+					<div class="content">
+						<p>
+							<img src="photos/slika.jpg" alt="Video Picture">
+						</p>
+						<h2 class="video-name">
+							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
+						</h2>
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">date</p>
+						<p class="date-rating">rating</p>
+					</div>
+					<div class="content">
+						<p>
+							<img src="photos/slika.jpg" alt="Video Picture">
+						</p>
+						<h2 class="video-name">
+							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
+						</h2>
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">date</p>
+						<p class="date-rating">rating</p>
+					</div>
+					<div class="content">
+						<p>
+							<img src="photos/slika.jpg" alt="Video Picture">
+						</p>
+						<h2 class="video-name">
+							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
+						</h2>
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">date</p>
+						<p class="date-rating">rating</p>
+					</div>
+					<div class="content">
+						<p>
+							<img src="photos/slika.jpg" alt="Video Picture">
+						</p>
+						<h2 class="video-name">
+							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
+						</h2>
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">date</p>
+						<p class="date-rating">rating</p>
+					</div>
+					<div class="content">
+						<p>
+							<img src="photos/slika.jpg" alt="Video Picture">
+						</p>
+						<h2 class="video-name">
+							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
+						</h2>
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">date</p>
+						<p class="date-rating">rating</p>
+					</div>
+				</div>
+			</div>
+			<div class="subs">
+				<h2>Subscribers:</h2>
+				<div class="row" style="margin-top: 3px;">
+					<div class="content">
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">rating</p>
+					</div>
+					<div class="content">
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">rating</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="menu">
+			<i class="fa fa-th" style="font-size: 36px" id="menu"
+				onclick="openNav()"></i>
+			<div class="user-menu" id="user-menu">
+				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+				<a href="#">Edit</a> <a href="#">Block</a>
+		</div>
+		</div>
+	</div>
 </body>
 </html>
