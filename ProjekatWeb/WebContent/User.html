@@ -18,24 +18,24 @@
 	</nav>
 	<div class="container">
 		<div class="user-info">
-			<div class="card">
-				<img src="photos/slika.jpg" alt="User">
-				<div class="container-info">
-					<h2>User Name</h2>
-					<p>Subscribers</p>
-					<p>Date</p>
-					<p>Blocked</p>
-					<p>Role</p>
-					<p>Some text that describes me lorem ipsum ipsum lorem.</p>
-					<p id="sub">
-						<button id="subscribe">Subscribe</button>
-					</p>
+			<div class="row" id="videos">
+				<div class="column">
+					<div class="card">
+						<img src="photos/slika.jpg" alt="User">
+						<div class="container-info">
+							<h2 id="username"></h2>
+							<p id="subsNumber"></p>
+							<p id="date"></p>
+							<p id="blocked"></p>
+							<p id="role"></p>
+							<p id="description"></p>
+							<p id="sub">
+								<button id="subscribe">Subscribe</button>
+							</p>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
-		<div class="video-subs">
-			<div class="videos">
-				<div class="row">
+				<div class="column">
 					<div class="content">
 						<p>
 							<img src="photos/slika.jpg" alt="Video Picture">
@@ -49,45 +49,8 @@
 						<p class="date-rating">date</p>
 						<p class="date-rating">rating</p>
 					</div>
-					<div class="content">
-						<p>
-							<img src="photos/slika.jpg" alt="Video Picture">
-						</p>
-						<h2 class="video-name">
-							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
-						</h2>
-						<p class="user-link">
-							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
-						</p>
-						<p class="date-rating">date</p>
-						<p class="date-rating">rating</p>
-					</div>
-					<div class="content">
-						<p>
-							<img src="photos/slika.jpg" alt="Video Picture">
-						</p>
-						<h2 class="video-name">
-							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
-						</h2>
-						<p class="user-link">
-							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
-						</p>
-						<p class="date-rating">date</p>
-						<p class="date-rating">rating</p>
-					</div>
-					<div class="content">
-						<p>
-							<img src="photos/slika.jpg" alt="Video Picture">
-						</p>
-						<h2 class="video-name">
-							<a href="Video.html?id='+data.videos[it].id+'">Video name</a>
-						</h2>
-						<p class="user-link">
-							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
-						</p>
-						<p class="date-rating">date</p>
-						<p class="date-rating">rating</p>
-					</div>
+				</div>
+					<div class="column">
 					<div class="content">
 						<p>
 							<img src="photos/slika.jpg" alt="Video Picture">
@@ -103,15 +66,27 @@
 					</div>
 				</div>
 			</div>
-			<div class="subs">
-				<h2>Subscribers:</h2>
-				<div class="row" style="margin-top: 3px;">
+		</div>
+		<div id="subs">
+			<h3>Subscribers:</h3>
+			<div class="row" id="subscribers">
+				<div class="column2">
 					<div class="content">
 						<p class="user-link">
 							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
 						</p>
 						<p class="date-rating">rating</p>
 					</div>
+				</div>
+				<div class="column2">
+					<div class="content">
+						<p class="user-link">
+							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
+						</p>
+						<p class="date-rating">rating</p>
+					</div>
+				</div>
+				<div class="column">
 					<div class="content">
 						<p class="user-link">
 							<img src="photos/slika.jpg" class="avatar"> <a href="#">Owner</a>
@@ -120,14 +95,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="menu">
-			<i class="fa fa-th" style="font-size: 36px" id="menu"
-				onclick="openNav()"></i>
-			<div class="user-menu" id="user-menu">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-				<a href="#">Edit</a> <a href="#">Block</a>
-		</div>
 		</div>
 	</div>
 </body>

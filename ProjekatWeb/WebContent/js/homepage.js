@@ -17,7 +17,7 @@ $(document).ready(function() {
 			     	'<p><img src="' +data.videos[it].videoPicture+ '" alt="Video Picture"></p>'+
 			      	'<h4><a href="Video.html?id='+data.videos[it].id+'">'+data.videos[it].videoName+'</a></h4>'+
 			      	'<p class="user-link"><img src="photos/slika.jpg" class="avatar">'+
-					'<a href="#">'+data.videos[it].owner.userName+'</a></p>'+
+					'<a href="User.html?userName='+data.videos[it].owner.userName+'">'+data.videos[it].owner.userName+'</a></p>'+
 			      	'<p class="date-rating">Date:'+data.videos[it].date+'</p>'+
 			      	'<p class="date-rating">views:'+data.videos[it].numberOfviews+'</p>'+
 			   		 '</div>'+
