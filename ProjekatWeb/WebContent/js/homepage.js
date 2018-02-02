@@ -49,7 +49,7 @@ $(document).ready(function() {
 			console.log(data);
 
 			if (data.status == 'success') {
-				window.location.replace('User.html');
+				window.location.replace('User.html?userName='+userName);
 			}
 			if (data.status == 'failure') {
 			messageParagraph.text("You input wrong username or password");

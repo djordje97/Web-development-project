@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 import model.User;
 import model.User.Role;
-
 
 public class UserDAO {
 
@@ -51,7 +49,7 @@ public class UserDAO {
 				}
 
 				u.setSubscribers(findSubscribers(u.subscribersUserName));
-
+				u.setSubsNumber(getSubsNumber(userName));
 				return u;
 
 			}
@@ -72,6 +70,40 @@ public class UserDAO {
 			}
 		}
 		return null;
+	}
+
+	public static int getSubsNumber(String userName) {
+		Connection conn = ConnectionMenager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "select Count(*) FROM subscribe WHERE masterUser = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				int index = 1;
+				int subs = rset.getInt(index);
+				return subs;
+			}
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return 0;
 	}
 
 	public static boolean addUser(User user) {
@@ -105,6 +137,44 @@ public class UserDAO {
 		}
 
 		return false;
+	}
+
+	public static ArrayList<User> findSubscribed(String userName) {
+		Connection conn = ConnectionMenager.getConnection();
+		ArrayList<User> subscribed = new ArrayList<User>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT masterUser FROM subscribe WHERE subscriber = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				int index = 1;
+				String master = rset.getString(index);
+
+				User u = get(master);
+				subscribed.add(u);
+			}
+			return subscribed;
+
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 	public static ArrayList<User> findSubscribers(ArrayList<String> subscribersUserName) {

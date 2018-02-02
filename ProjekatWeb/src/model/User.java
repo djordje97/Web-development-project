@@ -18,6 +18,7 @@ public class User {
 	private ArrayList<User> subscribers;
 	private ArrayList<LikeDislike> likedVideos;
 	private ArrayList<LikeDislike> likedComments;
+	public int subsNumber;
 	public ArrayList<String> subscribersUserName=new ArrayList<String>();
 	
 
@@ -103,6 +104,30 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+
+	public int getSubsNumber() {
+		return subsNumber;
+	}
+
+
+
+	public void setSubsNumber(int subsNumber) {
+		this.subsNumber = subsNumber;
+	}
+
+
+
+	public ArrayList<String> getSubscribersUserName() {
+		return subscribersUserName;
+	}
+
+
+
+	public void setSubscribersUserName(ArrayList<String> subscribersUserName) {
+		this.subscribersUserName = subscribersUserName;
+	}
+
 
 
 	public String getRegistrationDate() {
