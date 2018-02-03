@@ -25,10 +25,11 @@ public class UserServlet extends HttpServlet {
 		String username=request.getParameter("userName");
 		User user = UserDAO.get(username);
 		ArrayList<Video> videos=VideoDAO.userVideo(user.getUserName()); 
-		ArrayList<User> subs=UserDAO.findSubscribed(username);
+		ArrayList<User> subs=UserDAO.subscribedOn(username);
+		int subNumber=UserDAO.getSubsNumber(username);
 		Map<String, Object> data = new HashMap<>();
 		data.put("user", user);
-		data.put("subNumber", user.getSubscribers().size());
+		data.put("subNumber", subNumber);
 		data.put("videos", videos);
 		data.put("subs", subs);
 		ObjectMapper mapper = new ObjectMapper();

@@ -62,4 +62,24 @@
     <servlet-name>UserServlet</servlet-name>
     <url-pattern>/UserServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SubsServlet</display-name>
+    <servlet-name>SubsServlet</servlet-name>
+    <servlet-class>projekatWeb.servlets.SubsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SubsServlet</servlet-name>
+    <url-pattern>/SubsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LogOutServlet</display-name>
+    <servlet-name>LogOutServlet</servlet-name>
+    <servlet-class>projekatWeb.servlets.LogOutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogOutServlet</servlet-name>
+    <url-pattern>/LogOutServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

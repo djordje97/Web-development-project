@@ -36,24 +36,38 @@
 						id="userName"></a>
 				</p>
 				<button id="subscribe">Subscribe</button>
+				<button id="unsubscribe">Unubscribe</button>
 				<p id="date"></p>
 				<p id="description"></p>
 			</div>
-			
+			<button class="collapsible">Order comment</button>
+			<div class="content">
+				<h2>Order by:</h2>
+				<label class="container-cb">Like<input type="radio"
+					checked="checked" name="radio"> <span class="checkmark"></span>
+				</label> <label class="container-cb">Dislike<input type="radio"
+					name="radio"> <span class="checkmark"></span>
+				</label> <label class="container-cb">Date<input type="radio"
+					name="radio"> <span class="checkmark"></span>
+				</label>
+				
+			</div>
+
 			<div class="add-comment">
-			<textarea name="Text1" placeholder="Add your comment" maxlength="80"></textarea>
-			<input type="submit" value="Comment" id="submit-comment">
+				<textarea name="Text1" placeholder="Add your comment" maxlength="80"></textarea>
+				<input type="submit" value="Comment" id="submit-comment">
 			</div>
 			<div class="comment">
 				<p class="user-link">
 					<img src="photos/slika.jpg" class="avatar"><a href="#"
 						id="userName">Vlasnika komentara</a>
 				</p>
-					<div class="like-dislike">
-					<i class="fa fa-thumbs-o-up" id="like"></i>
-					<p id="like-number">4</p>
-					<i class="fa fa-thumbs-o-down" id="dislike"></i>
-					<p id="dislike-number">2</p>
+				<div class="like-dislike">
+					<i class="fa fa-thumbs-o-up" style="font-size: 20px;" id="like"></i>
+					<p id="like-number" style="font-size: 16px;">202</p>
+					<i class="fa fa-thumbs-o-down" style="font-size: 20px;"
+						id="dislike"></i>
+					<p id="dislike-number" style="font-size: 16px;">102</p>
 				</div>
 				<p id="date">12.5.2018</p>
 				<p>this is some comment</p>
@@ -66,10 +80,25 @@
 			<i class="fa fa-th" style="font-size: 36px" id="menu"
 				onclick="openNav()"></i>
 			<div class="user-menu" id="user-menu">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-				<a href="#">Edit</a> <a href="#">Block</a>
+				
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.maxHeight) {
+				content.style.maxHeight = null;
+			} else {
+				content.style.maxHeight = content.scrollHeight + "px";
+			}
+		});
+	}
+</script>
 </html>

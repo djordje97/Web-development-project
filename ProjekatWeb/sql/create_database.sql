@@ -67,11 +67,21 @@ CREATE TABLE likeDislike(
 id BIGINT AUTO_INCREMENT,
 liked BOOLEAN NOT NULL,
 likeDate VARCHAR(15) NOT NULL,
-videoId BIGINT,
-commentId BIGINT,
 ownerUserName VARCHAR(10),
 PRIMARY KEY (id),
-FOREIGN KEY (ownerUserName) REFERENCES users(userName) ON DELETE RESTRICT,
-FOREIGN KEY (videoId) REFERENCES video(id) ON DELETE RESTRICT,
+FOREIGN KEY (ownerUserName) REFERENCES users(userName) ON DELETE RESTRICT
+);
+
+CREATE TABLE likeDislikeVideo(
+likeId BIGINT,
+videoId BIGINT,
+FOREIGN KEY (likeId) REFERENCES likeDislike (id) ON DELETE RESTRICT,
+FOREIGN KEY (videoId) REFERENCES video(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE likeDislikeComment(
+likeId BIGINT,
+commentId BIGINT,
+FOREIGN KEY (likeId) REFERENCES likeDislike (id) ON DELETE RESTRICT,
 FOREIGN KEY (commentId) REFERENCES comment (id) ON DELETE RESTRICT
 );
