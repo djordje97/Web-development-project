@@ -13,8 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.Comment;
 import model.User;
 import model.Video;
+import projekatWeb.dao.CommentDAO;
 import projekatWeb.dao.UserDAO;
 import projekatWeb.dao.VideoDAO;
 
@@ -35,7 +37,6 @@ public class VideoServlet extends HttpServlet {
 		if(loggedInUser != null) {
 			status="logedUser";
 			int	isSub=UserDAO.findSubscribed(video.getOwner().getUserName(),loggedInUser.getUserName());
-			System.out.println(loggedInUser.getUserName());
 
 				if(isSub > 0) {
 					isSubscribed="subscribe";
@@ -44,11 +45,13 @@ public class VideoServlet extends HttpServlet {
 		
 		video.setNumberOfviews(video.getNumberOfviews()+1);
 		VideoDAO.updateVideo(video);
+		ArrayList<Comment> comments=CommentDAO.getComments(video.getId());
 		Map<String, Object> data = new HashMap<>();
 		data.put("video", video);
 		data.put("status", status);
 		data.put("user", loggedInUser);
 		data.put("isSubscribed",isSubscribed);
+		data.put("comments",comments);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);

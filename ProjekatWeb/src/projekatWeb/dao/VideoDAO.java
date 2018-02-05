@@ -27,7 +27,7 @@ public class VideoDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userName);
 			rset = pstmt.executeQuery();
-			if (rset.next()) {
+			while (rset.next()) {
 				int index = 1;
 				int id = rset.getInt(index++);
 				String videoUrl = rset.getString(index++);
@@ -80,7 +80,7 @@ public class VideoDAO {
 			pstmt.setString(1, "PUBLIC");
 			pstmt.setBoolean(2, false);
 			rset = pstmt.executeQuery();
-			if (rset.next()) {
+			while (rset.next()) {
 				int index = 1;
 				int id = rset.getInt(index++);
 				String videoUrl = rset.getString(index++);

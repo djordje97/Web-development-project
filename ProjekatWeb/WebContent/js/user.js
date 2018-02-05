@@ -8,17 +8,21 @@ $(document).ready(function(){
 	var role=$('#role');
 	var videosInput=$('#videos');
 	var subsInput=$('#subscribers');
+	var subscribe=$('#subscribe');
+	var unsub=$('#unsubscribe');
+	unsub.hide();
+	
 	$.get('UserServlet',{'userName':userName},function(data){
-		username.text(data.user.userName);
-		date.text("Registration: "+data.user.registrationDate);
-		description.text(data.user.channelDescription);
+		username.text(data.owner.userName);
+		date.text("Registration: "+data.owner.registrationDate);
+		description.text(data.owner.channelDescription);
 		subsNumber.text("Subscribers: "+data.subNumber);
-		if(data.user.blocked == false){
+		if(data.owner.blocked == false){
 			blocked.text("Not blocked");
 		}
 		else
 			blocked.text("Blocked");
-		role.text("Role: "+data.user.role);
+		role.text("Role: "+data.owner.role);
 		
 		for(it in data.videos){
 			videosInput.append(
@@ -47,11 +51,53 @@ $(document).ready(function(){
 				'</div>');
 		}
 		
-		
+		if(data.user == null){
+			subscribe.on('click',function(event){
+				alert("You must sign in first");
+				event.preventDefault();
+				return false;
+			});
+		}
+		if(data.user!=null){
+			if(data.isSubscribed == "subscribe"){
+				unsub.show();
+				subscribe.hide();
+			}
+			if(data.user.userName != data.owner.userName){
+				subscribe.on('click',function(event){
+					var subsUp=data.subNumber
+					$.post('SubsServlet',{'channel':data.owner.userName,'subscriber':data.user.userName},function(data){
+						console.log("stigao odgovor")
+						if(data.status == "success"){
+							alert("Subscribe success");
+							unsub.show();
+							subscribe.hide();
+							window.location.reload(true); 
+							
+						}
+						
+					});
+					
+					event.preventDefault();
+					return false;
+				});
+				
+				unsub.on('click',function(event){
+					$.get('SubsServlet',{'channel':data.owner.userName,'subscriber':data.user.userName,},function(data){
+						console.log("stigao odgovor")
+						if(data.status == "success"){
+							alert("Unsubscribe success");
+							subscribe.show();
+							unsub.hide();
+							window.location.reload(true); 
+						}
+						
+					});
+					event.preventDefault();
+					return false;
+				});
+			}
+		}
 	});
+	
 });
-
-window.history.forward();
-function noBack() {
-    window.history.forward();
-}

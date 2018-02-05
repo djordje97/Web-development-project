@@ -106,7 +106,7 @@ public class UserDAO {
 		return 0;
 	}
 
-	public static boolean addSubs(String masterUser,String subs) {
+	public static boolean addSubs(String masterUser, String subs) {
 		Connection conn = ConnectionMenager.getConnection();
 
 		PreparedStatement pstmt = null;
@@ -129,7 +129,7 @@ public class UserDAO {
 		return false;
 	}
 
-	public static boolean deleteSubs(String masterUser,String subs) {
+	public static boolean deleteSubs(String masterUser, String subs) {
 		Connection conn = ConnectionMenager.getConnection();
 
 		PreparedStatement pstmt = null;
@@ -151,6 +151,7 @@ public class UserDAO {
 		}
 		return false;
 	}
+
 	public static boolean addUser(User user) {
 		Connection conn = ConnectionMenager.getConnection();
 
@@ -195,14 +196,13 @@ public class UserDAO {
 			pstmt.setString(1, userName);
 			rset = pstmt.executeQuery();
 
-			if (rset.next()) {
+			while (rset.next()) {
 				int index = 1;
 				String master = rset.getString(index);
 
 				User u = get(master);
 				subscribed.add(u);
 			}
-			
 
 		} catch (Exception ex) {
 			System.out.println("Greska u SQL upitu!");
@@ -221,7 +221,8 @@ public class UserDAO {
 		}
 		return subscribed;
 	}
-	public static int findSubscribed(String userName,String subscriber) {
+
+	public static int findSubscribed(String userName, String subscriber) {
 		Connection conn = ConnectionMenager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -256,7 +257,7 @@ public class UserDAO {
 		}
 		return 0;
 	}
-	
+
 	public static ArrayList<User> findSubscribers(ArrayList<String> subscribersUserName) {
 		ArrayList<User> list = new ArrayList<User>();
 		if (subscribersUserName.isEmpty()) {

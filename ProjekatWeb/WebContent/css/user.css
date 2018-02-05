@@ -99,7 +99,7 @@ p {
 	text-align: center;
 }
 
-#subscribe {
+#subscribe,#unsubscribe {
 	color: white;
 	background: red;
 	border: none;

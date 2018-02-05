@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,16 +23,34 @@ public class UserServlet extends HttpServlet {
        
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		String username=request.getParameter("userName");
-		User user = UserDAO.get(username);
-		ArrayList<Video> videos=VideoDAO.userVideo(user.getUserName()); 
+		User owner = UserDAO.get(username);
+		String status="visiter";
+		String isSubscribed="unsuscribed";
+		if(loggedInUser != null) {
+			status="logedUser";
+			int	isSub=UserDAO.findSubscribed(owner.getUserName(),loggedInUser.getUserName());
+			System.out.println(loggedInUser.getUserName());
+
+				if(isSub > 0) {
+					isSubscribed="subscribe";
+				}
+		}
+		
+		
+		ArrayList<Video> videos=VideoDAO.userVideo(owner.getUserName()); 
 		ArrayList<User> subs=UserDAO.subscribedOn(username);
 		int subNumber=UserDAO.getSubsNumber(username);
 		Map<String, Object> data = new HashMap<>();
-		data.put("user", user);
+		data.put("owner", owner);
 		data.put("subNumber", subNumber);
 		data.put("videos", videos);
 		data.put("subs", subs);
+		data.put("status", status);
+		data.put("user", loggedInUser);
+		data.put("isSubscribed",isSubscribed);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
 		response.setContentType("application/json");

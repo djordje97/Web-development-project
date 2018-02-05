@@ -87,7 +87,7 @@ h2 {
 	height: auto;
 	background: white;
 	overflow: hidden;
-	margin-bottom: 40px;
+	margin-bottom:3px;
 }
 
 .user-link {
@@ -164,7 +164,7 @@ i {
 
 #date {
 	display: block;
-	margin-top: 10px;
+	margin-bottom: 10px;
 	font-size: 16px;
 }
 

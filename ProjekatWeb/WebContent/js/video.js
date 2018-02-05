@@ -17,11 +17,12 @@ $(document).ready(function(){
 	var menu=$('.menu-button');
 	var userMenu=$('.user-menu');
 	var unsub=$('#unsubscribe');
+	var comments=$('.comments');
+	var submitComm=$('#submit-comment');
+	var contentComm=$('#textArea');
 	var sub=false;
 	
 	unsub.hide();
-	showVideo();
-	function showVideo(){
 	$.get('VideoServlet',{'id':id},function(data){
 		console.log(data.video);
 			video.attr("src",data.video.videosUrl+"?rel=0&autoplay=1");
@@ -30,9 +31,29 @@ $(document).ready(function(){
 			likeNumber.text(data.video.numberOfLikes);
 			dislikeNumber.text(data.video.numberOfDislikes);
 			userName.text(data.video.owner.userName);
+			userName.attr('href','User.html?userName='+data.video.owner.userName);
 			date.text(data.video.date);
 			description.text(data.video.description);
 			
+			if(data.video.allowComments == true ||(data.user!=null && (data.user.userName == data.video.owner.userName || data.user.role == "ADMIN"))){
+				for( i in data.comments){
+					comments.append(
+							'<div class="comment">'+
+							'<p class="user-link">'+
+								'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
+							'</p>'+
+							'<div class="like-dislike">'+
+								'<i class="fa fa-thumbs-o-up" style="font-size: 20px;" id="like"></i>'+
+								'<p id="like-number" style="font-size: 16px;">202</p>'+
+								'<i class="fa fa-thumbs-o-down" style="font-size: 20px;" id="dislike"></i>'+
+								'<p id="dislike-number" style="font-size: 16px;">102</p>'+
+							'</div>'+
+							'<p id="date">'+data.comments[i].date+'</p>'+
+							'<p id="comment-content">'+data.comments[i].content+'</p>'+
+						'</div>'
+							);
+				}
+			}
 
 			if (data.status == "visiter"){
 			addComment.hide();
@@ -46,7 +67,35 @@ $(document).ready(function(){
 				});
 			}
 			if(data.user!=null){
-				addComment.show();
+				if(data.video.allowComments == true){
+					addComment.show();
+					submitComm.on('click',function(event){
+						var content=contentComm.val();
+						
+					$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id},function(data){
+						if(data.status=="success")
+							comments.append(
+									'<div class="comment">'+
+									'<p class="user-link">'+
+										'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
+									'</p>'+
+									'<div class="like-dislike">'+
+										'<i class="fa fa-thumbs-o-up" style="font-size: 20px;" id="like"></i>'+
+										'<p id="like-number" style="font-size: 16px;">202</p>'+
+										'<i class="fa fa-thumbs-o-down" style="font-size: 20px;" id="dislike"></i>'+
+										'<p id="dislike-number" style="font-size: 16px;">102</p>'+
+									'</div>'+
+									'<p id="date">'+data.date+'</p>'+
+									'<p id="comment-content">'+data.content+'</p>'+
+								'</div>'
+									);
+						 contentComm.value='';
+					});
+						event.preventDefault();
+						return false;
+					});
+				}
+				
 				menu.hide();
 				if(data.isSubscribed == "subscribe"){
 					unsub.show();
@@ -100,9 +149,10 @@ $(document).ready(function(){
 		
 		
 });
-	}
+	
 });
 	
+
 function openNav() {
     document.getElementById("user-menu").style.width = "230px";
 }

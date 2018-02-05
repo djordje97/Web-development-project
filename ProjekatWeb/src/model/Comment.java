@@ -7,19 +7,17 @@ private String content;
 private String date;
 private User owner;
 private Video video;
-private boolean deleted;
 
 
 
 
-public Comment(int id, String content, String date, User owner, Video video, boolean deleted) {
+public Comment(int id, String content, String date, User owner, Video video) {
 	super();
 	this.id = id;
 	this.content = content;
 	this.date = date;
 	this.owner = owner;
 	this.video = video;
-	this.deleted = deleted;
 }
 
 public int getId() {
@@ -65,18 +63,11 @@ public void setVideo(Video video) {
 }
 
 
-public boolean isDeleted() {
-	return deleted;
-}
-
-public void setDeleted(boolean deleted) {
-	this.deleted = deleted;
-}
 
 @Override
 public String toString() {
 	return "Comment [id=" + id + ", content=" + content + ", date=" + date + ", owner=" + owner + ", video=" + video
-			+ ", deleted=" + deleted + "]";
+			+ "]";
 }
 
 
