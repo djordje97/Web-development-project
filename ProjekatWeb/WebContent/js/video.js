@@ -7,8 +7,8 @@ $(document).ready(function(){
 	var video=$('#video');
 	var videoName=$('#videoName');
 	var videoViews=$('#videoViews');
-	var likeNumber=$('#like-number');
-	var dislikeNumber=$('#dislike-number');
+	var likeNumber=$('#like-video-number');
+	var dislikeNumber=$('#dislike-video-number');
 	var userName=$('#userName');
 	var date=$('#date');
 	var description=$('#description');
@@ -20,6 +20,10 @@ $(document).ready(function(){
 	var comments=$('.comments');
 	var submitComm=$('#submit-comment');
 	var contentComm=$('#textArea');
+	var likeVideo=$('#likeVideo');
+	var dislikeVideo=$('#dislikeVideo');
+	var likeComment=$('#like');
+	var dislikeComment=$('#dislike');
 	var sub=false;
 	
 	unsub.hide();
@@ -44,12 +48,13 @@ $(document).ready(function(){
 							'</p>'+
 							'<div class="like-dislike">'+
 								'<i class="fa fa-thumbs-o-up" style="font-size: 20px;" id="like"></i>'+
-								'<p id="like-number" style="font-size: 16px;">202</p>'+
+								'<p id="like-number" style="font-size: 16px;"></p>'+
 								'<i class="fa fa-thumbs-o-down" style="font-size: 20px;" id="dislike"></i>'+
-								'<p id="dislike-number" style="font-size: 16px;">102</p>'+
+								'<p id="dislike-number" style="font-size: 16px;"></p>'+
 							'</div>'+
 							'<p id="date">'+data.comments[i].date+'</p>'+
 							'<p id="comment-content">'+data.comments[i].content+'</p>'+
+							'<input type="hidden" value="'+data.comments[i].id+'">'+
 						'</div>'
 							);
 				}
@@ -67,6 +72,31 @@ $(document).ready(function(){
 				});
 			}
 			if(data.user!=null){
+				
+				likeVideo.on('click',function(event){
+					
+				$.get('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
+						likeNumber.text(data.likeNumber);
+						dislikeNumber.text(data.dislikeNumber);
+					
+				});
+					
+					event.preventDefault();
+					return false;
+				});
+				
+				dislikeVideo.on('click',function(event){
+					
+					$.post('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
+							dislikeNumber.text(data.dislikeNumber);
+							likeNumber.text(data.likeNumber);
+						
+					});
+						
+						event.preventDefault();
+						return false;
+					});
+				
 				if(data.video.allowComments == true){
 					addComment.show();
 					submitComm.on('click',function(event){
@@ -81,15 +111,16 @@ $(document).ready(function(){
 									'</p>'+
 									'<div class="like-dislike">'+
 										'<i class="fa fa-thumbs-o-up" style="font-size: 20px;" id="like"></i>'+
-										'<p id="like-number" style="font-size: 16px;">202</p>'+
+										'<p id="like-number" style="font-size: 16px;">'+data.likeNumber+'</p>'+
 										'<i class="fa fa-thumbs-o-down" style="font-size: 20px;" id="dislike"></i>'+
-										'<p id="dislike-number" style="font-size: 16px;">102</p>'+
+										'<p id="dislike-number" style="font-size: 16px;">'+data.dislikeNumber+'</p>'+
 									'</div>'+
 									'<p id="date">'+data.date+'</p>'+
 									'<p id="comment-content">'+data.content+'</p>'+
+									'<input type="hidden" value="'+data.id+'">'+
+
 								'</div>'
 									);
-						 contentComm.value='';
 					});
 						event.preventDefault();
 						return false;
@@ -131,6 +162,7 @@ $(document).ready(function(){
 						event.preventDefault();
 						return false;
 					});
+					
 				}
 			}
 		if(data.user.userName == data.video.owner.userName){

@@ -92,4 +92,24 @@
     <servlet-name>CommentServlet</servlet-name>
     <url-pattern>/CommentServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LikeDislikeVideoServlet</display-name>
+    <servlet-name>LikeDislikeVideoServlet</servlet-name>
+    <servlet-class>projekatWeb.servlets.LikeDislikeVideoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LikeDislikeVideoServlet</servlet-name>
+    <url-pattern>/LikeDislikeVideoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LikeDislikeCommentServlet</display-name>
+    <servlet-name>LikeDislikeCommentServlet</servlet-name>
+    <servlet-class>projekatWeb.servlets.LikeDislikeCommentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LikeDislikeCommentServlet</servlet-name>
+    <url-pattern>/LikeDislikeCommentServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

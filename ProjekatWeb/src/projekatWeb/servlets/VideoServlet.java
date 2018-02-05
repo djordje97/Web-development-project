@@ -17,6 +17,7 @@ import model.Comment;
 import model.User;
 import model.Video;
 import projekatWeb.dao.CommentDAO;
+import projekatWeb.dao.LikeDislikeDAO;
 import projekatWeb.dao.UserDAO;
 import projekatWeb.dao.VideoDAO;
 
@@ -42,7 +43,7 @@ public class VideoServlet extends HttpServlet {
 					isSubscribed="subscribe";
 				}
 		}
-		
+		 int videoLikeNumber=LikeDislikeDAO.getVideosLikeNumber(video.getId());
 		video.setNumberOfviews(video.getNumberOfviews()+1);
 		VideoDAO.updateVideo(video);
 		ArrayList<Comment> comments=CommentDAO.getComments(video.getId());
@@ -52,6 +53,7 @@ public class VideoServlet extends HttpServlet {
 		data.put("user", loggedInUser);
 		data.put("isSubscribed",isSubscribed);
 		data.put("comments",comments);
+		data.put("videoLikeNumber",videoLikeNumber);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);

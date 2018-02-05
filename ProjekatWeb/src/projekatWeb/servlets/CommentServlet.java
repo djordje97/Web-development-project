@@ -16,6 +16,7 @@ import model.Comment;
 import model.User;
 import model.Video;
 import projekatWeb.dao.CommentDAO;
+import projekatWeb.dao.LikeDislikeDAO;
 import projekatWeb.dao.UserDAO;
 import projekatWeb.dao.VideoDAO;
 
@@ -35,14 +36,20 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	Video v=VideoDAO.getVideo(video);
 	Date d=new Date();
 	String date=VideoDAO.dateToString(d);
-	Comment c=new Comment(2, content, date, u, v);
+	int id =CommentDAO.getCommentId();
+	Comment c=new Comment(id, content, date, u, v);
 	CommentDAO.addComment(c);
 	
+	int likeNumber=LikeDislikeDAO.getCommentLikeNumber(c.getId());
+	int dislikeNumber=LikeDislikeDAO.getCommentDislikeNumber(c.getId());
 	Map<String, Object> data = new HashMap<>();
 	data.put("status", "success");
 	data.put("owner", owner);
 	data.put("date", date);
 	data.put("content", content);
+	data.put("id", c.getId());
+	data.put("likeNumber", likeNumber);
+	data.put("dislikeNumber", dislikeNumber);
 	ObjectMapper mapper = new ObjectMapper();
 	String jsonData = mapper.writeValueAsString(data);
 	System.out.println(jsonData);

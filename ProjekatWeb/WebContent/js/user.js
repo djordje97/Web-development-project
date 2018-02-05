@@ -72,8 +72,7 @@ $(document).ready(function(){
 							alert("Subscribe success");
 							unsub.show();
 							subscribe.hide();
-							window.location.reload(true); 
-							
+							subsNumber.text("Subscribers: "+data.subN);
 						}
 						
 					});
@@ -89,7 +88,7 @@ $(document).ready(function(){
 							alert("Unsubscribe success");
 							subscribe.show();
 							unsub.hide();
-							window.location.reload(true); 
+							subsNumber.text("Subscribers: "+data.subN);
 						}
 						
 					});

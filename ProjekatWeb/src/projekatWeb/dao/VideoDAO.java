@@ -174,7 +174,7 @@ public class VideoDAO {
 		Connection conn = ConnectionMenager.getConnection();
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE video SET description = ?, visibility = ?, allowComment = ?, allowRating = ?, blocked = ?, deleted = ?,views = ?  WHERE id = ?";
+			String query = "UPDATE video SET description = ?, visibility = ?, allowComment = ?, allowRating = ?, blocked = ?, deleted = ?,views = ?, likeNumber = ?, dislikeNumber = ?  WHERE id = ?";
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, video.getDescription());
@@ -184,6 +184,8 @@ public class VideoDAO {
 			pstmt.setBoolean(index++, video.isBlocked());
 			pstmt.setBoolean(index++, video.isDeleted());
 			pstmt.setInt(index++, video.getNumberOfviews());
+			pstmt.setInt(index++, video.getNumberOfLikes());
+			pstmt.setInt(index++, video.getNumberOfDislikes());
 			pstmt.setInt(index++, video.getId());
 
 			return pstmt.executeUpdate() == 1;

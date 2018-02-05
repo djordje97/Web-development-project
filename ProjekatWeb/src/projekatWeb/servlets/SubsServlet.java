@@ -27,10 +27,11 @@ public class SubsServlet extends HttpServlet {
 		String channel=request.getParameter("channel");
 		String subs=request.getParameter("subscriber");
 		UserDAO.deleteSubs(channel,subs);
+		int subN=UserDAO.getSubsNumber(channel);
 		status="success";
 		Map<String, Object> data = new HashMap<>();
 		data.put("status",status);
-		
+		data.put("subN",subN);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
 		System.out.println(jsonData);
@@ -44,10 +45,12 @@ public class SubsServlet extends HttpServlet {
 		String channel=request.getParameter("channel");
 		String subs=request.getParameter("subscriber");
 		UserDAO.addSubs(channel,subs);
+		int subN=UserDAO.getSubsNumber(channel);
 		status="success";
 		
 		Map<String, Object> data = new HashMap<>();
 		data.put("status",status);
+		data.put("subN",subN);	
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
