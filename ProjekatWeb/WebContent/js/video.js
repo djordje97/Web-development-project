@@ -22,8 +22,9 @@ $(document).ready(function(){
 	var contentComm=$('#textArea');
 	var likeVideo=$('#likeVideo');
 	var dislikeVideo=$('#dislikeVideo');
-	var likeComment=$('#like');
-	var dislikeComment=$('#dislike');
+	var commentLikeNumber=$('#like-number');
+	var commentDislikeNumber=$('#dislike-number');
+	var nav=$('.topnav');
 	var sub=false;
 	
 	unsub.hide();
@@ -47,14 +48,13 @@ $(document).ready(function(){
 								'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
 							'</p>'+
 							'<div class="like-dislike">'+
-								'<i class="fa fa-thumbs-o-up" style="font-size: 20px;" id="like"></i>'+
-								'<p id="like-number" style="font-size: 16px;"></p>'+
-								'<i class="fa fa-thumbs-o-down" style="font-size: 20px;" id="dislike"></i>'+
-								'<p id="dislike-number" style="font-size: 16px;"></p>'+
+								'<button  id="commentLikeButton" name="like" value="'+data.comments[i].id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green;" id="like"></i></button>'+
+								'<p id="like-number" class="'+data.comments[i].id+'" style="font-size: 16px;">'+data.comments[i].likeNumber+'</p>'+
+								'<button id="commentLikeButton" name="dislike" value="'+data.comments[i].id+'"><i class="fa fa-thumbs-o-down" style="font-size: 20px; color:red;" id="dislike"></i></button>'+
+								'<p id="dislike-number" class="'+data.comments[i].id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.comments[i].dislikeNumber+'</p>'+
 							'</div>'+
 							'<p id="date">'+data.comments[i].date+'</p>'+
 							'<p id="comment-content">'+data.comments[i].content+'</p>'+
-							'<input type="hidden" value="'+data.comments[i].id+'">'+
 						'</div>'
 							);
 				}
@@ -70,15 +70,47 @@ $(document).ready(function(){
 					event.preventDefault();
 					return false;
 				});
+				nav.append('<a href="index.html">Home</a>');
+			}
+			
+			if(data.video.allowComments == true && data.user!=null){
+				addComment.show();
+				submitComm.on('click',function(event){
+					var content=contentComm.val();
+					
+				$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id},function(data){
+					if(data.status=="success")
+						comments.append(
+								'<div class="comment">'+
+								'<p class="user-link">'+
+									'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
+								'</p>'+
+								'<div class="like-dislike">'+
+									'<button id="commentLikeButton" name="like" value="'+data.id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green" id="like"></i></button>'+
+									'<p id="like-number" class="'+data.id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.likeNumber+'</p>'+
+									'<button id="commentLikeButton"  name="dislike" value="'+data.id+'"><i class="fa fa-thumbs-o-down" style="font-size: 20px; color:red;" id="dislike"></i></button>'+
+									'<p id="dislike-number" class="'+data.id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.dislikeNumber+'</p>'+
+								'</div>'+
+								'<p id="date">'+data.date+'</p>'+
+								'<p id="comment-content">'+data.content+'</p>'+
+
+							'</div>'
+								);
+				});
+					event.preventDefault();
+					return false;
+				});
 			}
 			if(data.user!=null){
 				
+				nav.append(' <a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a> <a href="index.html">Home</a>'
+						);
 				likeVideo.on('click',function(event){
 					
 				$.get('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
 						likeNumber.text(data.likeNumber);
 						dislikeNumber.text(data.dislikeNumber);
-					
+						
 				});
 					
 					event.preventDefault();
@@ -90,43 +122,44 @@ $(document).ready(function(){
 					$.post('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
 							dislikeNumber.text(data.dislikeNumber);
 							likeNumber.text(data.likeNumber);
-						
+							
 					});
 						
 						event.preventDefault();
 						return false;
 					});
-				
-				if(data.video.allowComments == true){
-					addComment.show();
-					submitComm.on('click',function(event){
-						var content=contentComm.val();
-						
-					$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id},function(data){
-						if(data.status=="success")
-							comments.append(
-									'<div class="comment">'+
-									'<p class="user-link">'+
-										'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
-									'</p>'+
-									'<div class="like-dislike">'+
-										'<i class="fa fa-thumbs-o-up" style="font-size: 20px;" id="like"></i>'+
-										'<p id="like-number" style="font-size: 16px;">'+data.likeNumber+'</p>'+
-										'<i class="fa fa-thumbs-o-down" style="font-size: 20px;" id="dislike"></i>'+
-										'<p id="dislike-number" style="font-size: 16px;">'+data.dislikeNumber+'</p>'+
-									'</div>'+
-									'<p id="date">'+data.date+'</p>'+
-									'<p id="comment-content">'+data.content+'</p>'+
-									'<input type="hidden" value="'+data.id+'">'+
 
-								'</div>'
-									);
-					});
-						event.preventDefault();
-						return false;
-					});
-				}
+				$('button').on('click',function(event){
+					var name=$(this).attr("name");
+					var id=$(this).val();
+					console.log(id);
+					
+					if (name == "like"){
+				$.get('LikeDislikeCommentServlet',{'id':id},function(data){
+					var getByLike="#like-number."+id;
+					var getByDislike="#dislike-number."+id;
+					console.log(getByLike);
+						$(getByLike).text(data.likeNumber);
+						$(getByDislike).text(data.dislikeNumber);
+					
+				});
+					
+					event.preventDefault();
+					return false;
 				
+				}else{
+				$.post('LikeDislikeCommentServlet',{'id':id},function(data){
+					var getByLike="#like-number."+id;
+					var getByDislike="#dislike-number."+id;
+					$(getByDislike).text(data.dislikeNumber);
+					$(getByLike).text(data.likeNumber);
+					
+					
+				});
+					
+
+				}
+				});
 				menu.hide();
 				if(data.isSubscribed == "subscribe"){
 					unsub.show();

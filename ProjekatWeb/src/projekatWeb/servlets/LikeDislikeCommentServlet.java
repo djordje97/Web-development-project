@@ -47,6 +47,9 @@ public class LikeDislikeCommentServlet extends HttpServlet {
 		}
 		int likeNumber =LikeDislikeDAO.getCommentLikeNumber(comment.getId());
 		int dislikeNumber =LikeDislikeDAO.getCommentDislikeNumber(comment.getId());
+		comment.setLikeNumber(likeNumber);
+		comment.setDislikeNumber(dislikeNumber);
+		CommentDAO.updateComment(comment);
 		Map<String, Object> data = new HashMap<>();
 		data.put("likeNumber", likeNumber);
 		data.put("dislikeNumber", dislikeNumber);
@@ -82,6 +85,9 @@ public class LikeDislikeCommentServlet extends HttpServlet {
 		}
 		int likeNumber =LikeDislikeDAO.getCommentLikeNumber(comment.getId());
 		int dislikeNumber =LikeDislikeDAO.getCommentDislikeNumber(comment.getId());
+		comment.setLikeNumber(likeNumber);
+		comment.setDislikeNumber(dislikeNumber);
+		CommentDAO.updateComment(comment);
 		Map<String, Object> data = new HashMap<>();
 		data.put("likeNumber", likeNumber);
 		data.put("dislikeNumber", dislikeNumber);

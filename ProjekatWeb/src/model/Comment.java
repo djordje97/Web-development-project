@@ -7,17 +7,22 @@ private String content;
 private String date;
 private User owner;
 private Video video;
+private int likeNumber;
+private int dislikeNumber;
 
 
 
 
-public Comment(int id, String content, String date, User owner, Video video) {
+
+public Comment(int id, String content, String date, User owner, Video video, int likeNumber, int dislikeNumber) {
 	super();
 	this.id = id;
 	this.content = content;
 	this.date = date;
 	this.owner = owner;
 	this.video = video;
+	this.likeNumber = likeNumber;
+	this.dislikeNumber = dislikeNumber;
 }
 
 public int getId() {
@@ -63,12 +68,29 @@ public void setVideo(Video video) {
 }
 
 
+public int getLikeNumber() {
+	return likeNumber;
+}
+
+public void setLikeNumber(int likeNumber) {
+	this.likeNumber = likeNumber;
+}
+
+public int getDislikeNumber() {
+	return dislikeNumber;
+}
+
+public void setDislikeNumber(int dislikeNumber) {
+	this.dislikeNumber = dislikeNumber;
+}
 
 @Override
 public String toString() {
 	return "Comment [id=" + id + ", content=" + content + ", date=" + date + ", owner=" + owner + ", video=" + video
-			+ "]";
+			+ ", likeNumber=" + likeNumber + ", dislikeNumber=" + dislikeNumber + "]";
 }
+
+
 
 
 

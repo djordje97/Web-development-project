@@ -163,7 +163,7 @@ public class LikeDislikeDAO {
 		}
 		return 0;
 	}
-	public static int getCommentLikeNumber(int videoId) {
+	public static int getCommentLikeNumber(int commentId) {
 		Connection conn = ConnectionMenager.getConnection();
 
 		PreparedStatement pstmt = null;
@@ -172,7 +172,7 @@ public class LikeDislikeDAO {
 			String query = "SELECT COUNT(*) FROM likeDislikeComment JOIN likeDislike on likeDislikeComment.likeId = likeDislike.id WHERE liked= ? AND likeDislikeComment.commentId = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setBoolean(1, true);
-			pstmt.setInt(2, videoId);
+			pstmt.setInt(2, commentId);
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {

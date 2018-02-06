@@ -13,7 +13,6 @@
 <body>
 	<nav class="topnav" id="myTopnav">
 		<a href="index.html">Copyright <span style="color: darkturquoise;">murder</span></a>
-		<a href="index.html">Home</a>
 	</nav>
 	<div class="container">
 		<div class="video-container">
@@ -22,11 +21,11 @@
 				allow="encrypted-media" allowfullscreen id="video"></iframe>
 			<div class="video-info">
 				<h2 id="videoName"></h2>
-				<p id="videoViews"></p>
+				<p id="videoViews" ></p>
 				<div class="like-dislike">
-					<i class="fa fa-thumbs-o-up" id="likeVideo"></i>
+					<i class="fa fa-thumbs-o-up" id="likeVideo" style="color: green;"></i>
 					<p id="like-video-number"></p>
-					<i class="fa fa-thumbs-o-down" id="dislikeVideo"></i>
+					<i class="fa fa-thumbs-o-down" id="dislikeVideo" style="color: red;"></i>
 					<p id="dislike-video-number"></p>
 				</div>
 			</div>
@@ -35,8 +34,8 @@
 					<img src="photos/slika.jpg" class="avatar"><a href=""
 						id="userName"></a>
 				</p>
-				<button id="subscribe">Subscribe</button>
-				<button id="unsubscribe">Unubscribe</button>
+				<input type="button" id="subscribe" value="Subscribe">
+				<input type="button" id="unsubscribe" value="Unubscribe">
 				<p id="date"></p>
 				<p id="description"></p>
 			</div>
@@ -58,7 +57,7 @@
 				<input type="submit" value="Comment" id="submit-comment">
 			</div>
 			<div class="comments">
-	
+
 			</div>
 		</div>
 		<div class="menu-button">

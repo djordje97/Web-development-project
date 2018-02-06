@@ -10,6 +10,7 @@ $(document).ready(function(){
 	var subsInput=$('#subscribers');
 	var subscribe=$('#subscribe');
 	var unsub=$('#unsubscribe');
+	var nav=$('.topnav');
 	unsub.hide();
 	
 	$.get('UserServlet',{'userName':userName},function(data){
@@ -95,6 +96,7 @@ $(document).ready(function(){
 					event.preventDefault();
 					return false;
 				});
+				nav.append('<a href="User.html?userName='+data.user.userName+'">My profile</a>');
 			}
 		}
 	});

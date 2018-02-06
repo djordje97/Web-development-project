@@ -62,9 +62,11 @@ public class CommentDAO {
 				String commentDate = rset.getString(index++);
 				String owner = rset.getString(index++);
 				int videoId=rset.getInt(index++);
+				int likeNumber=rset.getInt(index++);
+				int dislikeNumber=rset.getInt(index++);
 				User u = UserDAO.get(owner);
 				Video video=VideoDAO.getVideo(videoId);
-				return new Comment(id, content, commentDate, u, video);
+				return new Comment(id, content, commentDate, u, video,likeNumber,dislikeNumber);
 			}
 
 		} catch (Exception ex) {
@@ -102,9 +104,12 @@ public class CommentDAO {
 				String content = rset.getString(index++);
 				String commentDate = rset.getString(index++);
 				String owner = rset.getString(index++);
+				int videoId=rset.getInt(index++);
+				int likeNumber=rset.getInt(index++);
+				int dislikeNumber=rset.getInt(index++);
 				User u = UserDAO.get(owner);
-				Video video=VideoDAO.getVideo(videosId);
-				Comment c=new Comment(id, content, commentDate, u, video);
+				Video video=VideoDAO.getVideo(videoId);
+				Comment c=new Comment(id, content, commentDate, u, video,likeNumber,dislikeNumber);
 				comments.add(c);
 			}
 
@@ -131,7 +136,7 @@ public class CommentDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO comment (content, commentDate, ownerUserName, videoId) VALUES (?, ?, ?, ? )";
+			String query = "INSERT INTO comment (content, commentDate, ownerUserName, videoId, likeNumber, dislikeNumber) VALUES (?, ?, ?, ?, ?, ? )";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
@@ -139,7 +144,33 @@ public class CommentDAO {
 			pstmt.setString(index++, comment.getDate());
 			pstmt.setString(index++, comment.getOwner().getUserName());
 			pstmt.setInt(index++, comment.getVideo().getId());
-		
+			pstmt.setInt(index++, comment.getLikeNumber());
+			pstmt.setInt(index++, comment.getDislikeNumber());
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean updateComment(Comment comment) {
+		Connection conn = ConnectionMenager.getConnection();
+
+		PreparedStatement pstmt = null;
+		try {
+			String query = "UPDATE comment SET likeNumber =?, dislikeNumber = ?";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, comment.getLikeNumber());
+			pstmt.setInt(2, comment.getDislikeNumber());
 			return pstmt.executeUpdate() == 1;
 		} catch (SQLException ex) {
 			System.out.println("Greska u SQL upitu!");
