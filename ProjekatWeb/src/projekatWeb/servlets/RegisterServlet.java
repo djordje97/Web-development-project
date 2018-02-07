@@ -42,7 +42,7 @@ public class RegisterServlet extends HttpServlet {
 			if (user != null) throw new Exception("Error");
 			Date d=new Date();
 			String date=VideoDAO.dateToString(d);
-			User newUser=new User(userName, password, name, surname, email, "", Role.USER, date, false, null, null, null);
+			User newUser=new User(userName, password, name, surname, email, "", Role.USER, date, false, null, null, null,false);
 			UserDAO.addUser(newUser);
 			
 		} catch (Exception ex) {

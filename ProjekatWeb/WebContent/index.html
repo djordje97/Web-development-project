@@ -10,23 +10,27 @@
 <title>Copyright murder</title>
 </head>
 <body>
-<nav class="topnav" id="myTopnav">
-  <a href="index.html">Copyright <span style="color: darkturquoise;">murder</span></a>
-  <a href="#contact" onclick="openNav()">Sign in</a>
-  <a href="index.html" class="active">Home</a>
+<nav class="topnav">
+  <a href="index.html" id="logo">Copyright <span style="color: darkturquoise;">murder</span></a>
+  <a href="#signIn" onclick="openNav()">Sign in</a>
+  <a href="index.html">Home</a>
+  <div class="search-container">
+    <form>
+      <input type="text" placeholder="Search videos..."  id="search" name="search">
+      <button type="submit"><i class="fa fa-search" id="search-Button"></i></button>
+    </form>
+  </div>
 </nav> 
 <div id="mySidelogin" class="sidelogin">
  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <label><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="userName"  required>
+    <input type="text" placeholder="Enter Username" name="userName" id="userName" required>
  <label><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="password" required>
+    <input type="password" placeholder="Enter Password" id="password" name="password" required>
     <a href="Register.html">Don't have account? Click here to sign up</a>
     <p id="message"></p>
-     <button type="submit" class="signIn" id="signIn">Sign in</button>
+     <input type="submit" class="signIn" id="signIn" value="Sign in">
 </div>
-	<input type="text" name="search" id ="search" placeholder="Search videos...">
-	<input type="submit" name="search-button" value="Search">
 	<section class="container">
 	<div class="row">
 	

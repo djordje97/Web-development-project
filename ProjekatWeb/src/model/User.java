@@ -18,17 +18,14 @@ public class User {
 	private ArrayList<User> subscribers;
 	private ArrayList<LikeDislike> likedVideos;
 	private ArrayList<LikeDislike> likedComments;
+	private boolean deleted;
 	public int subsNumber;
 	public ArrayList<String> subscribersUserName=new ArrayList<String>();
 	
 
-
-
-
-
 	public User(String userName, String password, String name, String surname, String email, String channeDescription,
 			Role role, String registrationDate, boolean blocked, ArrayList<User> subscribers,
-			ArrayList<LikeDislike> likedVideos, ArrayList<LikeDislike> likedComments) {
+			ArrayList<LikeDislike> likedVideos, ArrayList<LikeDislike> likedComments, boolean deleted) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -42,8 +39,8 @@ public class User {
 		this.subscribers = subscribers;
 		this.likedVideos = likedVideos;
 		this.likedComments = likedComments;
+		this.deleted = deleted;
 	}
-
 
 
 	public String getPassword() {
@@ -189,6 +186,17 @@ public class User {
 		this.likedComments = likedComments;
 	}
 
+	
+
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 
 	@Override
@@ -196,9 +204,12 @@ public class User {
 		return "User [userName=" + userName + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", email=" + email + ", channeDescription=" + channeDescription + ", role=" + role
 				+ ", registrationDate=" + registrationDate + ", blocked=" + blocked + ", subscribers=" + subscribers
-				+ ", likedVideos=" + likedVideos + ", likedComments=" + likedComments + "]";
+				+ ", likedVideos=" + likedVideos + ", likedComments=" + likedComments + ", deleted=" + deleted
+				+ ", subsNumber=" + subsNumber + ", subscribersUserName=" + subscribersUserName + "]";
 	}
 
+
+	
 
 	
 

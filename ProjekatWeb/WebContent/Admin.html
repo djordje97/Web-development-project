@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" type="text/css" href="css/admin.css">
+ <script type="text/javascript" src="jquery-3.2.1.js"></script>
+ <script type="text/javascript" src="js/admin.js"></script>
+<title>Admin page</title>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html" id="logo">Copyright <span style="color: darkturquoise;">murder</span></a>
+  <a href="#contact" onclick="openNav()">Sign in</a>
+  <a href="index.html">Home</a>
+<div class="search-container">
+    <form>
+      <input type="text" placeholder="Search users..." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+  </div>
+</nav> 
+<section class="container">
+<div class="row">
+<input type="button"  class="collapsible" value="Click here for order users">
+			<div class="content">
+				<h3>Order by:</h3>
+				<label class="container-cb">Username<input type="radio"
+					checked="checked" name="radio"> <span class="checkmark"></span>
+				</label> <label class="container-cb">Name<input type="radio"
+					name="radio"> <span class="checkmark"></span>
+				</label> <label class="container-cb">Surname<input type="radio"
+					name="radio"> <span class="checkmark"></span>
+				</label>
+				<label class="container-cb">Email<input type="radio"
+					name="radio"> <span class="checkmark"></span>
+				</label>
+				<label class="container-cb">Role<input type="radio"
+					name="radio"> <span class="checkmark"></span>
+				</label>
+				
+			</div>
+			
+</div>
+	<div class="row" id="users">
+			
+			</div>
+	</section>
+</body>
+<script type="text/javascript">
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.maxHeight) {
+				content.style.maxHeight = null;
+			} else {
+				content.style.maxHeight = content.scrollHeight + "px";
+			}
+		});
+	}
+</script>
+</html>

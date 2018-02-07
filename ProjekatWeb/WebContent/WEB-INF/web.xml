@@ -3,9 +3,9 @@
   <display-name>ProjekatWeb</display-name>
   <welcome-file-list>
     <welcome-file>Loader.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
+    <welcome-file>Loader.html</welcome-file>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>default.html</welcome-file>
+    <welcome-file>index.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
@@ -111,5 +111,15 @@
   <servlet-mapping>
     <servlet-name>LikeDislikeCommentServlet</servlet-name>
     <url-pattern>/LikeDislikeCommentServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminServlet</display-name>
+    <servlet-name>AdminServlet</servlet-name>
+    <servlet-class>projekatWeb.servlets.AdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminServlet</servlet-name>
+    <url-pattern>/AdminServlet</url-pattern>
   </servlet-mapping>
 </web-app>

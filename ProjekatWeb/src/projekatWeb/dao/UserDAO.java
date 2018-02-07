@@ -17,9 +17,10 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM users WHERE userName = ?";
+			String query = "SELECT * FROM users WHERE userName = ? AND deleted = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userName);
+			pstmt.setBoolean(2, false);
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
@@ -32,9 +33,9 @@ public class UserDAO {
 				Role role = Role.valueOf(rset.getString(index++));
 				String registrationDate = rset.getString(index++);
 				boolean blocked = rset.getBoolean(index++);
-
+				boolean deleted = rset.getBoolean(index++);
 				User u = new User(userName, password, name, surname, email, channelDescription, role, registrationDate,
-						blocked, null, null, null);
+						blocked, null, null, null,deleted);
 				pstmt.close();
 				rset.close();
 
@@ -71,6 +72,96 @@ public class UserDAO {
 		}
 		return null;
 	}
+	
+	public static ArrayList<User> getAll() {
+		Connection conn = ConnectionMenager.getConnection();
+		
+		ArrayList<User> users=new ArrayList<User>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM users WHERE deleted = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setBoolean(1, false);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				int index = 1;
+				String userName = rset.getString(index++);
+				String password = rset.getString(index++);
+				String name = rset.getString(index++);
+				String surname = rset.getString(index++);
+				String email = rset.getString(index++);
+				String channelDescription = rset.getString(index++);
+				Role role = Role.valueOf(rset.getString(index++));
+				String registrationDate = rset.getString(index++);
+				boolean blocked = rset.getBoolean(index++);
+				boolean deleted = rset.getBoolean(index++);
+				User u = new User(userName, password, name, surname, email, channelDescription, role, registrationDate,
+						blocked, null, null, null,deleted);
+				
+				u.subscribersUserName=getSubsUserName(userName);
+				u.setSubscribers(findSubscribers(u.subscribersUserName));
+				u.setSubsNumber(getSubsNumber(userName));
+				users.add(u);
+
+			}
+			return users;
+
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public static ArrayList<String> getSubsUserName(String userName) {
+		ArrayList<String> subsUserName=new ArrayList<String>();
+		Connection conn = ConnectionMenager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM subscribe WHERE masterUser = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				int index2 = 2;
+				String subscriber = rset.getString(index2++);
+				subsUserName.add(subscriber);
+			}
+
+			return subsUserName;
+			
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 
 	public static int getSubsNumber(String userName) {
 		Connection conn = ConnectionMenager.getConnection();
@@ -157,7 +248,7 @@ public class UserDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO users (userName, userPassword, nameu, surname, email, channelDescription, role, registrationDate, blocked) VALUES (?, ?, ?, ? ,? ,? , ?, ?, ?)";
+			String query = "INSERT INTO users (userName, userPassword, nameu, surname, email, channelDescription, role, registrationDate, blocked,d eleted) VALUES (?, ?, ?, ? ,? ,? , ?, ?, ?, ?)";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
@@ -170,6 +261,7 @@ public class UserDAO {
 			pstmt.setString(index++, user.getRole().toString());
 			pstmt.setString(index++, user.getRegistrationDate());
 			pstmt.setBoolean(index++, user.isBlocked());
+			pstmt.setBoolean(index++, user.isDeleted());
 			return pstmt.executeUpdate() == 1;
 		} catch (SQLException ex) {
 			System.out.println("Greska u SQL upitu!");
@@ -256,6 +348,35 @@ public class UserDAO {
 			}
 		}
 		return 0;
+	}
+	public static boolean updateUser(User user) {
+		Connection conn = ConnectionMenager.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			String query = "UPDATE users SET channelDescription = ?, nameu = ?, surname = ?, userPassword = ?, blocked = ?, deleted = ?,role = ?  WHERE userName = ?";
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, user.getChanneDescription());
+			pstmt.setString(index++, user.getName());
+			pstmt.setString(index++, user.getSurname());
+			pstmt.setString(index++, user.getPassword());
+			pstmt.setBoolean(index++, user.isBlocked());
+			pstmt.setBoolean(index++,user.isDeleted());
+			pstmt.setString(index++, user.getRole().toString());
+			pstmt.setString(index++, user.getUserName());
+
+			return pstmt.executeUpdate() == 1;
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return false;
 	}
 
 	public static ArrayList<User> findSubscribers(ArrayList<String> subscribersUserName) {

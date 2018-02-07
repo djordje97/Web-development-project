@@ -18,7 +18,7 @@ public class CommentDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT COUNT(*) FROM comment";
+			String query = "SELECT MAX(id) FROM comment";
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 		

@@ -15,6 +15,40 @@ import model.Video;
 import model.Video.Visibility;
 
 public class VideoDAO {
+	
+	public static int getVideoId() {
+		Connection conn = ConnectionMenager.getConnection();
+		int id=0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT MAX(id) FROM video";
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+		
+			if (rset.next()) {
+				id=rset.getInt(1);
+				
+			}
+			id++;
+			return id;
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return 0;
+	}
 
 	public static ArrayList<Video> userVideo(String userName) {
 		Connection conn = ConnectionMenager.getConnection();

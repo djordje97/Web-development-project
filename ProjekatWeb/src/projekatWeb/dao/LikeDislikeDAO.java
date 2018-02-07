@@ -17,7 +17,7 @@ public class LikeDislikeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT COUNT(*) FROM likeDislike";
+			String query = "SELECT MAX(id) FROM likeDislike";
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 		

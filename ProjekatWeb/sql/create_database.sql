@@ -12,6 +12,7 @@ channelDescription VARCHAR(50),
 role ENUM ('USER','ADMIN') NOT NULL DEFAULT 'USER',
 registrationDate VARCHAR (15) NOT NULL,
 blocked BOOLEAN NOT NULL DEFAULT FALSE,
+deleted BOOLEAN NOT NULL DEFAULT FALSE,
 PRIMARY KEY (userName)
 );
  INSERT INTO users(userName,userPassword,nameU,surname,email,role,registrationDate) VALUES('marko','123','Marko','Markovic','marko@gmail.com','USER','1.1.2018');
