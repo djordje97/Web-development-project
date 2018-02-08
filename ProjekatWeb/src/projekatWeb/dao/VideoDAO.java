@@ -235,6 +235,42 @@ public class VideoDAO {
 		}
 		return false;
 	}
+	public static boolean addVideo(Video video) {
+		Connection conn = ConnectionMenager.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			String query = "INSERT INTO video(videoUrl,videosPicture,videoName,description,visibility,allowComment,likeNumber,dislikeNumber,blocked,allowRating,views,createdDate,deleted,ownerUserName)"
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, video.getVideosUrl());
+			pstmt.setString(index++, video.getVideoPicture());
+			pstmt.setString(index++, video.getVideoName());
+			pstmt.setString(index++, video.getDescription());
+			pstmt.setString(index++, video.getVisibility().toString());
+			pstmt.setBoolean(index++, video.isAllowComments());
+			pstmt.setInt(index++, video.getNumberOfLikes());
+			pstmt.setInt(index++, video.getNumberOfDislikes());
+			pstmt.setBoolean(index++, video.isBlocked());
+			pstmt.setBoolean(index++, video.isAllowRating());
+			pstmt.setInt(index++, video.getNumberOfviews());
+			pstmt.setString(index++, video.getDate());
+			pstmt.setBoolean(index++, video.isDeleted());
+			pstmt.setString(index++, video.getOwner().getUserName());
+
+			return pstmt.executeUpdate() == 1;
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 	public static String dateToString(Date date) {
 		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");

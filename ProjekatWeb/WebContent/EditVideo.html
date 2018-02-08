@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" type="text/css" href="css/editVideo.css">
+ <script type="text/javascript" src="jquery-3.2.1.js"></script>
+ <script type="text/javascript" src="js/editVideo.js"></script>
+<title>Edit video</title>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html" id="logo">Copyright <span style="color: darkturquoise;">murder</span></a>
+  <a href="#contact" onclick="openNav()">Sign in</a>
+  <a href="index.html">Home</a>
+</nav>
+<div class="container">
+<form>
+			<label for="visibility">Visibility</label> <select id="visibility"
+				name="visibility">
+				<option value="public">Public</option>
+				<option value="private">Private</option>
+				<option value="unlisted">Unlisted</option>
+			</select> 
+			<label for="allowComments">Allow comments</label> <select id="allowComments"
+				name="allowComments">
+				<option value="true">Allow</option>
+				<option value="false">Don't allow</option>
+			</select> 
+			
+			<label for="allowRating">Allow rating</label> 
+			<label class="container-cb">Allow
+			  <input type="radio" id="true">
+			  <span class="checkmark"></span>
+			</label>
+			<label class="container-cb">Don't allow
+			  <input type="radio" id="false">
+			  <span class="checkmark"></span>
+			</label> 
+		
+		<label for="description">Description</label>
+			<textarea id="description" name="description"
+				placeholder="Short description.." maxlength="50"
+				style="height: 100px"></textarea>
+			<p id="message"></p>
+			<input type="submit" value="Submit" id="submit">
+		</form>
+		</div>
+</body>
+</html>

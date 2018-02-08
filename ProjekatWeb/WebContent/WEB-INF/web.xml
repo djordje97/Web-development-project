@@ -122,4 +122,24 @@
     <servlet-name>AdminServlet</servlet-name>
     <url-pattern>/AdminServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Upload</display-name>
+    <servlet-name>Upload</servlet-name>
+    <servlet-class>projekatWeb.servlets.Upload</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Upload</servlet-name>
+    <url-pattern>/Upload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddVideoServlet</display-name>
+    <servlet-name>AddVideoServlet</servlet-name>
+    <servlet-class>projekatWeb.servlets.AddVideoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddVideoServlet</servlet-name>
+    <url-pattern>/AddVideoServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

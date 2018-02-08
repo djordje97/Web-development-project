@@ -202,13 +202,13 @@ $(document).ready(function(){
 			menu.show();
 			userMenu.append(
 					'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
-					'<a href="#">Edit</a> <a href="#">Delete</a>'
+					'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+'<a href="#">Delete</a>'
 					);
 		}
 		if(data.user.role == 'ADMIN'){
 			userMenu.append(
 					'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
-					'<a href="#">Block</a> <a href="#">Delete</a>'
+					'<a href="#">Block</a>'+ '<a href="#">Delete</a>'
 					);
 		}
 		
