@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.User;
+import model.User.Role;
 import model.Video;
 import projekatWeb.dao.UserDAO;
 import projekatWeb.dao.VideoDAO;;
@@ -58,7 +59,40 @@ public class UserServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String status=request.getParameter("status");
+		if(status.equals("edit")) {
+			String name=request.getParameter("name");
+			String surname=request.getParameter("surname");
+			String password=request.getParameter("password");
+			String description=request.getParameter("description");
+			String role=request.getParameter("role");
+			boolean blocked=Boolean.parseBoolean(request.getParameter("blocked"));
+			String userName=request.getParameter("userName");
+			Role r;
+			if(role.equals("user")) {
+				r=Role.USER;
+			}
+			else {
+				r=Role.ADMIN;
+			}
+			User u =UserDAO.get(userName);
+			u.setName(name);
+			u.setSurname(surname);
+			u.setPassword(password);
+			u.setChanneDescription(description);
+			u.setBlocked(blocked);
+			u.setRole(r);
+			UserDAO.updateUser(u);
+			Map<String, Object> data = new HashMap<>();
+			
+			data.put("status", "success");
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
+		}
 	}
 
 }

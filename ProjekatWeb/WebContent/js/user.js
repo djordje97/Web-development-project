@@ -11,8 +11,10 @@ $(document).ready(function(){
 	var subscribe=$('#subscribe');
 	var unsub=$('#unsubscribe');
 	var nav=$('.topnav');
+	var menu=$('.user-menu');
+	var menuButton=$('.menu-button');
 	unsub.hide();
-	
+	menuButton.hide();
 	$.get('UserServlet',{'userName':userName},function(data){
 		username.text(data.owner.userName);
 		date.text("Registration: "+data.owner.registrationDate);
@@ -64,6 +66,13 @@ $(document).ready(function(){
 				unsub.show();
 				subscribe.hide();
 			}
+			if(data.user.userName == data.owner.userName || data.user.role== "ADMIN"){
+				menuButton.show();
+				menu.append('<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
+						'<a href="EditUser.html?userName='+data.owner.userName+'">Edit</a>'+'<a href="#">Delete</a>')
+			}
+				
+			
 			if(data.user.userName != data.owner.userName){
 				subscribe.on('click',function(event){
 					var subsUp=data.subNumber
@@ -102,3 +111,9 @@ $(document).ready(function(){
 	});
 	
 });
+function openNav() {
+    document.getElementById("user-menu").style.width = "230px";
+}
+function closeNav() {
+    document.getElementById("user-menu").style.width = "0";
+}

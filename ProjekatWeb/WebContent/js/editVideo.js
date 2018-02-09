@@ -2,8 +2,7 @@ $(document).ready(function(){
 	var id = window.location.search.slice(1).split('&')[0].split('=')[1];
 	var visibility=$('#visibility');
 	var allowComments=$('#allowComments');
-	var allowRatingTrue=$('#true');
-	var allowRatingFalse=$('#false');
+	var allowRating=$('#allowRating');
 	var description=$('#description');
 	var submit=$('#submit'); 
 	
@@ -25,10 +24,10 @@ $(document).ready(function(){
 		}
 		
 		if(data.video.allowRating == true){
-			allowRatingTrue.prop('checked',true);
+			allowRating.prop('checked',true);
 		}
 		else{
-			allowRatingFalse.prop('checked',true);
+			allowRating.prop('checked',false);
 		}
 		description.val(data.video.description);
 	});
@@ -36,9 +35,9 @@ $(document).ready(function(){
 	submit.on('click',function(event){
 		var visibilityValue=visibility.val();
 		var allowCommentsValue=allowComments.val();
-		var allowRatingValue=true;
-		if(allowRatingFalse.is(':checked')){
-			allowRatingValue=false;
+		var allowRatingValue=false;
+		if(allowRating.is(':checked')){
+			allowRatingValue=true;
 		}
 		var descriptionValue=description.val();
 		var params={

@@ -36,7 +36,12 @@ body{
 .topnav a:hover {
    opacity: 1;
 }
-
+.grid{
+	display: grid;
+	grid-template-columns: auto auto;
+	height: 100%;
+	width: 100%;
+}
 .container {
 		padding: 3em 3em;
 	background:#c3c3c3;
@@ -118,7 +123,7 @@ p {
 .content{
 	margin: 0;
 	height: auto; 
-	margin-left: 80px;;
+	margin-left: 50px;;
 }
 .content img {
 	width: 60%;
@@ -179,7 +184,55 @@ a {
 	grid-template-columns:auto auto;
 	grid-gap:20px;
 }
+.user-menu {
+	background: gray;
+	height: 30%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 20%;
+	right: 1%;
+	background-color: #333;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
+}
 
+.user-menu .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+.user-menu>a:not(:first-child) {
+	text-decoration: none;
+	color: white;
+	display: block;
+	padding: 10px;
+	opacity: 0.6;
+	text-align: center;
+}
+
+.user-menu>a:first-child {
+	padding: 0;
+	color: white;
+	text-decoration: none;
+}
+.user-menu>a:hover:not(:first-child) {
+	color: white;
+	opacity: 1;
+}
+.menu-button {
+	grid-column: 2;
+}
+#menu {
+	margin: 10px 10px 0 0;
+	float: right;
+	cursor: pointer;
+
+}
 @media screen and (max-width:600px) {
 #logo{display: none;}
 
@@ -206,4 +259,15 @@ a {
         flex: 100%;
         max-width: 100%;
     }
+    	.grid {
+		grid-template-rows: auto auto;
+	}
+		#menu {
+		margin: 10px 10px 0 0;
+		float: right;
+	}
+	.container{
+	grid-row:2;
+	grid-column: 1/3;
+	}
 }

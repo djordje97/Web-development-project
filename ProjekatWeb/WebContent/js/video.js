@@ -26,6 +26,7 @@ $(document).ready(function(){
 	var commentDislikeNumber=$('#dislike-number');
 	var nav=$('.topnav');
 	var sub=false;
+	menu.hide();
 	
 	unsub.hide();
 	$.get('VideoServlet',{'id':id},function(data){
@@ -160,7 +161,6 @@ $(document).ready(function(){
 
 				}
 				});
-				menu.hide();
 				if(data.isSubscribed == "subscribe"){
 					unsub.show();
 					subscribe.hide();
@@ -206,6 +206,7 @@ $(document).ready(function(){
 					);
 		}
 		if(data.user.role == 'ADMIN'){
+			menu.show();
 			userMenu.append(
 					'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
 					'<a href="#">Block</a>'+ '<a href="#">Delete</a>'

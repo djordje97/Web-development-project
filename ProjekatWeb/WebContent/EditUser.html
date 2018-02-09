@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" type="text/css" href="css/editUser.css">
+ <script type="text/javascript" src="jquery-3.2.1.js"></script>
+ <script type="text/javascript" src="js/editUser.js"></script>
+<title>Edit user</title>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html" id="logo">Copyright <span style="color: darkturquoise;">murder</span></a>
+  <a href="index.html">Home</a>
+</nav>
+<div class="container-form">
+<form>
+		<label for="name">Name</label> <input type="text" id="name"
+				name="name" placeholder="" required="required">
+				
+			<label for="surname">Surname</label> <input type="text" id="surname"
+				name="surname" placeholder="" required="required">
+			
+			<label for="password">Password</label> <input type="password" id="password"
+				name="password" placeholder="" required="required">
+		<input type="checkbox" onclick="myFunction()"> <label for="checkbox" style="display: inline-block;">Show password</label>
+		<label for="description" >Description</label>
+			<textarea id="description" name="description"
+				placeholder="Short description.." maxlength="50"
+				style="height: 100px"></textarea>
+			
+					<label for="role" id="roleLabel">Role</label> <select id="role"
+				name="role">
+				<option value="user">User</option>
+				<option value="admin">Admin</option>
+			</select>  
+			
+				<label class="container" id="blockedLabel">Blocked
+			  <input type="checkbox" id="blocked">
+			  <span class="checkmark"></span>
+			</label>
+				<p id="message"></p>
+			<input type="submit" value="Submit" id="submit">
+		</form>
+		</div>
+</body>
+</html>
