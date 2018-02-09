@@ -3,10 +3,15 @@ $(document).ready(function(){
 	var visibility=$('#visibility');
 	var allowComments=$('#allowComments');
 	var allowRating=$('#allowRating');
+	var block=$('#block');
 	var description=$('#description');
 	var submit=$('#submit'); 
+	block.hide();
 	
 	$.get('VideoServlet',{'id':id},function(data){
+		if(data.user.role == "ADMIN"){
+			block.show();
+		}
 		if(data.video.visibility == "PUBLIC"){
 			visibility.val('public');
 		}
@@ -29,6 +34,12 @@ $(document).ready(function(){
 		else{
 			allowRating.prop('checked',false);
 		}
+		if(data.video.blocked == true){
+			block.prop('checked',true);
+		}
+		else{
+			block.prop('checked',false);
+		}
 		description.val(data.video.description);
 	});
 	
@@ -39,12 +50,17 @@ $(document).ready(function(){
 		if(allowRating.is(':checked')){
 			allowRatingValue=true;
 		}
+		var blockValue=false;
+		if(block.is(':checked')){
+			blockValue=true;
+		}
 		var descriptionValue=description.val();
 		var params={
 				'visibility':visibilityValue,
 				'allowComments':allowCommentsValue,
 				'allowRating':allowRatingValue,
 				'description':descriptionValue,
+				'block':blockValue,
 				'status':'edit',
 				'videoId':id
 			};

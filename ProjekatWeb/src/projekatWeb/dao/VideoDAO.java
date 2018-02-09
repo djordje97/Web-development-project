@@ -57,9 +57,10 @@ public class VideoDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM video WHERE ownerUserName = ?";
+			String query = "SELECT * FROM video WHERE ownerUserName = ? AND deleted = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userName);
+			pstmt.setBoolean(2, false);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				int index = 1;
@@ -109,10 +110,11 @@ public class VideoDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM video WHERE visibility = ? AND blocked = ?";
+			String query = "SELECT * FROM video WHERE visibility = ? AND blocked = ? AND deleted = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, "PUBLIC");
 			pstmt.setBoolean(2, false);
+			pstmt.setBoolean(3, false);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				int index = 1;

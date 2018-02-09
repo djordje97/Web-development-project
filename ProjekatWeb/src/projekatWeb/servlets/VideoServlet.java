@@ -108,6 +108,7 @@ public class VideoServlet extends HttpServlet {
 			String visibil=request.getParameter("visibility");
 			boolean allowComments=Boolean.parseBoolean(request.getParameter("allowComments"));
 			boolean allowRating=Boolean.parseBoolean(request.getParameter("allowRating"));
+			boolean block=Boolean.parseBoolean(request.getParameter("block"));
 			String description=request.getParameter("description");
 			Visibility visibility;
 			if(visibil.equals("public")) {
@@ -123,6 +124,7 @@ public class VideoServlet extends HttpServlet {
 			video.setAllowComments(allowComments);
 			video.setAllowRating(allowRating);
 			video.setDescription(description);
+			video.setBlocked(block);
 			VideoDAO.updateVideo(video);
 			Map<String, Object> data = new HashMap<>();
 			
@@ -133,6 +135,18 @@ public class VideoServlet extends HttpServlet {
 
 			response.setContentType("application/json");
 			response.getWriter().write(jsonData);
+		}else if(status.equals("delete")) {
+			int id=Integer.parseInt(request.getParameter("videoId"));
+			Video video = VideoDAO.getVideo(id);
+			video.setDeleted(true);
+			VideoDAO.updateVideo(video);
+			Map<String, Object> data = new HashMap<>();
+			
+			data.put("status", "success");
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+			
 		}
 		
 	}

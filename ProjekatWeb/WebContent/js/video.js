@@ -61,7 +61,7 @@ $(document).ready(function(){
 				}
 			}
 
-			if (data.status == "visiter"){
+			if (data.status == "visiter" || data.user.blocked == true){
 			addComment.hide();
 				menu.hide();
 			}
@@ -74,7 +74,7 @@ $(document).ready(function(){
 				nav.append('<a href="index.html">Home</a>');
 			}
 			
-			if(data.video.allowComments == true && data.user!=null){
+			if(data.video.allowComments == true && data.user!=null && data.user.blocked == false){
 				addComment.show();
 				submitComm.on('click',function(event){
 					var content=contentComm.val();
@@ -106,6 +106,7 @@ $(document).ready(function(){
 				
 				nav.append(' <a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a> <a href="index.html">Home</a>'
 						);
+				if(data.user.blocked == false){
 				likeVideo.on('click',function(event){
 					
 				$.get('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
@@ -129,7 +130,7 @@ $(document).ready(function(){
 						event.preventDefault();
 						return false;
 					});
-
+				}
 				$('button').on('click',function(event){
 					var name=$(this).attr("name");
 					var id=$(this).val();
@@ -209,8 +210,18 @@ $(document).ready(function(){
 			menu.show();
 			userMenu.append(
 					'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
-					'<a href="#">Block</a>'+ '<a href="#">Delete</a>'
+					'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+ '<a href="#" id="delete">Delete</a>'
 					);
+			$('#delete').on('click',function(event){
+				console.log(id);
+				$.post('VideoServlet',{'videoId':id,'status':"delete"},function(data){
+						window.location.replace('index.html');
+				
+				});
+				
+				event.preventDefault();
+				return false;
+			});
 		}
 		
 		

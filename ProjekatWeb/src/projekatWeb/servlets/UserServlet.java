@@ -92,6 +92,20 @@ public class UserServlet extends HttpServlet {
 
 			response.setContentType("application/json");
 			response.getWriter().write(jsonData);
+		}else if(status.equals("delete")) {
+			String userName=request.getParameter("userName");
+			User u =UserDAO.get(userName);
+			u.setDeleted(true);
+			UserDAO.updateUser(u);
+			Map<String, Object> data = new HashMap<>();
+			
+			data.put("status", "success");
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
 		}
 	}
 

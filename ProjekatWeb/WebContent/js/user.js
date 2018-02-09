@@ -62,14 +62,30 @@ $(document).ready(function(){
 			});
 		}
 		if(data.user!=null){
+			nav.append('<a href="User.html?userName='+data.user.userName+'">My profile</a>');
 			if(data.isSubscribed == "subscribe"){
 				unsub.show();
 				subscribe.hide();
 			}
+			if(data.user.role == "ADMIN"){
+				nav.append('<a href="Admin.html">Admin page</a>');
+			}
 			if(data.user.userName == data.owner.userName || data.user.role== "ADMIN"){
 				menuButton.show();
 				menu.append('<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
-						'<a href="EditUser.html?userName='+data.owner.userName+'">Edit</a>'+'<a href="#">Delete</a>')
+						'<a href="EditUser.html?userName='+data.owner.userName+'">Edit</a>'+'<a href="#" id="delete">Delete</a>')
+						
+						
+						$('#delete').on('click',function(event){
+							console.log(userName);
+							$.post('UserServlet',{'userName':userName,'status':"delete"},function(data){
+									window.location.replace('index.html');
+							
+							});
+							
+							event.preventDefault();
+							return false;
+						});
 			}
 				
 			
@@ -105,7 +121,8 @@ $(document).ready(function(){
 					event.preventDefault();
 					return false;
 				});
-				nav.append('<a href="User.html?userName='+data.user.userName+'">My profile</a>');
+				
+				
 			}
 		}
 	});
