@@ -109,8 +109,14 @@ public class CommentDAO {
 				int dislikeNumber=rset.getInt(index++);
 				User u = UserDAO.get(owner);
 				Video video=VideoDAO.getVideo(videoId);
-				Comment c=new Comment(id, content, commentDate, u, video,likeNumber,dislikeNumber);
-				comments.add(c);
+				if(u == null || video == null) {
+					continue;
+				}
+				else {
+					Comment c=new Comment(id, content, commentDate, u, video,likeNumber,dislikeNumber);
+					comments.add(c);
+				}
+				
 			}
 
 		} catch (Exception ex) {

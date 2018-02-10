@@ -7,7 +7,6 @@ $(document).ready(function() {
 	var passwordInput = $("input[name='password']");
 	var messageParagraph = $('#message');
 	var content=$('.row');
-	
 	$.get('GetVideosServlet',{},function(data){
 		console.log("Stigao odgovor");
 		for(it in data.videos){
@@ -30,7 +29,8 @@ $(document).ready(function() {
 		var password = passwordInput.val();
 		if(userName=="" || password =="")
 			messageParagraph.text("You must enter your username and password fields");
-			userNameInput.on('focus',function(event){
+			
+		userNameInput.on('focus',function(event){
 			messageParagraph.text("");
 			event.preventDefault();
 			return false;
@@ -61,6 +61,17 @@ $(document).ready(function() {
 		event.preventDefault();
 		return false;
 	});
+	$('input[type=button]').on('click',function(event){
+		var input = $('#search').val().toUpperCase();
+		$(".column").each(function(){
+			  if($(this).html().toUpperCase().includes(input)){
+			    $(this).show();
+			  }
+			  else{
+				$(this).hide();
+			  }
+		});
+	});
 });
 
 function openNav() {
@@ -69,3 +80,4 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidelogin").style.width = "0";
 }
+

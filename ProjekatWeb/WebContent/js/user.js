@@ -12,6 +12,7 @@ $(document).ready(function(){
 	var unsub=$('#unsubscribe');
 	var nav=$('.topnav');
 	var menu=$('.user-menu');
+	var photo=$('#userPhoto');
 	var menuButton=$('.menu-button');
 	unsub.hide();
 	menuButton.hide();
@@ -20,6 +21,9 @@ $(document).ready(function(){
 		date.text("Registration: "+data.owner.registrationDate);
 		description.text(data.owner.channelDescription);
 		subsNumber.text("Subscribers: "+data.subNumber);
+		var src='photos/'+userName+'.jpg';
+		console.log(src);
+		photo.attr('src',src);
 		if(data.owner.blocked == false){
 			blocked.text("Not blocked");
 		}

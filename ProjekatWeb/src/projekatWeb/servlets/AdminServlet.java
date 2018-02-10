@@ -22,10 +22,12 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-
+			HttpSession session = request.getSession();
+			User loggedInUser = (User) session.getAttribute("loggedInUser");
 			ArrayList<User> users = UserDAO.getAll();
 
 			Map<String, Object> data = new HashMap<>();
+			data.put("logged", loggedInUser);
 			data.put("users", users);
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonData = mapper.writeValueAsString(data);

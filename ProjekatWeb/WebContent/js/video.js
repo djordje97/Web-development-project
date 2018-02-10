@@ -27,7 +27,6 @@ $(document).ready(function(){
 	var nav=$('.topnav');
 	var sub=false;
 	menu.hide();
-	
 	unsub.hide();
 	$.get('VideoServlet',{'id':id},function(data){
 		console.log(data.video);
@@ -41,8 +40,8 @@ $(document).ready(function(){
 			date.text(data.video.date);
 			description.text(data.video.description);
 			
-			if(data.video.allowComments == true ||(data.user!=null && (data.user.userName == data.video.owner.userName || data.user.role == "ADMIN"))){
 				for( i in data.comments){
+					if(data.comments[i].owner != null){
 					comments.append(
 							'<div class="comment">'+
 							'<p class="user-link">'+
@@ -58,173 +57,172 @@ $(document).ready(function(){
 							'<p id="comment-content">'+data.comments[i].content+'</p>'+
 						'</div>'
 							);
+					}
 				}
-			}
-
-			if (data.status == "visiter" || data.user.blocked == true){
-			addComment.hide();
-				menu.hide();
-			}
-			if(data.user == null){
-				subscribe.on('click',function(event){
-					alert("You must sign in first");
-					event.preventDefault();
-					return false;
-				});
-				nav.append('<a href="index.html">Home</a>');
-			}
 			
-			if(data.video.allowComments == true && data.user!=null && data.user.blocked == false){
-				addComment.show();
-				submitComm.on('click',function(event){
-					var content=contentComm.val();
+				if(data.video.allowComments == false){
+					addComment.hide();
+					comments.hide();
+				}
+				if (data.status == "visiter" || data.user.blocked == true){
+					addComment.hide();
+					menu.hide();
+					nav.append('<a href="index.html">Home</a>'
+					);
+				}
+				if(data.user!= null){
 					
-				$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id},function(data){
-					if(data.status=="success")
-						comments.append(
-								'<div class="comment">'+
-								'<p class="user-link">'+
-									'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
-								'</p>'+
-								'<div class="like-dislike">'+
-									'<button id="commentLikeButton" name="like" value="'+data.id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green" id="like"></i></button>'+
-									'<p id="like-number" class="'+data.id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.likeNumber+'</p>'+
-									'<button id="commentLikeButton"  name="dislike" value="'+data.id+'"><i class="fa fa-thumbs-o-down" style="font-size: 20px; color:red;" id="dislike"></i></button>'+
-									'<p id="dislike-number" class="'+data.id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.dislikeNumber+'</p>'+
-								'</div>'+
-								'<p id="date">'+data.date+'</p>'+
-								'<p id="comment-content">'+data.content+'</p>'+
+					if(data.user.userName == data.video.owner.userName || data.user.role == "ADMIN"){
+						comments.show();
+					}
+					nav.append(' <a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a> <a href="index.html">Home</a>');
+					if(data.video.allowComments == true && data.user.blocked == false){
+						addComment.show();
+						submitComm.on('click',function(event){
+							var content=contentComm.val();
+							
+						$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id},function(data){
+							if(data.status=="success")
+								comments.append(
+										'<div class="comment">'+
+										'<p class="user-link">'+
+											'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
+										'</p>'+
+										'<div class="like-dislike">'+
+											'<button id="commentLikeButton" name="like" value="'+data.id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green" id="like"></i></button>'+
+											'<p id="like-number" class="'+data.id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.likeNumber+'</p>'+
+											'<button id="commentLikeButton"  name="dislike" value="'+data.id+'"><i class="fa fa-thumbs-o-down" style="font-size: 20px; color:red;" id="dislike"></i></button>'+
+											'<p id="dislike-number" class="'+data.id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.dislikeNumber+'</p>'+
+										'</div>'+
+										'<p id="date">'+data.date+'</p>'+
+										'<p id="comment-content">'+data.content+'</p>'+
 
-							'</div>'
+									'</div>'
+										);
+						});
+							event.preventDefault();
+							return false;
+						});
+					}
+					if(data.user.blocked == false){
+						likeVideo.on('click',function(event){
+							
+							$.get('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
+									likeNumber.text(data.likeNumber);
+									dislikeNumber.text(data.dislikeNumber);
+									
+							});
+								
+								event.preventDefault();
+								return false;
+							});
+						dislikeVideo.on('click',function(event){
+							
+							$.post('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
+									dislikeNumber.text(data.dislikeNumber);
+									likeNumber.text(data.likeNumber);
+									
+							});
+								
+								event.preventDefault();
+								return false;
+							});
+						
+						$('button').on('click',function(event){
+							var name=$(this).attr("name");
+							var id=$(this).val();
+							console.log(id);
+							
+							if (name == "like"){
+						$.get('LikeDislikeCommentServlet',{'id':id},function(data){
+							var getByLike="#like-number."+id;
+							var getByDislike="#dislike-number."+id;
+							console.log(getByLike);
+								$(getByLike).text(data.likeNumber);
+								$(getByDislike).text(data.dislikeNumber);
+							
+						});
+							
+							event.preventDefault();
+							return false;
+						
+						}else{
+						$.post('LikeDislikeCommentServlet',{'id':id},function(data){
+							var getByLike="#like-number."+id;
+							var getByDislike="#dislike-number."+id;
+							$(getByDislike).text(data.dislikeNumber);
+							$(getByLike).text(data.likeNumber);
+							
+							
+						});
+							
+
+						}
+						});
+						
+						if(data.isSubscribed == "subscribe"){
+							unsub.show();
+							subscribe.hide();
+						}
+						if(data.user.userName != data.video.owner.userName){
+							subscribe.on('click',function(event){
+								
+								$.post('SubsServlet',{'channel':data.video.owner.userName,'subscriber':data.user.userName},function(data){
+									console.log("stigao odgovor")
+									if(data.status == "success"){
+										alert("Subscribe success");
+										unsub.show();
+										subscribe.hide();
+									}
+									
+								});
+								
+								event.preventDefault();
+								return false;
+							});
+							
+							unsub.on('click',function(event){
+								$.get('SubsServlet',{'channel':data.video.owner.userName,'subscriber':data.user.userName,},function(data){
+									console.log("stigao odgovor")
+									if(data.status == "success"){
+										alert("Unsubscribe success");
+										subscribe.show();
+										unsub.hide();
+									}
+									
+								});
+								event.preventDefault();
+								return false;
+							});
+						}
+						
+					}
+					if(data.user.userName == data.video.owner.userName){
+						menu.show();
+						userMenu.append(
+								'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
+								'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+'<a href="#">Delete</a>'
 								);
-				});
-					event.preventDefault();
-					return false;
-				});
-			}
-			if(data.user!=null){
-				
-				nav.append(' <a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a> <a href="index.html">Home</a>'
-						);
-				if(data.user.blocked == false){
-				likeVideo.on('click',function(event){
-					
-				$.get('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
-						likeNumber.text(data.likeNumber);
-						dislikeNumber.text(data.dislikeNumber);
-						
-				});
-					
-					event.preventDefault();
-					return false;
-				});
-				
-				dislikeVideo.on('click',function(event){
-					
-					$.post('LikeDislikeVideoServlet',{'id':data.video.id},function(data){
-							dislikeNumber.text(data.dislikeNumber);
-							likeNumber.text(data.likeNumber);
+					}
+					if(data.user.role == 'ADMIN'){
+						menu.show();
+						userMenu.append(
+								'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
+								'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+ '<a href="#" id="delete">Delete</a>'
+								);
+						$('#delete').on('click',function(event){
+							console.log(id);
+							$.post('VideoServlet',{'videoId':id,'status':"delete"},function(data){
+									window.location.replace('index.html');
 							
-					});
-						
-						event.preventDefault();
-						return false;
-					});
-				}
-				$('button').on('click',function(event){
-					var name=$(this).attr("name");
-					var id=$(this).val();
-					console.log(id);
-					
-					if (name == "like"){
-				$.get('LikeDislikeCommentServlet',{'id':id},function(data){
-					var getByLike="#like-number."+id;
-					var getByDislike="#dislike-number."+id;
-					console.log(getByLike);
-						$(getByLike).text(data.likeNumber);
-						$(getByDislike).text(data.dislikeNumber);
-					
-				});
-					
-					event.preventDefault();
-					return false;
-				
-				}else{
-				$.post('LikeDislikeCommentServlet',{'id':id},function(data){
-					var getByLike="#like-number."+id;
-					var getByDislike="#dislike-number."+id;
-					$(getByDislike).text(data.dislikeNumber);
-					$(getByLike).text(data.likeNumber);
-					
-					
-				});
-					
-
-				}
-				});
-				if(data.isSubscribed == "subscribe"){
-					unsub.show();
-					subscribe.hide();
-				}
-				if(data.user.userName != data.video.owner.userName){
-					subscribe.on('click',function(event){
-						
-						$.post('SubsServlet',{'channel':data.video.owner.userName,'subscriber':data.user.userName},function(data){
-							console.log("stigao odgovor")
-							if(data.status == "success"){
-								alert("Subscribe success");
-								unsub.show();
-								subscribe.hide();
-							}
+							});
 							
+							event.preventDefault();
+							return false;
 						});
-						
-						event.preventDefault();
-						return false;
-					});
-					
-					unsub.on('click',function(event){
-						$.get('SubsServlet',{'channel':data.video.owner.userName,'subscriber':data.user.userName,},function(data){
-							console.log("stigao odgovor")
-							if(data.status == "success"){
-								alert("Unsubscribe success");
-								subscribe.show();
-								unsub.hide();
-							}
-							
-						});
-						event.preventDefault();
-						return false;
-					});
+					}
 					
 				}
-			}
-		if(data.user.userName == data.video.owner.userName){
-			menu.show();
-			userMenu.append(
-					'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
-					'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+'<a href="#">Delete</a>'
-					);
-		}
-		if(data.user.role == 'ADMIN'){
-			menu.show();
-			userMenu.append(
-					'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
-					'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+ '<a href="#" id="delete">Delete</a>'
-					);
-			$('#delete').on('click',function(event){
-				console.log(id);
-				$.post('VideoServlet',{'videoId':id,'status':"delete"},function(data){
-						window.location.replace('index.html');
-				
-				});
-				
-				event.preventDefault();
-				return false;
-			});
-		}
-		
-		
 });
 	
 });

@@ -4,7 +4,12 @@ $(document).ready(function(){
 	var users=$('#users');
 	
 	$.get('AdminServlet',{},function(data){
-		
+		$('.topnav').append(' <a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.logged.userName+'">My profile</a> <a href="index.html">Home</a>'+
+		'<div class="search-container">'+
+	    '<form>'+
+	      '<input type="text" placeholder="Search users..." onkeyup="myFunction()" id="search" name="search">'+
+	    '</form>'+
+	  '</div>');
 		for(i in data.users){
 			users.append('<div class="column" id="'+data.users[i].userName+'">'+
 			'<div class="card">'+
@@ -45,3 +50,15 @@ $(document).ready(function(){
 	
 
 });
+
+function myFunction() {
+	var input = $('#search').val().toUpperCase();
+	$(".column").each(function(){
+		  if($(this).html().toUpperCase().includes(input)){
+		    $(this).show();
+		  }
+		  else{
+			$(this).hide();
+		  }
+	});
+}

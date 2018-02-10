@@ -8,34 +8,8 @@ $(document).ready(function() {
 		var surnameInput = $("input[name='surname']");
 		var emailInput = $("input[name='email']");
 		var messageParagraph  = $('#message');
-		
-	$('#submit').on('click',function(event){
-		var userName=userNameInput.val();
-		var password=passwordInput.val();
-		var name=nameInput.val();
-		var surname=surnameInput.val();
-		var email=emailInput.val();
-		if(userName=="" || password =="" || email=="")
-			{
-			messageParagraph.text("You must fill username,email and password fields");
-			event.preventDefault();
-			return false;
-			}
-		
-		$.post('RegisterServlet', {'userName': userName, 'password': password,'name': name,'surname':surname,'email':email}, function(data) { 
-			console.log('stigao odgovor');
-			console.log(data);
-			
-			if (data.status == 'success') {
-				window.location.replace('index.html');
-			}
-			if(data.status=='failure'){
-				messageParagraph.text(data.message)
-			}
-		});
-		event.preventDefault();
-		return false;
-	});
+		var profilePicture=$("input[name='file']");
+
 		
 	});
 

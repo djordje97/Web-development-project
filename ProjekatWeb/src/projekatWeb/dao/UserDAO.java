@@ -248,7 +248,7 @@ public class UserDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO users (userName, userPassword, nameu, surname, email, channelDescription, role, registrationDate, blocked,d eleted) VALUES (?, ?, ?, ? ,? ,? , ?, ?, ?, ?)";
+			String query = "INSERT INTO users (userName, userPassword, nameu, surname, email, channelDescription, role, registrationDate, blocked,deleted) VALUES (?, ?, ?, ? ,? ,? , ?, ?, ?, ?)";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;

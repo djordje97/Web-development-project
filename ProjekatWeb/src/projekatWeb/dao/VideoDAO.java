@@ -80,9 +80,13 @@ public class VideoDAO {
 				boolean deleted = rset.getBoolean(index++);
 				String user = rset.getString(index++);
 				User u = UserDAO.get(user);
+				if(u== null) {
+					continue;
+				}else {
 				Video v = new Video(id, videoUrl, videoPicture, videoName, description, visibility, allowComment,
 						likeNumber, dislikeNumber, Videoblocked, allowViews, views, createDate, u, deleted);
 				videos.add(v);
+				}
 			}
 
 		} catch (Exception ex) {
