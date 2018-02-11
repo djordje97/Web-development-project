@@ -37,7 +37,7 @@ public class LikeDislikeVideoServlet extends HttpServlet {
 				status="notLiked";
 				Date d=new Date();
 				int likeId =LikeDislikeDAO.getLikeId();
-				LikeDislike l=new LikeDislike(likeId, true, VideoDAO.dateToString(d), video, null, loggedInUser);
+				LikeDislike l=new LikeDislike(likeId, true, VideoDAO.dateToStringForWrite(d), video, null, loggedInUser);
 				LikeDislikeDAO.addLikeDislike(l);
 				LikeDislikeDAO.addVideoLikeDislike(l.getId(),video.getId());
 			}
@@ -78,7 +78,7 @@ public class LikeDislikeVideoServlet extends HttpServlet {
 				status="notDisliked";
 				Date d=new Date();
 				int likeId =LikeDislikeDAO.getLikeId();
-				LikeDislike l=new LikeDislike(likeId, false, VideoDAO.dateToString(d), video, null, loggedInUser);
+				LikeDislike l=new LikeDislike(likeId, false, VideoDAO.dateToStringForWrite(d), video, null, loggedInUser);
 				LikeDislikeDAO.addLikeDislike(l);
 				LikeDislikeDAO.addVideoLikeDislike(l.getId(),video.getId());
 			}

@@ -90,7 +90,7 @@ public class VideoServlet extends HttpServlet {
 			Date d=new Date();
 			
 			int id=VideoDAO.getVideoId();
-			Video v=new Video(id, url, "photos/slika.jpg", name, description, visibility, allowComments, 0, 0, false, allowRating, 0, VideoDAO.dateToString(d), loggedInUser, false);
+			Video v=new Video(id, url, "photos/slika.jpg", name, description, visibility, allowComments, 0, 0, false, allowRating, 0, VideoDAO.dateToStringForWrite(d), loggedInUser, false);
 			VideoDAO.addVideo(v);
 			Map<String, Object> data = new HashMap<>();
 			

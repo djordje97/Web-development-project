@@ -9,12 +9,13 @@ private User owner;
 private Video video;
 private int likeNumber;
 private int dislikeNumber;
+private boolean deleted;
 
 
 
 
 
-public Comment(int id, String content, String date, User owner, Video video, int likeNumber, int dislikeNumber) {
+public Comment(int id, String content, String date, User owner, Video video, int likeNumber, int dislikeNumber, boolean deleted) {
 	super();
 	this.id = id;
 	this.content = content;
@@ -23,6 +24,7 @@ public Comment(int id, String content, String date, User owner, Video video, int
 	this.video = video;
 	this.likeNumber = likeNumber;
 	this.dislikeNumber = dislikeNumber;
+	this.deleted=deleted;
 }
 
 public int getId() {
@@ -84,11 +86,21 @@ public void setDislikeNumber(int dislikeNumber) {
 	this.dislikeNumber = dislikeNumber;
 }
 
+
+public boolean isDeleted() {
+	return deleted;
+}
+
+public void setDeleted(boolean deleted) {
+	this.deleted = deleted;
+}
+
 @Override
 public String toString() {
 	return "Comment [id=" + id + ", content=" + content + ", date=" + date + ", owner=" + owner + ", video=" + video
-			+ ", likeNumber=" + likeNumber + ", dislikeNumber=" + dislikeNumber + "]";
+			+ ", likeNumber=" + likeNumber + ", dislikeNumber=" + dislikeNumber + ", deleted=" + deleted + "]";
 }
+
 
 
 

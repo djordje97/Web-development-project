@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import model.LikeDislike;
 
@@ -62,9 +63,9 @@ public class LikeDislikeDAO {
 				int videosId=rset.getInt(index++);
 				int likeId=rset.getInt(index++);
 				boolean isLike=rset.getBoolean(index++);
-				String date=rset.getString(index++);
+				Date d=rset.getDate(index++);
 				String owner=rset.getString(index++);
-				
+				String date=VideoDAO.dateToString(d);
 				return  new LikeDislike(likeId, isLike, date, VideoDAO.getVideo(videosId), null, UserDAO.get(owner));
 			}
 
@@ -103,9 +104,9 @@ public class LikeDislikeDAO {
 				int videosId=rset.getInt(index++);
 				int likeId=rset.getInt(index++);
 				boolean isLike=rset.getBoolean(index++);
-				String date=rset.getString(index++);
+				Date d =rset.getDate(index++);
 				String owner=rset.getString(index++);
-				
+				String date=VideoDAO.dateToString(d);
 				return  new LikeDislike(likeId, isLike, date, VideoDAO.getVideo(videosId), null, UserDAO.get(owner));
 			}
 
@@ -207,7 +208,9 @@ public class LikeDislikeDAO {
 			String query = "INSERT INTO likeDislike(liked,likeDate,ownerUserName) VALUES(?, ?, ?)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setBoolean(1, likeDislike.isLiked());
-			pstmt.setString(2, likeDislike.getLikeDate());
+			Date myDate=VideoDAO.stringToDateForWrite(likeDislike.getLikeDate());
+			java.sql.Date date=new java.sql.Date(myDate.getTime());
+			pstmt.setDate(2, date);
 			pstmt.setString(3, likeDislike.getOwner().getUserName());
 			
 			return pstmt.executeUpdate() == 1;

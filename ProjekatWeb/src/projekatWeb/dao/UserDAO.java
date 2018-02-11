@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.User;
 import model.User.Role;
@@ -31,9 +32,10 @@ public class UserDAO {
 				String email = rset.getString(index++);
 				String channelDescription = rset.getString(index++);
 				Role role = Role.valueOf(rset.getString(index++));
-				String registrationDate = rset.getString(index++);
+				Date d= rset.getDate(index++);
 				boolean blocked = rset.getBoolean(index++);
 				boolean deleted = rset.getBoolean(index++);
+				String registrationDate=VideoDAO.dateToString(d);
 				User u = new User(userName, password, name, surname, email, channelDescription, role, registrationDate,
 						blocked, null, null, null,deleted);
 				pstmt.close();
@@ -94,9 +96,10 @@ public class UserDAO {
 				String email = rset.getString(index++);
 				String channelDescription = rset.getString(index++);
 				Role role = Role.valueOf(rset.getString(index++));
-				String registrationDate = rset.getString(index++);
+				Date d= rset.getDate(index++);
 				boolean blocked = rset.getBoolean(index++);
 				boolean deleted = rset.getBoolean(index++);
+				String registrationDate=VideoDAO.dateToString(d);
 				User u = new User(userName, password, name, surname, email, channelDescription, role, registrationDate,
 						blocked, null, null, null,deleted);
 				
@@ -259,7 +262,9 @@ public class UserDAO {
 			pstmt.setString(index++, user.getEmail());
 			pstmt.setString(index++, user.getChanneDescription());
 			pstmt.setString(index++, user.getRole().toString());
-			pstmt.setString(index++, user.getRegistrationDate());
+			Date myDate=VideoDAO.stringToDateForWrite(user.getRegistrationDate());
+			java.sql.Date date=new java.sql.Date(myDate.getTime());
+			pstmt.setDate(index++, date);
 			pstmt.setBoolean(index++, user.isBlocked());
 			pstmt.setBoolean(index++, user.isDeleted());
 			return pstmt.executeUpdate() == 1;

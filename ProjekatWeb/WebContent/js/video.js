@@ -55,8 +55,23 @@ $(document).ready(function(){
 							'</div>'+
 							'<p id="date">'+data.comments[i].date+'</p>'+
 							'<p id="comment-content">'+data.comments[i].content+'</p>'+
+							'<input type="button"  id="editComment" class="'+data.comments[i].owner.userName+'" name="'+data.comments[i].id+'" value="Edit">'+
+							'<input type="button"  id="deleteComment" class="'+data.comments[i].owner.userName+'" name="'+data.comments[i].id+'" value="Delete">'+
 						'</div>'
 							);
+					}
+					if(data.user!=null){
+					if(data.user.role == "ADMIN"){
+						continue;
+					}
+					if(data.comments[i].owner.userName != data.user.userName){
+					var userN='input[type=button]'+'.'+data.comments[i].owner.userName;
+					console.log(userN);
+					$(userN).hide();
+					}
+					
+					}else{
+						$('input[type=button]').hide();
 					}
 				}
 			
@@ -80,7 +95,7 @@ $(document).ready(function(){
 						addComment.show();
 						submitComm.on('click',function(event){
 							var content=contentComm.val();
-							
+							console.log(data.video.id);
 						$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id},function(data){
 							if(data.status=="success")
 								comments.append(
@@ -96,6 +111,8 @@ $(document).ready(function(){
 										'</div>'+
 										'<p id="date">'+data.date+'</p>'+
 										'<p id="comment-content">'+data.content+'</p>'+
+										'<input type="button"  id="editComment" name="'+data.comments[i].id+'" value="Edit">'+
+										'<input type="button"  id="deleteComment" name="'+data.comments[i].id+'" value="Delete">'+
 
 									'</div>'
 										);

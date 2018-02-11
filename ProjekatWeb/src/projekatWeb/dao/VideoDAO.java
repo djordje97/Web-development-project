@@ -134,10 +134,11 @@ public class VideoDAO {
 				boolean Videoblocked = rset.getBoolean(index++);
 				boolean allowViews = rset.getBoolean(index++);
 				int views = rset.getInt(index++);
-				String createDate = rset.getString(index++);
+				Date d = rset.getDate(index++);
 				boolean deleted = rset.getBoolean(index++);
 				String user = rset.getString(index++);
 				User u = UserDAO.get(user);
+				String createDate=dateToString(d);
 				Video v = new Video(id, videoUrl, videoPicture, videoName, description, visibility, allowComment,
 						likeNumber, dislikeNumber, Videoblocked, allowViews, views, createDate, u, deleted);
 				videos.add(v);
@@ -183,10 +184,11 @@ public class VideoDAO {
 				boolean Videoblocked = rset.getBoolean(index++);
 				boolean allowViews = rset.getBoolean(index++);
 				int views = rset.getInt(index++);
-				String createDate = rset.getString(index++);
+				Date d = rset.getDate(index++);
 				boolean deleted = rset.getBoolean(index++);
 				String user = rset.getString(index++);
 				User u = UserDAO.get(user);
+				String createDate=dateToString(d);
 				Video v = new Video(id, videoUrl, videoPicture, videoName, description, visibility, allowComment,
 						likeNumber, dislikeNumber, Videoblocked, allowViews, views, createDate, u, deleted);
 				return v;
@@ -260,7 +262,9 @@ public class VideoDAO {
 			pstmt.setBoolean(index++, video.isBlocked());
 			pstmt.setBoolean(index++, video.isAllowRating());
 			pstmt.setInt(index++, video.getNumberOfviews());
-			pstmt.setString(index++, video.getDate());
+			Date myDate=stringToDateForWrite(video.getDate());
+			java.sql.Date date=new java.sql.Date(myDate.getTime());
+			pstmt.setDate(index++,date);
 			pstmt.setBoolean(index++, video.isDeleted());
 			pstmt.setString(index++, video.getOwner().getUserName());
 
@@ -299,5 +303,26 @@ public class VideoDAO {
 		return null;
 
 	}
+	public static String dateToStringForWrite(Date date) {
+		SimpleDateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+		String datum;
+		datum = formatvr.format(date);
+		return datum;
+	}
+	public static Date stringToDateForWrite(String datum) {
+
+		try {
+			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+
+			return formatvr.parse(datum);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
 
 }

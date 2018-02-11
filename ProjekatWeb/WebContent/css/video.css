@@ -238,6 +238,21 @@ i {
 	word-break: break-all;
 }
 
+#editComment,#deleteComment{
+	color: white;
+	background: orange;
+	border: none;
+	float: right;
+	height: 30px;
+	width: 65px;
+	border-radius: 5%;
+	font-weight: bold;
+	cursor: pointer;
+	margin: 10px;
+}
+#deleteComment{
+	background: red;
+}
 textarea {
 	width: 70%;
 	height: 70px;

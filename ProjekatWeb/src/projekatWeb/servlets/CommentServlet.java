@@ -34,9 +34,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	User u=UserDAO.get(owner);
 	Video v=VideoDAO.getVideo(video);
 	Date d=new Date();
-	String date=VideoDAO.dateToString(d);
+	String date=VideoDAO.dateToStringForWrite(d);
 	int id =CommentDAO.getCommentId();
-	Comment c=new Comment(id, content, date, u, v,0,0);
+	Comment c=new Comment(id, content, date, u, v,0,0,false);
 	CommentDAO.addComment(c);
 	
 	Map<String, Object> data = new HashMap<>();

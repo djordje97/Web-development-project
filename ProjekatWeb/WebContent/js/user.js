@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$.get('UserServlet',{'userName':userName},function(data){
 		username.text(data.owner.userName);
 		date.text("Registration: "+data.owner.registrationDate);
-		description.text(data.owner.channelDescription);
+		description.text(data.owner.channeDescription);
 		subsNumber.text("Subscribers: "+data.subNumber);
 		var src='photos/'+userName+'.jpg';
 		console.log(src);
