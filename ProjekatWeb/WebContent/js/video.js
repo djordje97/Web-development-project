@@ -43,7 +43,7 @@ $(document).ready(function(){
 				for( i in data.comments){
 					if(data.comments[i].owner != null){
 					comments.append(
-							'<div class="comment">'+
+							'<div class="comment" id="'+data.comments[i].id+'">'+
 							'<p class="user-link">'+
 								'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
 							'</p>'+
@@ -96,10 +96,10 @@ $(document).ready(function(){
 						submitComm.on('click',function(event){
 							var content=contentComm.val();
 							console.log(data.video.id);
-						$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id},function(data){
+						$.post('CommentServlet',{'content':content,'owner':data.user.userName,'video':data.video.id,'status': "add"},function(data){
 							if(data.status=="success")
 								comments.append(
-										'<div class="comment">'+
+										'<div class="comment" id="'+data.id+'">'+
 										'<p class="user-link">'+
 											'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
 										'</p>'+
@@ -111,8 +111,8 @@ $(document).ready(function(){
 										'</div>'+
 										'<p id="date">'+data.date+'</p>'+
 										'<p id="comment-content">'+data.content+'</p>'+
-										'<input type="button"  id="editComment" name="'+data.comments[i].id+'" value="Edit">'+
-										'<input type="button"  id="deleteComment" name="'+data.comments[i].id+'" value="Delete">'+
+										'<input type="button"  id="editComment" name="'+data.id+'" value="Edit">'+
+										'<input type="button"  id="deleteComment" name="'+data.id+'" value="Delete">'+
 
 									'</div>'
 										);
@@ -122,6 +122,58 @@ $(document).ready(function(){
 						});
 					}
 					if(data.user.blocked == false){
+						$('input[type=button]#deleteComment').on('click',function(event){
+							
+							var id=$(this).attr('name');
+							console.log(id);
+							$.post('CommentServlet',{'id':id,'status':"delete"},function(data){
+								if(data.stat == "success"){
+									var forRemove='.comment#'+id;
+									$(forRemove).remove();
+								}
+							});
+							
+							event.preventDefault();
+							return false;
+						});
+						
+						$('input[type=button]#editComment').on('click',function(event){
+							
+							var id=$(this).attr('name');
+							console.log(id);
+							var select='#'+id+' #comment-content';
+							var dateSelect='#'+id+' #date';
+							var oldDate=$(dateSelect);
+							console.log(select);
+							var oldContent=$(select).text();
+							console.log(oldContent);
+							$('#textAreaUpdate').val(oldContent);
+							$('.editCommentDiv').fadeIn();
+							
+							$('.editCommentDiv #editCommentSubmit').on('click',function(event){
+								var content=$('#textAreaUpdate').val();
+								$.post('CommentServlet',{'id':id,'status':"edit",'content':content},function(data){
+									if(data.stat == "success"){
+										var oldContent=$(select).text(content);
+										oldDate.text(data.newDate);
+										$('.editCommentDiv').fadeOut();
+									}
+								});
+								
+								event.preventDefault();
+								return false;
+							});
+							
+							$('.editCommentDiv #cancel').on('click',function(event){
+								$('.editCommentDiv').fadeOut();
+								
+								event.preventDefault();
+								return false;
+							});
+							event.preventDefault();
+							return false;
+						});
+						
 						likeVideo.on('click',function(event){
 							
 							$.get('LikeDislikeVideoServlet',{'id':data.video.id},function(data){

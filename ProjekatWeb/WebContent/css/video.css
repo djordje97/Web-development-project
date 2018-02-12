@@ -238,7 +238,7 @@ i {
 	word-break: break-all;
 }
 
-#editComment,#deleteComment{
+#editComment,#deleteComment,#editCommentSubmit,#cancel{
 	color: white;
 	background: orange;
 	border: none;
@@ -250,8 +250,22 @@ i {
 	cursor: pointer;
 	margin: 10px;
 }
-#deleteComment{
+#deleteComment,#cancel{
 	background: red;
+}
+
+.buttons{
+	float: left;
+	margin-left: 30%;
+}
+.editCommentDiv{
+	width: 50%;
+	height: auto;
+	position: fixed;
+	top: 50%;
+	right: 30%;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: none;
 }
 textarea {
 	width: 70%;
@@ -259,6 +273,13 @@ textarea {
 	border: none;
 	font-size: 16px;
 	resize: none;
+}
+#textAreaUpdate{
+	margin-left: 10%;
+	margin-top: 2%;
+	height: 150px;
+	width: 80%;
+	display: block;
 }
 
 #submit-comment {

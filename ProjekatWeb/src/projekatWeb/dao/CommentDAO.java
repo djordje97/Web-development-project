@@ -182,15 +182,20 @@ public class CommentDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE comment SET likeNumber =?, dislikeNumber = ?, deleted = ?, commentDate = ? ";
+			String query = "UPDATE comment SET likeNumber =?, dislikeNumber = ?, deleted = ?, commentDate = ?, content = ? WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, comment.getLikeNumber());
 			pstmt.setInt(2, comment.getDislikeNumber());
 			pstmt.setBoolean(3, comment.isDeleted());
-			Date d =VideoDAO.stringToDateForWrite(comment.getDate());
+			Date d1 =VideoDAO.stringToDate(comment.getDate());
+			String dd=VideoDAO.dateToStringForWrite(d1);
+			Date d=VideoDAO.stringToDateForWrite(dd);
 			java.sql.Date date=new java.sql.Date(d.getTime());
 			pstmt.setDate(4, date);
+			pstmt.setString(5, comment.getContent());
+			pstmt.setInt(6, comment.getId());
+		
 			return pstmt.executeUpdate() == 1;
 		} catch (SQLException ex) {
 			System.out.println("Greska u SQL upitu!");
