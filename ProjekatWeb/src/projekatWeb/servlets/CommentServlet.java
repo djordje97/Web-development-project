@@ -1,6 +1,7 @@
 package projekatWeb.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,25 @@ public class CommentServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response);
+		String status = "success";
+		ArrayList<Comment> comments=null;
+		try {
+			String column=request.getParameter("column");
+			String ascDesc=request.getParameter("ascDesc");
+			System.out.println(ascDesc);
+			int id =Integer.parseInt(request.getParameter("id"));
+			 comments=CommentDAO.orderComments(id, column,ascDesc );
+			
+		} catch (Exception e) {status="faliuer";}
+		Map<String, Object> data = new HashMap<>();
+		data.put("status", status);
+		data.put("comments", comments);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonData = mapper.writeValueAsString(data);
+		System.out.println(jsonData);
+		response.setContentType("application/json");
+		response.getWriter().write(jsonData);	
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

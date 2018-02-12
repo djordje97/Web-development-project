@@ -25,6 +25,8 @@ $(document).ready(function(){
 	var commentLikeNumber=$('#like-number');
 	var commentDislikeNumber=$('#dislike-number');
 	var nav=$('.topnav');
+	var desc=$('#desc');
+	var asc=$('#asc');
 	var sub=false;
 	menu.hide();
 	unsub.hide();
@@ -75,6 +77,56 @@ $(document).ready(function(){
 					}
 				}
 			
+				$('#order').on('click',function(event){
+					var column=$('#orderComment').val();
+					var ascDesc=asc.val();
+					if(desc.is(':checked')){
+						var ascDesc=desc.val();
+					}
+					console.log(ascDesc);
+					$.get('CommentServlet',{'id':id,'ascDesc':ascDesc,'column':column},function(data){
+						if(data.status == "success"){
+							comments.empty();
+							for( i in data.comments){
+								if(data.comments[i].owner != null){
+								comments.append(
+										'<div class="comment" id="'+data.comments[i].id+'">'+
+										'<p class="user-link">'+
+											'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
+										'</p>'+
+										'<div class="like-dislike">'+
+											'<button  id="commentLikeButton" name="like" value="'+data.comments[i].id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green;" id="like"></i></button>'+
+											'<p id="like-number" class="'+data.comments[i].id+'" style="font-size: 16px;">'+data.comments[i].likeNumber+'</p>'+
+											'<button id="commentLikeButton" name="dislike" value="'+data.comments[i].id+'"><i class="fa fa-thumbs-o-down" style="font-size: 20px; color:red;" id="dislike"></i></button>'+
+											'<p id="dislike-number" class="'+data.comments[i].id+'" style="font-size: 16px;" commentId="'+data.id+'">'+data.comments[i].dislikeNumber+'</p>'+
+										'</div>'+
+										'<p id="date">'+data.comments[i].date+'</p>'+
+										'<p id="comment-content">'+data.comments[i].content+'</p>'+
+										'<input type="button"  id="editComment" class="'+data.comments[i].owner.userName+'" name="'+data.comments[i].id+'" value="Edit">'+
+										'<input type="button"  id="deleteComment" class="'+data.comments[i].owner.userName+'" name="'+data.comments[i].id+'" value="Delete">'+
+									'</div>'
+										);
+								}
+								if(data.user!=null){
+								if(data.user.role == "ADMIN"){
+									continue;
+								}
+								if(data.comments[i].owner.userName != data.user.userName){
+								var userN='input[type=button]'+'.'+data.comments[i].owner.userName;
+								console.log(userN);
+								$(userN).hide();
+								}
+								
+								}else{
+									$('input[type=button]').hide();
+								}
+							}
+						}
+					});
+					event.preventDefault();
+					return false;
+				});
+				
 				if(data.video.allowComments == false){
 					addComment.hide();
 					comments.hide();
@@ -274,6 +326,8 @@ $(document).ready(function(){
 								event.preventDefault();
 								return false;
 							});
+							
+							
 						}
 						
 					}

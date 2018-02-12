@@ -36,7 +36,7 @@ public class LikeDislikeCommentServlet extends HttpServlet {
 			if(li == null) {
 				Date d=new Date();
 				int likeId =LikeDislikeDAO.getLikeId();
-				LikeDislike l=new LikeDislike(likeId, true, VideoDAO.dateToString(d), null, comment, loggedInUser);
+				LikeDislike l=new LikeDislike(likeId, true, VideoDAO.dateToStringForWrite(d), null, comment, loggedInUser);
 				LikeDislikeDAO.addLikeDislike(l);
 				LikeDislikeDAO.addCommentLikeDislike(l.getId(),comment.getId());
 			}
@@ -64,8 +64,9 @@ public class LikeDislikeCommentServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	try {
 		int id=Integer.parseInt(request.getParameter("id"));
+	
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		Comment comment = CommentDAO.getComment(id);
@@ -74,7 +75,7 @@ public class LikeDislikeCommentServlet extends HttpServlet {
 			if(li == null) {
 				Date d=new Date();
 				int likeId =LikeDislikeDAO.getLikeId();
-				LikeDislike l=new LikeDislike(likeId, false, VideoDAO.dateToString(d), null, comment, loggedInUser);
+				LikeDislike l=new LikeDislike(likeId, false, VideoDAO.dateToStringForWrite(d), null, comment, loggedInUser);
 				LikeDislikeDAO.addLikeDislike(l);
 				LikeDislikeDAO.addCommentLikeDislike(l.getId(),comment.getId());
 			}
@@ -98,6 +99,7 @@ public class LikeDislikeCommentServlet extends HttpServlet {
 
 		response.setContentType("application/json");
 		response.getWriter().write(jsonData);
+	}catch (Exception e) {}
 	}
 
 }

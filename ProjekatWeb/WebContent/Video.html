@@ -42,14 +42,23 @@
 			<button class="collapsible">Order comment</button>
 			<div class="content">
 				<h2>Order by:</h2>
-				<label class="container-cb">Like<input type="radio"
-					checked="checked" name="radio"> <span class="checkmark"></span>
-				</label> <label class="container-cb">Dislike<input type="radio"
-					name="radio"> <span class="checkmark"></span>
-				</label> <label class="container-cb">Date<input type="radio"
-					name="radio"> <span class="checkmark"></span>
-				</label>
-				
+				 <select id="orderComment"
+				name="order">
+				<option value="likeNumber">Like</option>
+				<option value="dislikeNumber">Dislike</option>
+				<option value="createdDate">Date</option>
+			</select>
+			
+				<label class="container-rb" style="color:white;">Ascending
+			  <input type="radio" id="asc" value="ASC" checked="checked" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+			
+				<label class="container-rb" style="color:white;" >Descending
+			  <input type="radio" id="desc" value="DESC" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+			<input type="submit" value="Order" id="order">
 			</div>
 
 			<div class="add-comment">
