@@ -79,16 +79,28 @@ $(document).ready(function(){
 					addComment.hide();
 					comments.hide();
 				}
+				if(data.video.allowRating == false){
+					likeNumber.hide();
+					dislikeNumber.hide();
+					likeVideo.hide();
+					dislikeVideo.hide();
+				}
+				
 				if (data.status == "visiter" || data.user.blocked == true){
 					addComment.hide();
 					menu.hide();
 					nav.append('<a href="index.html">Home</a>'
 					);
+					subscribe.show();
 				}
 				if(data.user!= null){
 					
 					if(data.user.userName == data.video.owner.userName || data.user.role == "ADMIN"){
 						comments.show();
+						likeNumber.show();
+						dislikeNumber.show();
+						likeVideo.show();
+						dislikeVideo.show();
 					}
 					nav.append(' <a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a> <a href="index.html">Home</a>');
 					if(data.video.allowComments == true && data.user.blocked == false){
@@ -143,7 +155,6 @@ $(document).ready(function(){
 							console.log(id);
 							var select='#'+id+' #comment-content';
 							var dateSelect='#'+id+' #date';
-							var oldDate=$(dateSelect);
 							console.log(select);
 							var oldContent=$(select).text();
 							console.log(oldContent);
@@ -155,7 +166,7 @@ $(document).ready(function(){
 								$.post('CommentServlet',{'id':id,'status':"edit",'content':content},function(data){
 									if(data.stat == "success"){
 										var oldContent=$(select).text(content);
-										oldDate.text(data.newDate);
+										var oldDate=$(dateSelect).text(data.newDate);
 										$('.editCommentDiv').fadeOut();
 									}
 								});

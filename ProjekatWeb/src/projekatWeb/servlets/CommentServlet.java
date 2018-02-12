@@ -74,7 +74,7 @@ public class CommentServlet extends HttpServlet {
 			response.getWriter().write(jsonData);
 		}else if(status.equals("edit")) {
 			String stat="success";
-			String date="";
+			String newDate="";
 			try {
 				
 				int id =Integer.parseInt(request.getParameter("id"));
@@ -84,8 +84,8 @@ public class CommentServlet extends HttpServlet {
 				{
 					comment.setContent(newContent);
 					Date d=new Date();
-					String newDate=VideoDAO.dateToString(d);
-					date=VideoDAO.dateToString(d);
+					newDate=VideoDAO.dateToString(d);
+					System.out.println(newDate);
 					comment.setDate(newDate);
 					CommentDAO.updateComment(comment);
 				}
@@ -94,7 +94,7 @@ public class CommentServlet extends HttpServlet {
 			} catch (Exception e) {stat="faliuer";}
 			Map<String, Object> data = new HashMap<>();
 			data.put("stat", stat);
-			data.put("newDate", date);
+			data.put("newDate", newDate);
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonData = mapper.writeValueAsString(data);
 			System.out.println(jsonData);

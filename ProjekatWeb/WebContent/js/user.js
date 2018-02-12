@@ -48,12 +48,12 @@ $(document).ready(function(){
 	
 		for(i in data.subs){
 			subsInput.append(
-					'<div class="column2">'+
+					'<div class="column">'+
 					'<div class="content">'+
 						'<p class="user-link">'+
-							'<img src="photos/slika.jpg" class="avatar"> <a href="User.html?userName='+data.subs[i].userName+'">'+data.subs[i].userName+'</a>'+
+							'<img src="photos/slika.jpg" class="avatar" style="width:100px;height:100px;"> <br/> <a style="font-size:24px;margin-left:15px;" href="User.html?userName='+data.subs[i].userName+'">'+data.subs[i].userName+'</a>'+
 						'</p>'+
-						'<p class="date-rating">Subscribers:'+data.subs[i].subsNumber+'</p>'+
+						'<p class="date-rating" style="margin:0;">Subscribers:'+data.subs[i].subsNumber+'</p>'+
 					'</div>'+
 				'</div>');
 		}

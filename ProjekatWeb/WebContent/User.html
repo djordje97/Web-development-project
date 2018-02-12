@@ -12,48 +12,65 @@
 </head>
 <body>
 	<nav class="topnav">
-		<a href="index.html" id="logo">Copyright <span style="color: darkturquoise;">murder</span></a>
-		<a href="AddVideo.html">Add video</a>
-		<a href="LogOutServlet">Sign out</a>
-		 <a href="index.html">Home</a>
+		<a href="index.html" id="logo">Copyright <span
+			style="color: darkturquoise;">murder</span></a> <a href="AddVideo.html">Add
+			video</a> <a href="LogOutServlet">Sign out</a> <a href="index.html">Home</a>
 	</nav>
 	<div class="grid">
-	<div class="container">
-		<div class="user-info">
-			<div class="row" id="videos">
-				<div class="column">
-					<div class="card">
-						<img id="userPhoto" src="" alt="User">
-						<div class="container-info">
-							<h2 id="username"></h2>
-							<p id="subsNumber"></p>
-							<p id="date"></p>
-							<p id="blocked"></p>
-							<p id="role"></p>
-							<p id="description"></p>
-							<p id="sub">
-								<button id="subscribe">Subscribe</button>
-								<button id="unsubscribe">Unsubscribe</button>
-							</p>
+		<div class="container">
+				<div class="row" >
+					<div class="user-info">
+						<div class="card">
+							<img id="userPhoto" src="" alt="User">
+							<div class="container-info">
+								<h2 id="username"></h2>
+								<p id="subsNumber"></p>
+								<p id="date"></p>
+								<p id="blocked"></p>
+								<p id="role"></p>
+								<p id="description"></p>
+								<p id="sub">
+									<button id="subscribe">Subscribe</button>
+									<button id="unsubscribe">Unsubscribe</button>
+								</p>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-		<div id="subs">
-			<h3>Subscribed on:</h3>
-			<div class="row" id="subscribers">
+					<div  class="info">
+					<div  class="tab">
+						<button class="tablinks active" onclick="openCity(event, 'videos')">Videos</button>
+						<button class="tablinks" onclick="openCity(event, 'subscribers')">Subscribe on</button>
+					</div>
 
-			</div>
+					<div id="videos" class="tabcontent active" style="display: block;">
+						
+					</div>
+
+					<div id="subscribers" class="tabcontent">
+					</div>
+					</div>
+				</div>
 		</div>
-	</div>
 		<div class="menu-button">
 			<i class="fa fa-th" style="font-size: 36px" id="menu"
 				onclick="openNav()"></i>
-			<div class="user-menu" id="user-menu">
-				
-			</div>
+			<div class="user-menu" id="user-menu"></div>
 		</div>
 	</div>
 </body>
+<script>
+function openCity(evt, option) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(option).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
 </html>
