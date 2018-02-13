@@ -41,7 +41,9 @@ public class AdminServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String status = request.getParameter("status");
 
+		if(status.equals("delete")) {
 		try {
 			HttpSession session = request.getSession();
 			User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -59,6 +61,25 @@ public class AdminServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			System.out.println(e);
+		}
+		}else {
+			String stat = "success";
+			ArrayList<User> users=null;
+			try {
+				String column=request.getParameter("column");
+				String ascDesc=request.getParameter("ascDesc");
+				System.out.println(ascDesc);
+				 users=UserDAO.getAllOrders(column, ascDesc);
+				
+			} catch (Exception e) {status="faliuer";}
+			Map<String, Object> data = new HashMap<>();
+			data.put("stat", stat);
+			data.put("users", users);
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);	
 		}
 	}
 

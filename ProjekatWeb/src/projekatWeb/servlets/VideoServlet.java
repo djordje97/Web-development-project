@@ -31,6 +31,7 @@ public class VideoServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
 		int id=Integer.parseInt(request.getParameter("id"));
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -63,6 +64,9 @@ public class VideoServlet extends HttpServlet {
 
 		response.setContentType("application/json");
 		response.getWriter().write(jsonData);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 
@@ -90,7 +94,7 @@ public class VideoServlet extends HttpServlet {
 			Date d=new Date();
 			
 			int id=VideoDAO.getVideoId();
-			Video v=new Video(id, url, "photos/slika.jpg", name, description, visibility, allowComments, 0, 0, false, allowRating, 0, VideoDAO.dateToStringForWrite(d), loggedInUser, false);
+			Video v=new Video(id, url, "photos/img.jpg", name, description, visibility, allowComments, 0, 0, false, allowRating, 0, VideoDAO.dateToStringForWrite(d), loggedInUser, false);
 			VideoDAO.addVideo(v);
 			Map<String, Object> data = new HashMap<>();
 			
@@ -103,12 +107,17 @@ public class VideoServlet extends HttpServlet {
 			response.getWriter().write(jsonData);
 		}
 		else if(status.equals("edit")) {
-			int id=Integer.parseInt(request.getParameter("videoId"));
+			int id=Integer.parseInt(request.getParameter("id"));
 			Video video = VideoDAO.getVideo(id);
 			String visibil=request.getParameter("visibility");
 			boolean allowComments=Boolean.parseBoolean(request.getParameter("allowComments"));
 			boolean allowRating=Boolean.parseBoolean(request.getParameter("allowRating"));
-			boolean block=Boolean.parseBoolean(request.getParameter("block"));
+			String blocked=request.getParameter("block");
+			boolean block=false;
+			if(blocked.equals("true")) {
+				block=true;
+			}
+		
 			String description=request.getParameter("description");
 			Visibility visibility;
 			if(visibil.equals("public")) {

@@ -24,6 +24,9 @@ $(document).ready(function() {
 		var data={'userName':userName,'password':password,'name':name,'surname':surname,'email':email,
 			'photo':photo};
 		$('#submit').on('click',function(event){
+			if(userName == "" || password == "" || email == ""){
+				messageParagraph.text("Username ,password and email are required");
+			}
 			
 			iQuery.ajax({
 			    type: 'POST',

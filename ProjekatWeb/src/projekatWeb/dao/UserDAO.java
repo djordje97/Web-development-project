@@ -129,6 +129,60 @@ public class UserDAO {
 		return null;
 	}
 	
+	public static ArrayList<User> getAllOrders(String column,String ascDesc) {
+		Connection conn = ConnectionMenager.getConnection();
+		
+		ArrayList<User> users=new ArrayList<User>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM users WHERE deleted = ? ORDER BY "+column+" "+ascDesc;
+			pstmt = conn.prepareStatement(query);
+			pstmt.setBoolean(1, false);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				int index = 1;
+				String userName = rset.getString(index++);
+				String password = rset.getString(index++);
+				String name = rset.getString(index++);
+				String surname = rset.getString(index++);
+				String email = rset.getString(index++);
+				String channelDescription = rset.getString(index++);
+				Role role = Role.valueOf(rset.getString(index++));
+				Date d= rset.getDate(index++);
+				boolean blocked = rset.getBoolean(index++);
+				boolean deleted = rset.getBoolean(index++);
+				String registrationDate=VideoDAO.dateToString(d);
+				User u = new User(userName, password, name, surname, email, channelDescription, role, registrationDate,
+						blocked, null, null, null,deleted);
+				
+				u.subscribersUserName=getSubsUserName(userName);
+				u.setSubscribers(findSubscribers(u.subscribersUserName));
+				u.setSubsNumber(getSubsNumber(userName));
+				users.add(u);
+
+			}
+			return users;
+
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 	public static ArrayList<String> getSubsUserName(String userName) {
 		ArrayList<String> subsUserName=new ArrayList<String>();
 		Connection conn = ConnectionMenager.getConnection();

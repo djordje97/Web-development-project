@@ -59,6 +59,34 @@ $(document).ready(function(){
 					'</div>'+
 				'</div>');
 		}
+		if(data.user == null){
+			nav.append('<a href="index.html">Home</a>');
+			subscribe.on('click',function(event){
+				alert("You must sign in first");
+				event.preventDefault();
+				return false;
+			});
+		}
+		if(data.user!=null){
+			nav.append('<a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a><a href="AddVideo.html?userName='+userName+'">Add video</a> <a href="index.html">Home</a>');
+			if(data.user.role == "ADMIN"){
+				nav.append('<a href="Admin.html">Admin page</a>');
+			}
+		}
+		if( data.owner.blocked == true){
+			$('.row').hide();
+			$('.overlay').fadeIn();	
+	
+			}
+
+		if( data.owner.blocked == true){
+			if(data.user!= null){
+				if(data.user.userName == data.owner.userName || data.user.role == "ADMIN"){
+					$('.row').show();
+					$('.overlay').hide();
+				}
+			}
+		}
 		$('#order').on('click',function(event){
 			$('.orderVideos').fadeIn();	
 			event.preventDefault();
@@ -97,26 +125,14 @@ $(document).ready(function(){
 			event.preventDefault();
 			return false;
 		});
-		
-		if(data.user == null){
-			nav.append('<a href="index.html">Home</a>');
-			subscribe.on('click',function(event){
-				alert("You must sign in first");
-				event.preventDefault();
-				return false;
-			});
-		}
+	
 		if(data.user!=null){
-			nav.append('<a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a> <a href="index.html">Home</a>');
 			if(data.isSubscribed == "subscribe"){
 				unsub.show();
 				subscribe.hide();
 			}
-			if(data.user.role == "ADMIN"){
-				nav.append('<a href="Admin.html">Admin page</a>');
-			}
 			if(data.user.userName == data.owner.userName){
-				nav.append( ''+'<a href="AddVideo.html">Add video</a>');
+				nav.append( '');
 			}
 			if(data.user.userName == data.owner.userName || data.user.role== "ADMIN"){
 				menuButton.show();

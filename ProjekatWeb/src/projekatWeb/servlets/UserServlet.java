@@ -24,6 +24,7 @@ public class UserServlet extends HttpServlet {
        
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		String username=request.getParameter("userName");
@@ -63,6 +64,9 @@ public class UserServlet extends HttpServlet {
 		String jsonData = mapper.writeValueAsString(data);
 		response.setContentType("application/json");
 		response.getWriter().write(jsonData);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

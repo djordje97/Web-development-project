@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	var userName = window.location.search.slice(1).split('&')[0].split('=')[1];
 	var url=$('#url');
 	var name=$('#name');
 	var visibility=$('#visibility');
@@ -7,7 +8,9 @@ $(document).ready(function(){
 	var description=$('#description');
 	var message=$('#message');
 	var submit=$('#submit');
+	var nav=$('.topnav');
 	
+	nav.append('<a href="User.html?userName='+userName+'">My profile</a> <a href="index.html">Home</a>');
 	submit.on('click',function(event){
 		var urlValue=url.val();
 		var nameValue=name.val();
