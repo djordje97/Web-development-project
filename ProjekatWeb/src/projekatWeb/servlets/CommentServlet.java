@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,6 +26,8 @@ public class CommentServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		String status = "success";
 		ArrayList<Comment> comments=null;
 		try {
@@ -37,6 +40,7 @@ public class CommentServlet extends HttpServlet {
 		} catch (Exception e) {status="faliuer";}
 		Map<String, Object> data = new HashMap<>();
 		data.put("status", status);
+		data.put("user", loggedInUser);
 		data.put("comments", comments);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);

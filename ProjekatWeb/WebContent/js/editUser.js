@@ -20,6 +20,8 @@ $(document).ready(function(){
 			blocked.show();
 			roleLabel.show();
 			blockedLabel.show();
+			password.hide();
+			$('showPass').hide();
 		}
 		name.val(data.owner.name);
 		surname.val(data.owner.surname);

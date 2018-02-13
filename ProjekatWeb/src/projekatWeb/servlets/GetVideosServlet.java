@@ -23,8 +23,20 @@ public class GetVideosServlet extends HttpServlet {
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		ArrayList<Video> videos= null;
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
-		ArrayList<Video> videos =VideoDAO.publicVideo();
+		if(loggedInUser!= null) {
+			if(loggedInUser.getRole().toString().equals("ADMIN")) {
+				videos=VideoDAO.allVideo();
+			}
+			else {
+				videos =VideoDAO.publicVideo();
+			}
+		}
+		else {
+			videos =VideoDAO.publicVideo();
+		}
+		
 		Map<String, Object> data = new HashMap<>();
 		ArrayList<User> users=UserDAO.getAll();
 		data.put("users", users);

@@ -102,7 +102,7 @@ $(document).ready(function(){
 					var column=$('#orderComment').val();
 					var ascDesc=asc.val();
 					if(desc.is(':checked')){
-						var ascDesc=desc.val();
+						 ascDesc=desc.val();
 					}
 					console.log(column);
 					console.log(ascDesc);
@@ -212,13 +212,15 @@ $(document).ready(function(){
 							
 							var id=$(this).attr('name');
 							console.log(id);
+							var x=confirm("Are you shure?");
+							if(x){
 							$.post('CommentServlet',{'id':id,'status':"delete"},function(data){
 								if(data.stat == "success"){
 									var forRemove='.comment#'+id;
 									$(forRemove).remove();
 								}
 							});
-							
+							}
 							event.preventDefault();
 							return false;
 						});
