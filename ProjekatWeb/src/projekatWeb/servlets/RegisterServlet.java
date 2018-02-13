@@ -8,9 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import model.User;
 import model.User.Role;
@@ -53,8 +50,7 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println(e);
 		}
 		
-		String status = "success";
-		String message ="You sign up successfully";
+	
 		try {
 			User user = UserDAO.get(userName);
 			if (user != null) throw new Exception("Error");
@@ -64,19 +60,11 @@ public class RegisterServlet extends HttpServlet {
 			UserDAO.addUser(newUser);
 			
 		} catch (Exception ex) {
-			status = "failure";
-			message="User already exists";
+	
+			
 		}
 		
-		Map<String, Object> data = new HashMap<>();
-		data.put("status", status);
-		data.put("message", message);
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonData = mapper.writeValueAsString(data);
-		System.out.println(jsonData);
-
-		response.setContentType("application/json");
-		response.getWriter().write(jsonData);
+		response.sendRedirect("./index.html");
 	}
 	
 

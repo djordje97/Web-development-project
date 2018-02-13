@@ -14,6 +14,8 @@ $(document).ready(function(){
 	var menu=$('.user-menu');
 	var photo=$('#userPhoto');
 	var menuButton=$('.menu-button');
+	var desc=$('#desc');
+	var asc=$('#asc');
 	unsub.hide();
 	menuButton.hide();
 	$.get('UserServlet',{'userName':userName},function(data){
@@ -37,7 +39,7 @@ $(document).ready(function(){
 					'<div class="content">'+
 			     	'<p><img src="' +data.videos[it].videoPicture+ '" alt="Video Picture"></p>'+
 			      	'<h3><a href="Video.html?id='+data.videos[it].id+'">'+data.videos[it].videoName+'</a></h3>'+
-			      	'<p class="user-link"><img src="photos/slika.jpg" class="avatar">'+
+			      	'<p class="user-link"><img src="photos/'+data.videos[it].owner.userName+'.jpg" class="avatar">'+
 					'<a href="User.html?userName='+data.videos[it].owner.userName+'">'+data.videos[it].owner.userName+'</a></p>'+
 			      	'<p class="date-rating">Date:'+data.videos[it].date+'</p>'+
 			      	'<p class="date-rating">views:'+data.videos[it].numberOfviews+'</p>'+
@@ -51,14 +53,51 @@ $(document).ready(function(){
 					'<div class="column">'+
 					'<div class="content">'+
 						'<p class="user-link">'+
-							'<img src="photos/slika.jpg" class="avatar" style="width:100px;height:100px;"> <br/> <a style="font-size:24px;margin-left:15px;" href="User.html?userName='+data.subs[i].userName+'">'+data.subs[i].userName+'</a>'+
+							'<img src="photos/'+data.subs[i].userName+'.jpg" class="avatar" style="width:100px;height:100px;"> <br/> <a style="font-size:24px;margin-left:15px;" href="User.html?userName='+data.subs[i].userName+'">'+data.subs[i].userName+'</a>'+
 						'</p>'+
 						'<p class="date-rating" style="margin:0;">Subscribers:'+data.subs[i].subsNumber+'</p>'+
 					'</div>'+
 				'</div>');
 		}
+		$('#order').on('click',function(event){
+			$('.orderVideos').fadeIn();	
+			event.preventDefault();
+			return false;
+		});
+	
+		$('#orderSubmit').on('click',function(event){
+			var column=$('#orderComment').val();
+			var ascDesc=asc.val();
+			if(desc.is(':checked')){
+			var ascDesc=desc.val();
+			}
+			$.post('VideoServlet',{'status':"order",'column':column,'ascDesc':ascDesc,'userName':userName},function(data){
+				if(data.stat == "success"){
+					videosInput.empty();
+					for(it in data.videos){
+						videosInput.append(
+								'<div class="column">'+
+								'<div class="content">'+
+						     	'<p><img src="' +data.videos[it].videoPicture+ '" alt="Video Picture"></p>'+
+						      	'<h3><a href="Video.html?id='+data.videos[it].id+'">'+data.videos[it].videoName+'</a></h3>'+
+						      	'<p class="user-link"><img src="photos/'+data.videos[it].owner.userName+'.jpg" class="avatar">'+
+								'<a href="User.html?userName='+data.videos[it].owner.userName+'">'+data.videos[it].owner.userName+'</a></p>'+
+						      	'<p class="date-rating">Date:'+data.videos[it].date+'</p>'+
+						      	'<p class="date-rating">views:'+data.videos[it].numberOfviews+'</p>'+
+						   		 '</div>'+
+								'</div>'
+								);
+					}
+					
+					$('.orderVideos').fadeOut();	
+				}
+			});
+			event.preventDefault();
+			return false;
+		});
 		
 		if(data.user == null){
+			nav.append('<a href="index.html">Home</a>');
 			subscribe.on('click',function(event){
 				alert("You must sign in first");
 				event.preventDefault();
@@ -66,13 +105,16 @@ $(document).ready(function(){
 			});
 		}
 		if(data.user!=null){
-			nav.append('<a href="User.html?userName='+data.user.userName+'">My profile</a>');
+			nav.append('<a href="LogOutServlet">Sign out</a> <a href="User.html?userName='+data.user.userName+'">My profile</a> <a href="index.html">Home</a>');
 			if(data.isSubscribed == "subscribe"){
 				unsub.show();
 				subscribe.hide();
 			}
 			if(data.user.role == "ADMIN"){
 				nav.append('<a href="Admin.html">Admin page</a>');
+			}
+			if(data.user.userName == data.owner.userName){
+				nav.append( ''+'<a href="AddVideo.html">Add video</a>');
 			}
 			if(data.user.userName == data.owner.userName || data.user.role== "ADMIN"){
 				menuButton.show();
@@ -82,11 +124,13 @@ $(document).ready(function(){
 						
 						$('#delete').on('click',function(event){
 							console.log(userName);
+							var x=confirm("Are you shure?");
+							if(x){
 							$.post('UserServlet',{'userName':userName,'status':"delete"},function(data){
-									window.location.replace('index.html');
+									window.location.replace('LogOutServlet');
 							
 							});
-							
+							}
 							event.preventDefault();
 							return false;
 						});

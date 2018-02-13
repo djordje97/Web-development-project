@@ -31,6 +31,8 @@ $(document).ready(function(){
 		$('button').on('click',function(event){
 			var userName=$(this).val();
 			console.log(userName);
+			var x=confirm("Are you shure?");
+			if(x){
 			$.post('AdminServlet',{'userName':userName},function(data){
 					var id="#"+userName;
 					if(usrName == data.logged.userName){
@@ -41,7 +43,7 @@ $(document).ready(function(){
 					}
 					$(id).remove();
 			});
-			
+			}
 			event.preventDefault();
 			return false;
 		});

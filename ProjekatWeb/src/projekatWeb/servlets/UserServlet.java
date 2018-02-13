@@ -28,6 +28,7 @@ public class UserServlet extends HttpServlet {
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		String username=request.getParameter("userName");
 		User owner = UserDAO.get(username);
+		ArrayList<Video> videos = null;
 		String status="visiter";
 		String isSubscribed="unsuscribed";
 		if(loggedInUser != null) {
@@ -38,10 +39,16 @@ public class UserServlet extends HttpServlet {
 				if(isSub > 0) {
 					isSubscribed="subscribe";
 				}
+				if(loggedInUser.getUserName().equals(username) || loggedInUser.getRole().toString().equals("ADMIN")) {
+					videos=VideoDAO.userVideo(owner.getUserName()); 
+				}
+				
+		}else {
+			videos=VideoDAO.userPublicVideo(username);
 		}
 		
 		
-		ArrayList<Video> videos=VideoDAO.userVideo(owner.getUserName()); 
+		 
 		ArrayList<User> subs=UserDAO.subscribedOn(username);
 		int subNumber=UserDAO.getSubsNumber(username);
 		Map<String, Object> data = new HashMap<>();

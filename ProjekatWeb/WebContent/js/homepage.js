@@ -15,7 +15,7 @@ $(document).ready(function() {
 					'<div class="content">'+
 			     	'<p><img src="' +data.videos[it].videoPicture+ '" alt="Video Picture"></p>'+
 			      	'<h2><a href="Video.html?id='+data.videos[it].id+'">'+data.videos[it].videoName+'</a></h2>'+
-			      	'<p class="user-link"><img src="photos/slika.jpg" class="avatar">'+
+			      	'<p class="user-link"><img src="photos/'+data.videos[it].owner.userName+'.jpg" class="avatar">'+
 					'<a href="User.html?userName='+data.videos[it].owner.userName+'">'+data.videos[it].owner.userName+'</a></p>'+
 			      	'<p class="date-rating">Date:'+data.videos[it].date+'</p>'+
 			      	'<p class="date-rating">views:'+data.videos[it].numberOfviews+'</p>'+

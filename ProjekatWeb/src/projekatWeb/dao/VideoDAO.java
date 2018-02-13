@@ -57,7 +57,7 @@ public class VideoDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM video WHERE ownerUserName = ? AND deleted = ?";
+			String query = "SELECT * FROM video WHERE ownerUserName = ? AND deleted = ? ORDER BY createdDate DESC";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userName);
 			pstmt.setBoolean(2, false);
@@ -106,7 +106,180 @@ public class VideoDAO {
 		}
 		return videos;
 	}
+	
+	public static ArrayList<Video> userPublicVideo(String userName) {
+		Connection conn = ConnectionMenager.getConnection();
+		ArrayList<Video> videos = new ArrayList<Video>();
 
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM video WHERE visibility = ? AND ownerUserName = ? AND deleted = ? ORDER BY createdDate DESC";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "PUBLIC");
+			pstmt.setString(2, userName);
+			pstmt.setBoolean(3, false);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				int index = 1;
+				int id = rset.getInt(index++);
+				String videoUrl = rset.getString(index++);
+				String videoPicture = rset.getString(index++);
+				String videoName = rset.getString(index++);
+				String description = rset.getString(index++);
+				Visibility visibility = Visibility.valueOf(rset.getString(index++));
+				boolean allowComment = rset.getBoolean(index++);
+				int likeNumber = rset.getInt(index++);
+				int dislikeNumber = rset.getInt(index++);
+				boolean Videoblocked = rset.getBoolean(index++);
+				boolean allowViews = rset.getBoolean(index++);
+				int views = rset.getInt(index++);
+				String createDate = rset.getString(index++);
+				boolean deleted = rset.getBoolean(index++);
+				String user = rset.getString(index++);
+				User u = UserDAO.get(user);
+				if(u== null) {
+					continue;
+				}else {
+				Video v = new Video(id, videoUrl, videoPicture, videoName, description, visibility, allowComment,
+						likeNumber, dislikeNumber, Videoblocked, allowViews, views, createDate, u, deleted);
+				videos.add(v);
+				}
+			}
+
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return videos;
+	}
+	
+	public static ArrayList<Video> OrderAllUserVideo(String userName,String column,String ascDesc) {
+		Connection conn = ConnectionMenager.getConnection();
+		ArrayList<Video> videos = new ArrayList<Video>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM video WHERE ownerUserName = ? AND deleted = ? ORDER BY "+column+" "+ascDesc;
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			pstmt.setBoolean(2, false);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				int index = 1;
+				int id = rset.getInt(index++);
+				String videoUrl = rset.getString(index++);
+				String videoPicture = rset.getString(index++);
+				String videoName = rset.getString(index++);
+				String description = rset.getString(index++);
+				Visibility visibility = Visibility.valueOf(rset.getString(index++));
+				boolean allowComment = rset.getBoolean(index++);
+				int likeNumber = rset.getInt(index++);
+				int dislikeNumber = rset.getInt(index++);
+				boolean Videoblocked = rset.getBoolean(index++);
+				boolean allowViews = rset.getBoolean(index++);
+				int views = rset.getInt(index++);
+				String createDate = rset.getString(index++);
+				boolean deleted = rset.getBoolean(index++);
+				String user = rset.getString(index++);
+				User u = UserDAO.get(user);
+				if(u== null) {
+					continue;
+				}else {
+				Video v = new Video(id, videoUrl, videoPicture, videoName, description, visibility, allowComment,
+						likeNumber, dislikeNumber, Videoblocked, allowViews, views, createDate, u, deleted);
+				videos.add(v);
+				}
+			}
+
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return videos;
+	}
+	
+	public static ArrayList<Video> OrderPublicUserVideo(String userName,String column,String ascDesc) {
+		Connection conn = ConnectionMenager.getConnection();
+		ArrayList<Video> videos = new ArrayList<Video>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM video WHERE visibility = ? AND ownerUserName = ? AND deleted = ? ORDER BY "+column+" "+ascDesc;
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "PUBLIC");
+			pstmt.setString(2, userName);
+			pstmt.setBoolean(3, false);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				int index = 1;
+				int id = rset.getInt(index++);
+				String videoUrl = rset.getString(index++);
+				String videoPicture = rset.getString(index++);
+				String videoName = rset.getString(index++);
+				String description = rset.getString(index++);
+				Visibility visibility = Visibility.valueOf(rset.getString(index++));
+				boolean allowComment = rset.getBoolean(index++);
+				int likeNumber = rset.getInt(index++);
+				int dislikeNumber = rset.getInt(index++);
+				boolean Videoblocked = rset.getBoolean(index++);
+				boolean allowViews = rset.getBoolean(index++);
+				int views = rset.getInt(index++);
+				String createDate = rset.getString(index++);
+				boolean deleted = rset.getBoolean(index++);
+				String user = rset.getString(index++);
+				User u = UserDAO.get(user);
+				if(u== null) {
+					continue;
+				}else {
+				Video v = new Video(id, videoUrl, videoPicture, videoName, description, visibility, allowComment,
+						likeNumber, dislikeNumber, Videoblocked, allowViews, views, createDate, u, deleted);
+				videos.add(v);
+				}
+			}
+
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return videos;
+	}
+	
 	public static ArrayList<Video> publicVideo() {
 		Connection conn = ConnectionMenager.getConnection();
 		ArrayList<Video> videos = new ArrayList<Video>();
@@ -114,11 +287,10 @@ public class VideoDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM video WHERE visibility = ? AND blocked = ? AND deleted = ?";
+			String query = "SELECT * FROM video WHERE visibility = ? AND deleted = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, "PUBLIC");
 			pstmt.setBoolean(2, false);
-			pstmt.setBoolean(3, false);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				int index = 1;

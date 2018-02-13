@@ -13,8 +13,7 @@
 <body>
 	<nav class="topnav">
 		<a href="index.html" id="logo">Copyright <span
-			style="color: darkturquoise;">murder</span></a> <a href="AddVideo.html">Add
-			video</a> <a href="LogOutServlet">Sign out</a> <a href="index.html">Home</a>
+			style="color: darkturquoise;">murder</span></a>
 	</nav>
 	<div class="grid">
 		<div class="container">
@@ -38,8 +37,8 @@
 					</div>
 					<div  class="info">
 					<div  class="tab">
-						<button class="tablinks active" onclick="openCity(event, 'videos')">Videos</button>
-						<button class="tablinks" onclick="openCity(event, 'subscribers')">Subscribe on</button>
+						<button class="tablinks active" onclick="openVid(event, 'videos')">Videos</button>
+						<button class="tablinks" onclick="openVid(event, 'subscribers')">Subscribe on</button>
 					</div>
 
 					<div id="videos" class="tabcontent active" style="display: block;">
@@ -51,15 +50,39 @@
 					</div>
 				</div>
 		</div>
+		<div class="secondColumn">
 		<div class="menu-button">
 			<i class="fa fa-th" style="font-size: 36px" id="menu"
 				onclick="openNav()"></i>
 			<div class="user-menu" id="user-menu"></div>
-		</div>
+			</div>
+			<div class="orderVideosButton">
+				<input type="button" value="Order" id="order">
+			</div>
+			</div>
 	</div>
+<div class="orderVideos">
+	<h2 style="color: white;">Order by:</h2>
+				 <select id="orderVideos"
+				name="order">
+				<option value="dislikeNumber">Views</option>
+				<option value="createdDate">Date</option>
+			</select>
+			
+				<label class="container-rb" style="color:white;">Ascending
+			  <input type="radio" id="asc" value="ASC" checked="checked" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+			
+				<label class="container-rb" style="color:white;" >Descending
+			  <input type="radio" id="desc" value="DESC" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+			<input type="submit" value="Order" id="orderSubmit">
+</div>
 </body>
 <script>
-function openCity(evt, option) {
+function openVid(evt, option) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -72,5 +95,6 @@ function openCity(evt, option) {
     document.getElementById(option).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
 </script>
 </html>

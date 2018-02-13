@@ -24,6 +24,7 @@ $(document).ready(function(){
 	var dislikeVideo=$('#dislikeVideo');
 	var commentLikeNumber=$('#like-number');
 	var commentDislikeNumber=$('#dislike-number');
+	var userImg=$('#userPhoto');
 	var nav=$('.topnav');
 	var desc=$('#desc');
 	var asc=$('#asc');
@@ -41,13 +42,16 @@ $(document).ready(function(){
 			userName.attr('href','User.html?userName='+data.video.owner.userName);
 			date.text(data.video.date);
 			description.text(data.video.description);
+			var src='photos/'+data.video.owner.userName+'.jpg';
+			userImg.attr('src',src);
+			console.log(src);
 			
 				for( i in data.comments){
 					if(data.comments[i].owner != null){
 					comments.append(
 							'<div class="comment" id="'+data.comments[i].id+'">'+
 							'<p class="user-link">'+
-								'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
+								'<img src="photos/'+data.comments[i].owner.userName+'.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
 							'</p>'+
 							'<div class="like-dislike">'+
 								'<button  id="commentLikeButton" name="like" value="'+data.comments[i].id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green;" id="like"></i></button>'+
@@ -78,7 +82,7 @@ $(document).ready(function(){
 				}
 			
 				$('#order').on('click',function(event){
-					var column=$('#orderComment').val();
+					var column=$('#orderVideos').val();
 					var ascDesc=asc.val();
 					if(desc.is(':checked')){
 						var ascDesc=desc.val();
@@ -92,7 +96,7 @@ $(document).ready(function(){
 								comments.append(
 										'<div class="comment" id="'+data.comments[i].id+'">'+
 										'<p class="user-link">'+
-											'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
+											'<img src="photos/'+data.comments[i].owner.userName+'.jpg" class="avatar"><a href="User.html?userName='+data.comments[i].owner.userName+'" id="userName">'+data.comments[i].owner.userName+'</a>'+
 										'</p>'+
 										'<div class="like-dislike">'+
 											'<button  id="commentLikeButton" name="like" value="'+data.comments[i].id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green;" id="like"></i></button>'+
@@ -165,7 +169,7 @@ $(document).ready(function(){
 								comments.append(
 										'<div class="comment" id="'+data.id+'">'+
 										'<p class="user-link">'+
-											'<img src="photos/slika.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
+											'<img src="photos/'+data.owner+'.jpg" class="avatar"><a href="User.html?userName='+data.owner+'" id="userName">'+data.owner+'</a>'+
 										'</p>'+
 										'<div class="like-dislike">'+
 											'<button id="commentLikeButton" name="like" value="'+data.id+'"><i class="fa fa-thumbs-o-up" style="font-size: 20px; color:green" id="like"></i></button>'+
@@ -335,8 +339,21 @@ $(document).ready(function(){
 						menu.show();
 						userMenu.append(
 								'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
-								'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+'<a href="#">Delete</a>'
+								'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+'<a id="delete" href="#">Delete</a>'
 								);
+						
+						$('#delete').on('click',function(event){
+							console.log(id);
+							var x=confirm("Are you shure?");
+							if(x){
+							$.post('VideoServlet',{'videoId':id,'status':"delete"},function(data){
+									window.location.replace('index.html');
+							
+							});
+							}
+							event.preventDefault();
+							return false;
+						});
 					}
 					if(data.user.role == 'ADMIN'){
 						menu.show();
@@ -344,13 +361,16 @@ $(document).ready(function(){
 								'<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'+
 								'<a href="EditVideo.html?id='+data.video.id+'">Edit</a>'+ '<a href="#" id="delete">Delete</a>'
 								);
+						
 						$('#delete').on('click',function(event){
 							console.log(id);
+							var x=confirm("Are you shure?");
+							if(x){
 							$.post('VideoServlet',{'videoId':id,'status':"delete"},function(data){
 									window.location.replace('index.html');
 							
 							});
-							
+							}
 							event.preventDefault();
 							return false;
 						});

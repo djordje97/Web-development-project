@@ -147,6 +147,31 @@ public class VideoServlet extends HttpServlet {
 			String jsonData = mapper.writeValueAsString(data);
 			System.out.println(jsonData);
 			
+		}else if (status.equals("order")) {
+			String stat = "success";
+			ArrayList<Video> videos=null;
+			try {
+				String column=request.getParameter("column");
+				String ascDesc=request.getParameter("ascDesc");
+				System.out.println(ascDesc);
+				String userName =request.getParameter("userName");
+				if(loggedInUser!= null) {
+				 if(loggedInUser.getUserName().equals(userName) || loggedInUser.getRole().toString().equals("ADMIN")) {
+					 videos=VideoDAO.OrderAllUserVideo(userName, column, ascDesc);
+				 }
+				}else {
+					 videos=VideoDAO.OrderPublicUserVideo(userName, column, ascDesc);
+				 }
+				
+			} catch (Exception e) {status="faliuer";}
+			Map<String, Object> data = new HashMap<>();
+			data.put("stat", stat);
+			data.put("videos", videos);
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
 		}
 		
 	}
