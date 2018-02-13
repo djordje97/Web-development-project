@@ -17,23 +17,29 @@
 <section class="container">
 <div class="row">
 <input type="button"  class="collapsible" value="Click here for order users">
-			<div class="content">
-				<h3>Order by:</h3>
-				<label class="container-cb">Username<input type="radio"
-					checked="checked" name="radio"> <span class="checkmark"></span>
-				</label> <label class="container-cb">Name<input type="radio"
-					name="radio"> <span class="checkmark"></span>
-				</label> <label class="container-cb">Surname<input type="radio"
-					name="radio"> <span class="checkmark"></span>
-				</label>
-				<label class="container-cb">Email<input type="radio"
-					name="radio"> <span class="checkmark"></span>
-				</label>
-				<label class="container-cb">Role<input type="radio"
-					name="radio"> <span class="checkmark"></span>
-				</label>
-				
+					<div class="content">
+				<h2>Order by:</h2>
+				 <select id="orderComment"
+				name="order">
+				<option value="userName">Username</option>
+				<option value="nameu">Name</option>
+				<option value="surname">Surname</option>
+				<option value="email">Email</option>
+				<option value="role">Role</option>
+			</select>
+			
+				<label class="container-rb" style="color:white;">Ascending
+			  <input type="radio" id="asc" value="ASC" checked="checked" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+			
+				<label class="container-rb" style="color:white;" >Descending
+			  <input type="radio" id="desc" value="DESC" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+			<input type="submit" value="Order" id="order">
 			</div>
+
 			
 </div>
 	<div class="row" id="users">

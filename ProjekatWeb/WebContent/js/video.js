@@ -82,11 +82,12 @@ $(document).ready(function(){
 				}
 			
 				$('#order').on('click',function(event){
-					var column=$('#orderVideos').val();
+					var column=$('#orderComment').val();
 					var ascDesc=asc.val();
 					if(desc.is(':checked')){
 						var ascDesc=desc.val();
 					}
+					console.log(column);
 					console.log(ascDesc);
 					$.get('CommentServlet',{'id':id,'ascDesc':ascDesc,'column':column},function(data){
 						if(data.status == "success"){

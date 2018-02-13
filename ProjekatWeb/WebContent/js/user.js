@@ -65,12 +65,14 @@ $(document).ready(function(){
 			return false;
 		});
 	
-		$('#orderSubmit').on('click',function(event){
-			var column=$('#orderComment').val();
+		$('input[type=submit]').on('click',function(event){
+			var column=$('#orderVideos').val();
 			var ascDesc=asc.val();
 			if(desc.is(':checked')){
 			var ascDesc=desc.val();
 			}
+			console.log(ascDesc);
+			console.log(column);
 			$.post('VideoServlet',{'status':"order",'column':column,'ascDesc':ascDesc,'userName':userName},function(data){
 				if(data.stat == "success"){
 					videosInput.empty();

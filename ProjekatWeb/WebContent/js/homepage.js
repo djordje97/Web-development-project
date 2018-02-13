@@ -23,6 +23,10 @@ $(document).ready(function() {
 					'</div>'
 					);
 		}
+		if(data.user !=null){
+			$('#signInLink').replaceWith('<a href="LogOutServlet">Sign out</a>');
+			$('#home').replaceWith('<a href="User.html?userName='+data.user.userName+'">My profile</a>');
+		}
 	});
 	$('#signIn').on('click', function(event) { 
 		var userName = userNameInput.val();

@@ -9,20 +9,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.User;
 import model.Video;
+import projekatWeb.dao.UserDAO;
 import projekatWeb.dao.VideoDAO;
 
 public class GetVideosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		ArrayList<Video> videos =VideoDAO.publicVideo();
 		Map<String, Object> data = new HashMap<>();
+		ArrayList<User> users=UserDAO.getAll();
+		data.put("users", users);
 		data.put("videos", videos);
-
+		data.put("user", loggedInUser);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
 		System.out.println(jsonData);

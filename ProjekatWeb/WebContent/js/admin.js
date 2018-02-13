@@ -50,6 +50,19 @@ $(document).ready(function(){
 		
 	});
 	
+	$('#order').on('click',function(event){
+		var column=$('#orderComment').val();
+		var ascDesc=asc.val();
+		if(desc.is(':checked')){
+			var ascDesc=desc.val();
+		}
+		$.post
+		console.log(column);
+		console.log(ascDesc)
+		event.preventDefault();
+		return false;
+	});
+	
 
 });
 
